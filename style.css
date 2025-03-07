@@ -19,12 +19,14 @@ h1 {
     margin-bottom: 0.5rem;
     border-bottom: 2px solid #b066ff;
     padding-bottom: 0.5rem;
+    text-align: center;
 }
 
 .description {
     color: #cccccc;
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    text-align: center;
 }
 
 .links-section {
