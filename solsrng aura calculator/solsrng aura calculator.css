@@ -33,7 +33,7 @@ label {
     color: #e0e0e0;
 }
 
-input, select, button {
+input, select, button, .back-button {
     width: 100%;
     padding: 12px;
     margin: 5px 0;
@@ -48,13 +48,13 @@ input, select, button {
     box-sizing: border-box;
 }
 
-input:focus, select:focus, button:focus {
+input:focus, select:focus, button:focus, .back-button:focus {
     border: 2px solid #2dd4bf;
     font-family: 'Changa', sans-serif;
     box-shadow: 0 0 8px rgba(45, 212, 191, 0.3);
 }
 
-button {
+button, .back-button {
     background-color: #2dd4bf;
     color: #1a1a1a;
     font-weight: bold;
@@ -62,7 +62,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+button:hover, .back-button:hover {
     background-color: #14b8a6;
 }
 
@@ -298,19 +298,4 @@ button:hover {
 .bt-checkbox-container input[type="checkbox"]:checked,
 .bt-checkbox-container label {
     display: none;
-}
-
-.back-button {
-    display: inline-block;
-    text-decoration: none;
-    color: #333;
-    margin-bottom: 20px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    background: #f0f0f0;
-    transition: background 0.2s;
-}
-
-.back-button:hover {
-    background: #e0e0e0;
 }
