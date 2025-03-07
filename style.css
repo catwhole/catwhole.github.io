@@ -17,7 +17,7 @@ h1 {
     color: #ffffff;
     font-size: 3rem;
     margin-bottom: 0.5rem;
-    border-bottom: 2px solid #d4a6ff;
+    border-bottom: 2px solid #b066ff;
     padding-bottom: 0.5rem;
     text-align: center;
 }
@@ -33,11 +33,11 @@ h1 {
     background-color: #252525;
     padding: 1.5rem;
     border-radius: 8px;
-    border-left: 4px solid #d4a6ff;
+    border-left: 4px solid #b066ff;
 }
 
 h2 {
-    color: #d4a6ff;
+    color: #b066ff;
     margin-top: 0;
 }
 
@@ -57,5 +57,5 @@ h2 {
 }
 
 .links-list a:hover {
-    color: #d4a6ff;
+    color: #b066ff;
 }
