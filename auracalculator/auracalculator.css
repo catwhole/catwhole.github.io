@@ -13,6 +13,8 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;;
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
@@ -64,6 +66,14 @@ button, .back-button {
 
 button:hover, .back-button:hover {
     background-color: #14b8a6;
+}
+
+.back-button {
+    padding: 8px;
+    margin: 20px 0;
+    text-align: center;
+    width: 25%;
+    align-self: center;
 }
 
 .modal {
