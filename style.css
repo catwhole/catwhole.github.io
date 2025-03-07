@@ -54,8 +54,15 @@ h2 {
     color: #ffffff;
     text-decoration: none;
     transition: color 0.3s ease;
+    margin-right: 4px;
 }
 
 .links-list a:hover {
     color: #d4a6ff;
+}
+
+.links-list span.description {
+    font-size: 0.9em;
+    margin-left: 8px;
+    color: #666;
 }
