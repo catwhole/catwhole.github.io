@@ -1,0 +1,301 @@
+/* General Styles */
+body {
+    font-family: 'Changa', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #434343;
+    color: #e0e0e0;
+}
+
+/* Standardized box sizing */
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #2a2a2a;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+h2, h3 {
+    color: #2dd4bf;
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin: 15px 0 5px;
+    color: #e0e0e0;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border: 2px solid #2dd4bf;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+    outline: none;
+    transition: all 0.2s ease;
+    font-family: 'Changa', sans-serif;
+    box-sizing: border-box;
+}
+
+input:focus, select:focus, button:focus {
+    border: 2px solid #2dd4bf;
+    font-family: 'Changa', sans-serif;
+    box-shadow: 0 0 8px rgba(45, 212, 191, 0.3);
+}
+
+button {
+    background-color: #2dd4bf;
+    color: #1a1a1a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #14b8a6;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #2a2a2a;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #3a3a3a;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    color: #e0e0e0;
+    position: relative;
+}
+
+.close {
+    color: #2dd4bf;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #14b8a6;
+}
+
+.result-line {
+    margin: 8px 0;
+    padding: 8px;
+    background-color: #363636;
+    border-radius: 6px;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.highlight {
+    color: #7fbed1;
+    font-weight: 600;
+}
+
+.checkbox-container {
+    width: 100%;
+    padding: 12px;
+    margin: 5px 0;
+    border-radius: 8px;
+    background-color: #363636;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-container:hover {
+    background-color: #3a3a3a;
+    transform: translateX(4px);
+}
+
+.checkbox-container input[type="checkbox"] {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    margin: 0 12px 0 0;
+    padding: 0;
+    appearance: none;
+    border: 2px solid #2dd4bf;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: #2dd4bf;
+    border-color: #2dd4bf;
+}
+
+.checkbox-container input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+    color: #1a1a1a;
+    font-weight: bold;
+}
+
+.checkbox-container label {
+    margin: 0;
+    flex: 1;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.checkbox-container:hover label {
+    color: #2dd4bf;
+}
+
+/* Search bar styling */
+.search-container {
+    position: relative;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#searchAura {
+    width: calc(100% - 22px); /* Adjust width to include padding and border */
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+    border: 2px solid #2dd4bf;
+    font-family: 'Changa', sans-serif;
+}
+
+#searchAura:focus {
+    box-shadow: 0 0 8px rgba(45, 212, 191, 0.3);
+}
+
+#auraSelect {
+    width: calc(100% - 22px); /* Adjust width to include padding and border */
+    margin-top: 5px;
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+    border: 2px solid #2dd4bf;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'Changa', sans-serif;
+    display: none; /* Hide dropdown initially */
+}
+
+.search-container {
+    position: relative;
+}
+
+/* Aura Rarity Colors */
+.rarity-basic { color: #d3d3d3; text-shadow: 1px 1px 2px #000; }
+.rarity-epic { color: #c71585; text-shadow: 1px 1px 2px #000; }
+.rarity-unique { color: #ff8c00; text-shadow: 1px 1px 2px #000; }
+.rarity-legendary { color: #ffd700; text-shadow: 1px 1px 2px #000; }
+.rarity-mythic { color: #ff1493; text-shadow: 1px 1px 2px #000; }
+.rarity-exalted { color: #1e90ff; text-shadow: 1px 1px 2px #000; }
+.rarity-glorious { color: #dc143c; text-shadow: 1px 1px 2px #000; }
+.rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
+
+#auraList option {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.search-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.search-container input {
+    width: calc(100% - 44px); 
+    padding-right: 34px; 
+}
+
+/* Search bar styling */
+.search-container {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+#auraInput {
+    width: 100%;
+    padding: 12px;
+    padding-right: 40px; /* Make room for the reset button */
+    border-radius: 8px;
+    background-color: #3a3a3a;
+    color: #e0e0e0;
+    border: 2px solid #2dd4bf;
+    font-family: 'Changa', sans-serif;
+}
+
+/* Reset button styling */
+#resetSearch {
+    position: absolute;
+    right: 12px; /* Adjust position to be inside input */
+    top: 50%;
+    transform: translateY(-75%);
+    background-color: transparent;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: #2dd4bf;
+    text-align: center;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+#resetSearch:hover {
+    color: #14b8a6;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 600px) {
+    .container {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    input, select, button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .checkbox-container {
+        padding: 10px;
+    }
+}
+
+/* Remove BT checkbox styles */
+.bt-checkbox-container,
+.bt-checkbox-container:hover,
+.bt-checkbox-container input[type="checkbox"],
+.bt-checkbox-container input[type="checkbox"]:checked,
+.bt-checkbox-container label {
+    display: none;
+}
