@@ -14,11 +14,9 @@
         <a href="../" class="back-button">Back</a>
         <h2>Aura Chance Calculator</h2>
 
-        <!-- Input for Luck -->
         <label for="luck">Input your Luck:</label>
         <input type="number" id="luck" placeholder="Enter your Luck" required>
 
-        <!-- Search and Aura Selection -->
         <div class="search-container">
             <label for="auraInput">Search and Select Aura:</label>
             <div style="position: relative;">
@@ -26,26 +24,23 @@
                 <button id="resetSearch" onclick="resetSearch()">✕</button>
             </div>
             <select id="auraSelect" size="5">
-                <!-- Options will be populated by JavaScript -->
             </select>
         </div>
     
-        <!-- Placeholder Elements -->
-        <label for="placeholderSelect">Placeholder Select (Coming Soon):</label>
+<!--    <label for="placeholderSelect">Placeholder Select</label>
         <select id="placeholderSelect">
-            <option>Future Feature</option>
+            <option>Placeholder</option>
         </select>
 
         <div class="checkbox-container">
             <input type="checkbox" id="placeholderCheck">
             <label for="placeholderCheck">Placeholder Checkbox</label>
         </div>
+ -->
 
-        <!-- Calculate Button -->
         <button onclick="calculateChance()">Calculate</button>
     </div>
 
-    <!-- Result Modal -->
     <div id="resultModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
