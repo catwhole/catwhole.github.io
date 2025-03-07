@@ -1,4 +1,3 @@
-// Aura data
 const auras = [
     { name: "Luminosity - 1,200,000,000", chance: 1200000000 },
     { name: "Aegis - 825,000,000", chance: 825000000 },
