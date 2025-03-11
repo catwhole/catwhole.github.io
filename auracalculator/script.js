@@ -13,6 +13,7 @@ const auras = [
     { name: "Overture : History - 300,000,000", chance: 300000000 },
     { name: "Bloodlust - 300,000,000", chance: 300000000 },
     { name: "Archangel - 250,000,000", chance: 250000000 },
+    { name: "Oppression - 220,000,000", chance: 220000000 },
     { name: "Impeached - 200,000,000", chance: 200000000 },
     { name: "Symphony - 175,000,000", chance: 175000000 },
     { name: "Overture - 150,000,000", chance: 150000000 },
@@ -34,6 +35,8 @@ const auras = [
     { name: "Chromatic - 20,000,000", chance: 20000000 },
     { name: "Arcane : Legacy - 15,000,000", chance: 15000000 },
     { name: "Sirius - 14,000,000", chance: 14000000 },
+    { name: "Stormal : Hurricane - 13,500,000", chance: 13500000 },
+    { name: "Glitch - 12,210,110", chance: 12210110 },
     { name: "Wonderland - 12,000,000", chance: 12000000 }, ///////////// ev
     { name: "Sailor - 12,000,000", chance: 12000000 },
     { name: "Starscourge - 10,000,000", chance: 10000000 },
@@ -43,7 +46,7 @@ const auras = [
     { name: "Origin - 6,500,000", chance: 6500000 },
     { name: "Twilight - 6,000,000", chance: 6000000 },
     { name: "Galaxy - 5,000,000", chance: 5000000 },
-    { name: "Lunar : FullMoon - 5,000,000", chance: 5000000 },
+    { name: "Lunar : Full Moon - 5,000,000", chance: 5000000 },
     { name: "Solar : Solstice - 5,000,000", chance: 5000000 },
     { name: "Aquatic : Flame - 4,000,000", chance: 4000000 },
     { name: "Poseidon - 4,000,000", chance: 4000000 },
@@ -53,6 +56,7 @@ const auras = [
     { name: "Gravitational - 2,000,000", chance: 2000000 },
     { name: "Astral - 1,336,000", chance: 1336000 },
     { name: "Rage : Brawler - 1,280,000", chance: 1280000 },
+    { name: "Undefined - 1,111,000", chance: 1111000 },
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000 },
     { name: "Arcane - 1,000,000", chance: 1000000 },
     { name: "Kyawthuite - 850,000", chance: 850000 },
@@ -86,6 +90,7 @@ const auras = [
     { name: "Bleeding - 4,444", chance: 4444 },
     { name: "Sidereum - 4,096", chance: 4096 },
     { name: "Player - 3,000", chance: 3000 },
+    { name: "Fault - 3,000", chance: 3000 },
     { name: "Glacier - 2,304", chance: 2304 },
     { name: "Ash - 2,300", chance: 2300 },
     { name: "Magnetic - 2,048", chance: 2048 },
@@ -109,7 +114,7 @@ const auras = [
     { name: "Natural - 8", chance: 8 },
     { name: "Good - 5", chance: 5 },
     { name: "Uncommon - 4", chance: 4 },
-    { name: "Common - 2", chance: 1 }
+    { name: "Common - 2", chance: 2 }
 ];
 
 const nativeAuras = [
@@ -129,6 +134,8 @@ const nativeAuras = [
     { name: "[Native] Stormal : Hurricane - 4,500,000", chance: 4500000 },
     { name: "[Native] Wonderland - 4,000,000", chance: 4000000 },
     { name: "[Native] Sailor - 3,000,000", chance: 3000000 },
+    { name: "[Native] Sirius - 1,400,000", chance: 1400000 },
+    { name: "[Native] Hades - 1,111,111", chance: 1111111 },
     { name: "[Native] Poseidon - 1,000,000", chance: 1000000 },
     { name: "[Native] Starscourge - 1,000,000", chance: 1000000 },
     { name: "[Native] Twilight - 600,000", chance: 600000 },
@@ -141,6 +148,11 @@ const nativeAuras = [
     { name: "[Native] Undead : Devil - 20,000", chance: 20000 },
     { name: "[Native] Hazard : Rays - 14,000", chance: 14000 },
     { name: "[Native] Comet - 12,000", chance: 12000 },
+    { name: "[Native] Nihility - 9,000", chance: 9000 },
+    { name: "[Native] Solar - 5,000", chance: 5000 },
+    { name: "[Native] Lunar - 5,000", chance: 5000 },
+    { name: "[Native] Starlight - 5,000", chance: 5000 },
+    { name: "[Native] Star Rider - 5,000", chance: 5000 },
     { name: "[Native] Corrosive - 2,400", chance: 2400 },
     { name: "[Native] Undead - 2,000", chance: 2000 },
     { name: "[Native] Hazard - 1,400", chance: 1400 },
@@ -232,6 +244,27 @@ function resetSearch() {
     document.getElementById('resetSearch').style.display = 'none';
 }
 
+// Add formatPercentage helper function
+function formatPercentage(value) {
+    if (value < 0.00000001) return "< 0.00000001";
+    
+    // Convert to string with 8 decimal places
+    const fixed = value.toFixed(8);
+    
+    // If it's a whole number (all decimals are 0), return without decimals
+    if (fixed.endsWith('00000000')) return Math.round(value).toString();
+    
+    // Find the position of first non-zero decimal
+    const decimalPart = fixed.split('.')[1];
+    let firstNonZero = 0;
+    while (firstNonZero < decimalPart.length && decimalPart[firstNonZero] === '0') {
+        firstNonZero++;
+    }
+    
+    // Return with number of decimals needed (position of first non-zero + 1)
+    return value.toFixed(firstNonZero + 1);
+}
+
 // Update calculation function with new Native terminology
 function calculateChance() {
     const luck = parseFloat(document.getElementById('luck').value);
@@ -254,9 +287,12 @@ function calculateChance() {
     );
 
     const baseChance = selectedAura.chance;
-    const adjustedChance = baseChance / luck;
+    let adjustedChance = baseChance / luck;
+    if (adjustedChance < 1) {
+        adjustedChance = 1;
+    }
     const formattedAdjusted = adjustedChance.toLocaleString();
-    const percentage = ((1 / adjustedChance) * 100).toFixed(8);
+    const percentage = formatPercentage((1 / adjustedChance) * 100);
 
     let resultHTML = `
         <h2 style="color: #2dd4bf; text-align: center;">Results</h2>
@@ -271,13 +307,16 @@ function calculateChance() {
         </div>`;
 
     if (nativeVersion) {
-        const nativeAdjustedChance = nativeVersion.chance / luck;
+        let nativeAdjustedChance = nativeVersion.chance / luck;
+        if (nativeAdjustedChance < 1) {
+            nativeAdjustedChance = 1;
+        }
         const nativeFormattedAdjusted = nativeAdjustedChance.toLocaleString();
-        const nativePercentage = ((1 / nativeAdjustedChance) * 100).toFixed(8);
+        const nativePercentage = formatPercentage((1 / nativeAdjustedChance) * 100);
 
         resultHTML += `
             <div class="result-line" style="margin-top: 20px;">
-                <span class="highlight">Native:</span> <span class="${getRarityClass(nativeVersion.chance)}">${nativeVersion.name}</span>
+                <span class="highlight">Native Version:</span> <span class="${getRarityClass(nativeVersion.chance)}">${nativeVersion.name}</span>
             </div>
             <div class="result-line">
                 <span class="highlight">Chance:</span> 1 in ${nativeFormattedAdjusted}
@@ -301,3 +340,8 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    const bgMusic = document.getElementById('bgMusic');
+    bgMusic.volume = 0.1; // Set volume to 10%
+});
