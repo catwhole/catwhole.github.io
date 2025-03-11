@@ -309,3 +309,22 @@ button:hover, .back-button:hover {
 .bt-checkbox-container label {
     display: none;
 }
+
+.mute-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    transition: background 0.3s;
+}
+
+.mute-button:hover {
+    background: rgba(0, 0, 0, 0.7);
+}

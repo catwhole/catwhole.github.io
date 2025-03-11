@@ -343,5 +343,16 @@ window.onclick = function(event) {
 
 document.addEventListener('DOMContentLoaded', function() {
     const bgMusic = document.getElementById('bgMusic');
-    bgMusic.volume = 0.1; // Set volume to 10%
+    const muteButton = document.getElementById('muteButton');
+    bgMusic.volume = 0.01; // Set initial volume to 10%
+
+    muteButton.addEventListener('click', function() {
+        if (bgMusic.muted) {
+            bgMusic.muted = false;
+            muteButton.textContent = '🔊';
+        } else {
+            bgMusic.muted = true;
+            muteButton.textContent = '🔈';
+        }
+    });
 });
