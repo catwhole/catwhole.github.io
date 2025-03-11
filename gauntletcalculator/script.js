@@ -197,3 +197,32 @@ window.onclick = function(event) {
         }
     });
 }
+
+function toggleMusic() {
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    
+    if (bgMusic.muted) {
+        bgMusic.currentTime = 0;
+        bgMusic.muted = false;
+        bgMusic.play().catch(function(error) {
+            console.log("Audio play failed:", error);
+        });
+        musicToggle.textContent = 'Stop Music';
+    } else {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+        bgMusic.muted = true;
+        musicToggle.textContent = 'Play Music';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const bgMusic = document.getElementById('bgMusic');
+    
+    // Set initial volume and play state
+    bgMusic.volume = 0.09;
+    bgMusic.play().catch(function(error) {
+        console.log("Audio play failed:", error);
+    });
+});

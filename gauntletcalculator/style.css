@@ -1,19 +1,26 @@
 /* General Styles */
 body {
+    overflow-y: scroll;
     font-family: 'Changa', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #434343;
     color: #e0e0e0;
+    background-image: url('solsbg.jpg');
+    background-size: cover;
+    background-blend-mode: soft-light;
+    background-position-x: center;
+    background-attachment: fixed;
 }
 
 .container {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;;
+    width: 100%;
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #2a2a2a;
+    background-color: #25282b;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
@@ -21,19 +28,21 @@ body {
 h2, h3 {
     color: #2dd4bf;
     text-align: center;
+    margin: 4px auto;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 label {
     display: block;
-    margin: 15px 0 5px;
     color: #e0e0e0;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 input, select, button, .back-button {
     width: 100%;
-    padding: 10px;
-    margin: 5px 0 15px;
-    border: none;
+    padding: 12px;
+    margin: 10px 0 10px;
+    border: 2px solid #2dd4bf;
     border-radius: 8px;
     font-size: 16px;
     background-color: #3a3a3a;
@@ -41,6 +50,7 @@ input, select, button, .back-button {
     outline: none;
     transition: all 0.2s ease;
     font-family: 'Changa', sans-serif;
+    box-sizing: border-box;
 }
 
 input:focus, select:focus, button:focus, .back-button:focus {
@@ -67,6 +77,31 @@ button:hover, .back-button:hover {
     text-align: center;
     width: 25%;
     align-self: center;
+}
+
+.button-music {
+    background-color: #3a3a3a;
+    color: #ff9393;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 8px;
+    margin: 20px 0;
+    text-align: center;
+    width: 25%;
+    align-self: center;
+    border: 2px solid #ff9393;
+}
+
+.button-music:hover {
+    background-color: #ff9393;
+    color: #1a1a1a;
+}
+
+.button-music:focus {
+    border: 2px solid #db8181;
+    font-family: 'Changa', sans-serif;
+    box-shadow: 0 0 8px rgba(212, 45, 45, 0.3);
 }
 
 .checkbox-container {
@@ -132,7 +167,7 @@ button:hover, .back-button:hover {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.5);
     overflow: auto;
 }
 
@@ -267,4 +302,10 @@ button:hover, .back-button:hover {
 
 #myModal p {
     margin: 0 0 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

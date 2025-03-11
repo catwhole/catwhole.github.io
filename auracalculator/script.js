@@ -265,18 +265,49 @@ function formatPercentage(value) {
     return value.toFixed(firstNonZero + 1);
 }
 
-// Update calculation function with new Native terminology
+function getSpeed() {
+let gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
+let elementSpeed = (parseFloat(document.getElementById("elementSpeed").value)) / 100;
+if (isNaN(elementSpeed)) elementSpeed = 0;
+let hastePotion = parseFloat(document.getElementById("hastePotion").value);
+let speedPotion = document.getElementById("speedPotion").checked ? 0.25 : 0;
+let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
+let knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
+let knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
+let hwachae = document.getElementById("hwachae").checked ? 0.25 : 0;
+let bank = document.getElementById("bank").checked ? 0.07 : 0;
+let santa = document.getElementById("santa").checked ? 0.25 : 0;
+return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledgeOne + knowledgeTwo + hwachae + bank + santa;
+}
+
+function calculateTime(adjustedChance, speed) {
+    const seconds = adjustedChance / speed;
+    if (seconds < 60) return `${seconds.toFixed(2)} seconds`;
+    const minutes = seconds / 60;
+    if (minutes < 60) return `${minutes.toFixed(2)} minutes`;
+    const hours = minutes / 60;
+    if (hours < 24) return `${hours.toFixed(2)} hours`;
+    const days = hours / 24;
+    if (days < 7) return `${days.toFixed(2)} days`;
+    const weeks = days / 7;
+    if (weeks < 4) return `${weeks.toFixed(2)} weeks`;
+    const months = weeks / 4.34524;
+    if (months < 12) return `${months.toFixed(2)} months`;
+    const years = months / 12;
+    return `${years.toFixed(2)} years`;
+}
+
 function calculateChance() {
-    const luck = parseFloat(document.getElementById('luck').value);
     const selectedAura = getSelectedAura();
-    
-    if (!luck || luck <= 0) {
-        alert("Please enter a valid luck value greater than 0");
-        return;
-    }
-    
-    if (!selectedAura) {
-        alert("Please select a valid aura from the list");
+    const luck = parseFloat(document.getElementById('luck').value);
+    const speed = getSpeed();
+    const advancedOptions = document.getElementById('advancedOptions');
+
+    if (!selectedAura || !luck) {
+        document.getElementById('modalResult').innerHTML = `
+            <h2 style="color: #ff4444; text-align: center;">Error</h2>
+            <div class="result-line">Please enter valid values for both aura and luck</div>`;
+        document.getElementById('resultModal').style.display = 'block';
         return;
     }
 
@@ -296,6 +327,7 @@ function calculateChance() {
 
     let resultHTML = `
         <h2 style="color: #2dd4bf; text-align: center;">Results</h2>
+        <p class="warning-text" style="margin: 10px 0 10px;">Note: The results are entirely statistical, not based on simulations. This means that there is a very high possibility you will get this aura faster/easier than displayed.</p>
         <div class="result-line">
             <span class="highlight">Aura:</span> <span class="${getRarityClass(baseChance)}">${selectedAura.name}</span>
         </div>
@@ -305,6 +337,14 @@ function calculateChance() {
         <div class="result-line">
             <span class="highlight">Percentage:</span> ${percentage}%
         </div>`;
+
+    if (advancedOptions.style.display === 'block') {
+        const timeToGetAura = calculateTime(adjustedChance, speed);
+        resultHTML += `
+            <div class="result-line">
+                <span class="highlight">Average Time to Get Aura:</span> ${timeToGetAura}
+            </div>`;
+    }
 
     if (nativeVersion) {
         let nativeAdjustedChance = nativeVersion.chance / luck;
@@ -324,7 +364,18 @@ function calculateChance() {
             <div class="result-line">
                 <span class="highlight">Percentage:</span> ${nativePercentage}%
             </div>`;
+
+        if (advancedOptions.style.display === 'block') {
+            const nativeTimeToGetAura = calculateTime(nativeAdjustedChance, speed);
+            resultHTML += `
+            <div class="result-line">
+                <span class="highlight">Average Time to Get Aura:</span> ${nativeTimeToGetAura}
+            </div>`;
+        }
     }
+
+
+
 
     document.getElementById('modalResult').innerHTML = resultHTML;
     document.getElementById('resultModal').style.display = 'block';
@@ -334,10 +385,65 @@ function closeModal() {
     document.getElementById('resultModal').style.display = 'none';
 }
 
-// Close modal when clicking outside
-window.onclick = function(event) {
+
+window.addEventListener('click', function(event) {
     if (event.target == document.getElementById('resultModal')) {
         closeModal();
+    }
+});
+
+// Add toggleRollSpeed function
+function toggleRollSpeed() {
+    const rollSpeedOptions = document.getElementById('rollSpeedOptions');
+    if (rollSpeedOptions.style.display === 'none') {
+        rollSpeedOptions.style.display = 'block';
+    } else {
+        rollSpeedOptions.style.display = 'none';
+    }
+}
+
+// Add mode toggle function
+function toggleMode() {
+    const modeToggle = document.getElementById('modeToggle');
+    const advancedOptions = document.getElementById('advancedOptions');
+    const isAdvanced = advancedOptions.style.display === 'block';
+    
+    advancedOptions.style.display = isAdvanced ? 'none' : 'block';
+    modeToggle.textContent = isAdvanced ? 'Switch to Advanced Mode' : 'Switch to Simple Mode';
+    
+    // Reset roll speed options when switching to simple mode
+    if (isAdvanced) {
+        document.getElementById('rollSpeedOptions').style.display = 'none';
+    }
+
+    // Switch background music
+    const bgMusic = document.getElementById('bgMusic');
+    const bgMusicSource = document.getElementById('bgMusicSource');
+    bgMusicSource.src = isAdvanced ? 'elevator.mp3' : 'elevator_slowed.mp3';
+    bgMusic.load();
+    bgMusic.currentTime = 0;
+    bgMusic.play().catch(function(error) {
+        console.log("Audio play failed:", error);
+    });
+}
+
+// Modify the toggleMusic function to stop and restart the music when the button is pressed
+function toggleMusic() {
+    const bgMusic = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    
+    if (bgMusic.muted) {
+        bgMusic.currentTime = 0;
+        bgMusic.muted = false;
+        bgMusic.play().catch(function(error) {
+            console.log("Audio play failed:", error);
+        });
+        musicToggle.textContent = 'Stop Music';
+    } else {
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+        bgMusic.muted = true;
+        musicToggle.textContent = 'Play Music';
     }
 }
 

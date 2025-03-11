@@ -10,14 +10,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <audio id="bgMusic" loop autoplay>
-        <source src="elevator.mp3" type="audio/mpeg">
+    <audio id="bgMusic" loop muted>
+        <source id="bgMusicSource" src="elevator.mp3" type="audio/mpeg">
     </audio>
     <div class="container">
-        <a href="../" class="back-button">Back</a>
+        <div class="button-group">
+            <a href="../" class="back-button">Back</a>
+            <button id="musicToggle" onclick="toggleMusic()" class="button-music">Play Music</button>
+        </div>
         <h2>Aura Chance Calculator</h2>
-        <label for="luck">Input your Luck:</label>
-        <input type="number" id="luck" placeholder="Enter your Luck" required>
+
+        <button id="modeToggle" onclick="toggleMode()" class="button-secondary">Switch to Advanced Mode</button>
 
         <div class="search-container">
             <label for="auraInput">Search and Select Aura:</label>
@@ -28,17 +31,75 @@
             <select id="auraSelect" size="5">
             </select>
         </div>
-    
-<!--    <label for="placeholderSelect">Placeholder Select</label>
-        <select id="placeholderSelect">
-            <option>Placeholder</option>
-        </select>
 
-        <div class="checkbox-container">
-            <input type="checkbox" id="placeholderCheck">
-            <label for="placeholderCheck">Placeholder Checkbox</label>
+        <div id="luckContainer">
+            <label for="luck">Input your Luck:</label>
+            <input type="number" id="luck" placeholder="Enter your Luck" required>
         </div>
- -->
+
+        <div id="advancedOptions" style="display: none;">
+            <p class="warning-text">If you want an accurate calculation, ensure that the inputted luck is your luck from the stats board.</p>
+            
+            <button id="toggleRollSpeed" onclick="toggleRollSpeed()" class="button-secondary">Toggle Roll Speed Options</button>
+            <div id="rollSpeedOptions" style="display: none;">
+                <label for="gauntletSpeed">What is your R Gauntlet?</label>
+                <select id="gauntletSpeed">
+                    <option value="0">None</option>     
+                    <option value="0.15">Lunar / Eclipse Device</option>
+                    <option value="0.2">Exo Gauntlet</option>
+                    <option value="0.3">Galactic Device / Windstorm Device / Subzero Device / Snow Rider</option>
+                    <option value="0.35">Volcanic Device / Exoflex Device / Hologrammer</option>
+                    <option value="0.4">Ragnaröker</option>
+                    <option value="0.5">Starshaper</option>
+                </select>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="speedPotion">
+                    <label for="speedPotion">Speed Potion?</label>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="knowledgeOne">
+                    <label for="knowledgeOne">The Knowledge 1 or Chosen?</label>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="knowledgeTwo">
+                    <label for="knowledgeTwo">The Knowledge 2 or Godlike?</label>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="hwachae">
+                    <label for="hwachae">Hwachae?</label>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="bank">
+                    <label for="bank">Bank?</label>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="transcendant">
+                    <label for="transcendant">Transcendant or Warp Potion?</label>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="santa">
+                    <label for="santa">Santa Claus Potion?</label>
+                </div>
+
+                <label for="hastePotion">Haste Potion?</label>
+                <select id="hastePotion">
+                    <option value="0">None</option>
+                    <option value="0.3">1</option>
+                    <option value="0.5">2</option>
+                    <option value="0.7">3</option>
+                </select>
+
+                <label for="elementSpeed">Resonance of Elements speed (the thingy on mountain):</label>
+                <input type="number" id="elementSpeed" placeholder="Enter Resonance of Elements Speed in %" required>
+            </div>
+        </div>
 
         <button onclick="calculateChance()">Calculate</button>
     </div>

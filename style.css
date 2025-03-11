@@ -5,12 +5,18 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    background-image: url('54e.jpg');
+    background-size: cover;
+    background-blend-mode: soft-light;
+    background-position-x: center;
+    background-attachment: fixed;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
+    text-align: center; /* Add this line to center align all elements inside the container */
 }
 
 h1 {
@@ -26,6 +32,7 @@ h1 {
     color: #cccccc;
     font-size: 1.2rem;
     margin-bottom: 2rem;
+    margin-top: 5px;
     text-align: center;
 }
 
@@ -65,4 +72,43 @@ h2 {
     font-size: 0.9em;
     margin-left: 8px;
     color: #666;
+}
+
+.discord-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 6px;
+}
+
+.discord-handle {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 1em; /* Using em for consistent spacing */
+}
+
+.button-music {
+    background-color: #3a3a3a;
+    color: #d4a6ff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 8px;
+    margin: 4px 0;
+    text-align: center;
+    width: 25%;
+    align-self: center;
+    border: 2px solid #d4a6ff;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.button-music:hover {
+    background-color: #d4a6ff;
+    color: #1a1a1a;
+}
+
+.button-music:focus {
+    border: 2px solid #ca94fc;
+    font-family: 'Changa', sans-serif;
+    box-shadow: 0 0 8px rgba(145, 45, 212, 0.3);
 }
