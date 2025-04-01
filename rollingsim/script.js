@@ -42,10 +42,10 @@ const auras = [
     { name: "Starscourge - 10,000,000", chance: 10000000, wonCount: 0 },
     { name: "Helios - 9,000,000", chance: 9000000, wonCount: 0 },
     { name: "Nihility - 9,000,000", chance: 9000000, wonCount: 0 },
+    { name: "Origin : Onion - 8,000,000", chance: 8000000, wonCount: 0 }, ////event
     { name: "Velocity - 7,630,000", chance: 7630000, wonCount: 0 },
     { name: "HYPER-VOLT - 7,500,000", chance: 7500000, wonCount: 0 },
     { name: "Hades - 6,666,666", chance: 6666666, wonCount: 0 },
-    { name: "Origin : Onion - 6,500,000", chance: 6500000, wonCount: 0 }, ////event
     { name: "Origin - 6,500,000", chance: 6500000, wonCount: 0 },
     { name: "Twilight - 6,000,000", chance: 6000000, wonCount: 0 },
     { name: "Galaxy - 5,000,000", chance: 5000000, wonCount: 0 },
