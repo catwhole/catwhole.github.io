@@ -6,10 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: "Glock : shieldofthesky", file: "Glockofthesky.png", type: "image", rarity: "1 in 170,000,000" },
         { name: "Helios", file: "Helios.png", type: "image", rarity: "1 in 9,000,000" },
         { name: "Velocity", file: "Velocity.png", type: "image", rarity: "1 in 7,630,000" },
+        { name: "Origin : Onion", file: "Onion.png", type: "image", rarity: "1 in 6,500,000"},
         { name: "Cosmos", file: "Cosmos.png", type: "image", rarity: "1 in 1,520,000" },
-        { name: "Flushed : Troll", file: "Troll.png", type: "image", rarity: "2 in 1" },
-        { name: "Origin : Onion", file: "", type: "image", rarity: "1 in ?"},
-        { name: "pukeko", file: "", type: "image", rarity: "1 in ?" },
+        { name: "Flushed : Troll", file: "Troll.png", type: "image", rarity: "1 in 1,000,000" },
+        { name: "pukeko", file: "pukeko.png", type: "image", rarity: "1 in 3,198" },
     ];
     
     const auraList = document.getElementById('aura-list');

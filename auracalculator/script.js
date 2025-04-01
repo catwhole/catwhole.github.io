@@ -60,6 +60,7 @@ const auras = [
     { name: "Undefined - 1,111,000", chance: 1111000 },
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000 },
     { name: "Arcane - 1,000,000", chance: 1000000 },
+    { name: "Flushed : Troll - 2 in 1", chance: 1000000 }, ////event
     { name: "Kyawthuite - 850,000", chance: 850000 },
     { name: "Celestial - 350,000", chance: 350000 },
     { name: "Bounded - 200,000", chance: 200000 },
@@ -80,7 +81,6 @@ const auras = [
     { name: "Star Rider - 50,000", chance: 50000 },
     { name: "Aquatic - 40,000", chance: 40000 },
     { name: "Powered - 16,384", chance: 16384 },
-    { name: "Flushed : Troll - 2 in 1", chance: 15000 }, ////event
     { name: "LEAK - 14,000", chance: 14000 },
     { name: "Rage : Heated - 12,800", chance: 12800 },
     { name: "Corrosive - 12,000", chance: 12000 },
@@ -91,6 +91,7 @@ const auras = [
     { name: "Flushed - 6,900", chance: 6900 },
     { name: "Bleeding - 4,444", chance: 4444 },
     { name: "Sidereum - 4,096", chance: 4096 },
+    { name: "pukeko - 3,198", chance: 3198 }, ////event
     { name: "Player - 3,000", chance: 3000 },
     { name: "Fault - 3,000", chance: 3000 },
     { name: "Glacier - 2,304", chance: 2304 },
