@@ -3,12 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const auras = [
         { name: "Pixelation", file: "Pixelation.mp4", type: "video", rarity: "1 in 1,073,741,824" },
         { name: "Ruins : Withered", file: "Withered.png", type: "image", rarity: "1 in 800,000,000" },
-        { name: "Glock: shieldofthesky", file: "Glockofthesky.png", type: "image", rarity: "1 in 170,000,000" },
+        { name: "Glock : shieldofthesky", file: "Glockofthesky.png", type: "image", rarity: "1 in 170,000,000" },
         { name: "Helios", file: "Helios.png", type: "image", rarity: "1 in 9,000,000" },
         { name: "Velocity", file: "Velocity.png", type: "image", rarity: "1 in 7,630,000" },
-        { name: "Origin : Onion", file: "Onion.png", type: "image", rarity: "1 in 6,500,000" },
         { name: "Cosmos", file: "Cosmos.png", type: "image", rarity: "1 in 1,520,000" },
         { name: "Flushed : Troll", file: "Troll.png", type: "image", rarity: "2 in 1" },
+        { name: "Origin : Onion", file: "Onion.png", type: "image", rarity: "1 in ?"},
+        { name: "pukeko", file: "pukeko.png", type: "image", rarity: "1 in ?" },
     ];
     
     const auraList = document.getElementById('aura-list');

@@ -90,6 +90,12 @@ document.addEventListener('DOMContentLoaded', function() {
             ], 
             type: "multi-image", 
             rarity: "Unknown" 
+        },
+        { 
+            name: "Gladiator Potion", 
+            files: [], 
+            type: "multi-image", 
+            rarity: "Unknown" 
         }
         // Add more potions here when available
     ];
