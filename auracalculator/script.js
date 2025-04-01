@@ -1,9 +1,10 @@
 const auras = [
     { name: "Luminosity - 1,200,000,000", chance: 1200000000 },
+    { name: "Pixelation - 1,073,741,824", chance: 1073741824 },
     { name: "Aegis - 825,000,000", chance: 825000000 },
+    { name: "Ruins : Withered - 800,000,000", chance: 800000000 },
     { name: "Sovereign - 750,000,000", chance: 750000000 },
     { name: "Matrix : Reality - 601,020,102", chance: 601020102 },
-    { name: "Atlas : Yuletide - 510,000,000", chance: 510000000 }, ///////////// ev
     { name: "Matrix : Overdrive - 503,000,000", chance: 503000000 },
     { name: "Ruins - 500,000,000", chance: 500000000 },
     { name: "Apostolos - 444,000,000", chance: 444000000 },
@@ -16,17 +17,14 @@ const auras = [
     { name: "Oppression - 220,000,000", chance: 220000000 },
     { name: "Impeached - 200,000,000", chance: 200000000 },
     { name: "Symphony - 175,000,000", chance: 175000000 },
+    { name: "Glock : shieldofthesky - 170,000,000", chance: 170000000 }, ////event
     { name: "Overture - 150,000,000", chance: 150000000 },
-    { name: "Abomitable - 120,000,000", chance: 120000000 }, ///////////// ev
     { name: "Starscourge : Radiant - 100,000,000", chance: 100000000 },
     { name: "Chromatic : GENESIS - 99,999,999", chance: 99999999 },
-    { name: "Express - 90,000,000", chance: 90000000 }, ///////////// ev
     { name: "Sailor : Flying Dutchman - 80,000,000", chance: 80000000 },
-    { name: "Winter Fantasy - 72,000,000", chance: 72000000 }, ///////////// ev
     { name: "Twilight : Iridescent Memory - 60,000,000", chance: 60000000 },
     { name: "Matrix - 50,000,000", chance: 50000000 },
     { name: "Exotic : APEX - 49,999,500", chance: 49999500 },
-    { name: "Santa Frost - 45,000,000", chance: 45000000 }, ///////////// ev
     { name: "Overseer - 45,000,000", chance: 45000000 },
     { name: "Ethereal - 35,000,000", chance: 35000000 },
     { name: "Arcane : Dark - 30,000,000", chance: 30000000 },
@@ -37,12 +35,14 @@ const auras = [
     { name: "Sirius - 14,000,000", chance: 14000000 },
     { name: "Stormal : Hurricane - 13,500,000", chance: 13500000 },
     { name: "Glitch - 12,210,110", chance: 12210110 },
-    { name: "Wonderland - 12,000,000", chance: 12000000 }, ///////////// ev
     { name: "Sailor - 12,000,000", chance: 12000000 },
     { name: "Starscourge - 10,000,000", chance: 10000000 },
+    { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000 },
+    { name: "Velocity - 7,630,000", chance: 7630000 },
     { name: "HYPER-VOLT - 7,500,000", chance: 7500000 },
     { name: "Hades - 6,666,666", chance: 6666666 },
+    { name: "Origin : Onion - 6,500,000", chance: 6500000 }, ////event
     { name: "Origin - 6,500,000", chance: 6500000 },
     { name: "Twilight - 6,000,000", chance: 6000000 },
     { name: "Galaxy - 5,000,000", chance: 5000000 },
@@ -54,6 +54,7 @@ const auras = [
     { name: "Virtual - 2,500,000", chance: 2500000 },
     { name: "Bounded : Unbound - 2,000,000", chance: 2000000 },
     { name: "Gravitational - 2,000,000", chance: 2000000 },
+    { name: "Cosmos - 1,520,000", chance: 1520000 },
     { name: "Astral - 1,336,000", chance: 1336000 },
     { name: "Rage : Brawler - 1,280,000", chance: 1280000 },
     { name: "Undefined - 1,111,000", chance: 1111000 },
@@ -79,6 +80,7 @@ const auras = [
     { name: "Star Rider - 50,000", chance: 50000 },
     { name: "Aquatic - 40,000", chance: 40000 },
     { name: "Powered - 16,384", chance: 16384 },
+    { name: "Flushed : Troll - 2 in 1", chance: 15000 }, ////event
     { name: "LEAK - 14,000", chance: 14000 },
     { name: "Rage : Heated - 12,800", chance: 12800 },
     { name: "Corrosive - 12,000", chance: 12000 },
@@ -118,21 +120,15 @@ const auras = [
 ];
 
 const nativeAuras = [
-    { name: "[Native] Atlas : Yuletide - 170,000,000", chance: 170000000 },
     { name: "[Native] Abyssal Hunter - 100,000,000", chance: 100000000 },
     { name: "[Native] Atlas - 90,000,000", chance: 90000000 },
     { name: "[Native] Bloodlust - 50,000,000", chance: 50000000 },
     { name: "[Native] Gargantua - 43,000,000", chance: 43000000 },
     { name: "[Native] Impeached - 40,000,000", chance: 40000000 },
-    { name: "[Native] Abomitable - 40,000,000", chance: 40000000 },
-    { name: "[Native] Express - 30,000,000", chance: 30000000 },
-    { name: "[Native] Winter Fantasy - 24,000,000", chance: 24000000 },
     { name: "[Native] Sailor : Flying Dutchman - 20,000,000", chance: 20000000 },
-    { name: "[Native] Santa Frost - 15,000,000", chance: 15000000 },
     { name: "[Native] Starscourge : Radiant - 10,000,000", chance: 10000000 },
     { name: "[Native] Twilight : Iridescent Memory - 6,000,000", chance: 6000000 },
     { name: "[Native] Stormal : Hurricane - 4,500,000", chance: 4500000 },
-    { name: "[Native] Wonderland - 4,000,000", chance: 4000000 },
     { name: "[Native] Sailor - 3,000,000", chance: 3000000 },
     { name: "[Native] Sirius - 1,400,000", chance: 1400000 },
     { name: "[Native] Hades - 1,111,111", chance: 1111111 },
@@ -269,15 +265,27 @@ function getSpeed() {
 let gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
 let elementSpeed = (parseFloat(document.getElementById("elementSpeed").value)) / 100;
 if (isNaN(elementSpeed)) elementSpeed = 0;
-let hastePotion = parseFloat(document.getElementById("hastePotion").value);
-let speedPotion = document.getElementById("speedPotion").checked ? 0.25 : 0;
+
+// Get value from haste potion radio buttons
+let hastePotion = parseFloat(document.querySelector('input[name="hastePotion"]:checked').value);
+
+// Get value from rage/diver potion radio buttons
+let ragePotion = parseFloat(document.querySelector('input[name="ragePotion"]:checked').value);
+
+// Get value from godly potion radio buttons
+let godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:checked').value);
+
+// Get value from seasonal potion radio buttons
+let seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
+
+// Update speed potion value from 0.25 to 0.1
+let speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
 let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
 let knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
 let knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
-let hwachae = document.getElementById("hwachae").checked ? 0.25 : 0;
 let bank = document.getElementById("bank").checked ? 0.07 : 0;
-let santa = document.getElementById("santa").checked ? 0.25 : 0;
-return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledgeOne + knowledgeTwo + hwachae + bank + santa;
+
+return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledgeOne + knowledgeTwo + seasonalPotion + bank + ragePotion + godlyPotion;
 }
 
 function calculateTime(adjustedChance, speed) {
@@ -381,6 +389,99 @@ function calculateChance() {
     document.getElementById('resultModal').style.display = 'block';
 }
 
+// Add simulation function
+function simulateRolls() {
+    const selectedAura = getSelectedAura();
+    const luck = parseFloat(document.getElementById('luck').value);
+    
+    if (!selectedAura || !luck) {
+        document.getElementById('modalResult').innerHTML = `
+            <h2 style="color: #ff4444; text-align: center;">Error</h2>
+            <div class="result-line">Please enter valid values for both aura and luck</div>`;
+        document.getElementById('resultModal').style.display = 'block';
+        return;
+    }
+    
+    // Implementation of Random function from rollingsim
+    function sfc32(a, b, c, d) {
+        return function() {
+          a |= 0; b |= 0; c |= 0; d |= 0;
+          let t = (a + b | 0) + d | 0;
+          d = d + 1 | 0;
+          a = b ^ b >>> 9;
+          b = c + (c << 3) | 0;
+          c = (c << 21 | c >>> 11);
+          c = c + t | 0;
+          return (t >>> 0) / 4294967296;
+        }
+    }
+      
+    const seedgen = () => (Math.random()*2**32)>>>0;
+    const getRand = sfc32(seedgen(), seedgen(), seedgen(), seedgen());
+    
+    function Random(min, max) {
+        return Math.floor(getRand() * (max - min + 1)) + min;
+    }
+    
+    // Start simulation
+    document.getElementById('modalResult').innerHTML = `
+        <h2 style="color: #2dd4bf; text-align: center;">Simulation Running...</h2>
+        <div class="result-line">
+            Please wait while we simulate rolling for ${selectedAura.name}
+        </div>`;
+    document.getElementById('resultModal').style.display = 'block';
+    
+    // Run simulation after a short delay to allow modal to show
+    setTimeout(() => {
+        let rolls = 0;
+        let auraFound = false;
+        const maxRolls = 500000000; // 500 million limit
+        
+        const adjustedChance = Math.max(1, Math.floor(selectedAura.chance / luck));
+        
+        while (!auraFound && rolls < maxRolls) {
+            rolls++;
+            if (Random(1, adjustedChance) === 1) {
+                auraFound = true;
+            }
+        }
+        
+        // Display results
+        let resultHTML;
+        if (auraFound) {
+            resultHTML = `
+                <h2 style="color: #2dd4bf; text-align: center;">Simulation Results</h2>
+                <p class="warning-text" style="margin: 10px 0 10px;">Note: Results vary A LOT per simulation. Please run a few simulations for a more accurate result.</p>
+                <div class="result-line">
+                    <span class="highlight">Aura:</span> <span class="${getRarityClass(selectedAura.chance)}">${selectedAura.name}</span>
+                </div>
+                <div class="result-line">
+                    <span class="highlight">Luck Used:</span> ${luck.toLocaleString()}
+                </div>
+                <div class="result-line">
+                    <span class="highlight">Rolls Required:</span> ${rolls.toLocaleString()}
+                </div>
+                <button onclick="simulateRolls()" class="button-secondary" style="width: 100%; margin-top: 20px;">Simulate Again</button>`;
+        } else {
+            resultHTML = `
+                <h2 style="color: #ff4444; text-align: center;">Simulation Aborted</h2>
+                <p class="warning-text" style="margin: 10px 0 10px;">Note: Results vary A LOT per simulation. Please run a few simulations for a more accurate result.</p>
+                <div class="result-line">
+                    Rolls exceeded 500 million - aborted simulation
+                </div>
+                <div class="result-line">
+                    <span class="highlight">Aura:</span> <span class="${getRarityClass(selectedAura.chance)}">${selectedAura.name}</span>
+                </div>
+                <div class="result-line">
+                    <span class="highlight">Luck Used:</span> ${luck.toLocaleString()}
+                </div>
+                <button onclick="simulateRolls()" class="button-secondary" style="width: 100%; margin-top: 20px;">Simulate Again</button>`;
+        }
+        
+        document.getElementById('modalResult').innerHTML = resultHTML;
+    }, 100);
+}
+
 function closeModal() {
     document.getElementById('resultModal').style.display = 'none';
 }
@@ -446,6 +547,85 @@ function toggleMusic() {
         musicToggle.textContent = 'Play Music';
     }
 }
+
+// Store the base luck value (before multipliers) and a flag for programmatic updates
+let baseLuckValue = 0;
+let isProgrammaticUpdate = false;
+
+// Function to update luck value based on presets and multipliers
+function updateLuckValue(newBaseValue = null) {
+    // Set flag to prevent input handler from resetting multipliers during programmatic updates
+    isProgrammaticUpdate = true;
+    
+    const luckInput = document.getElementById('luck');
+    // Get selected radio button value
+    const vipMultiplier = parseFloat(document.querySelector('input[name="vipStatus"]:checked').value);
+    const xyzMultiplier = document.getElementById('xyzBuff').checked ? 2 : 1;
+    
+    // Update base value if provided
+    if (newBaseValue !== null) {
+        baseLuckValue = newBaseValue;
+    }
+    
+    // Calculate final luck value with multipliers
+    const finalValue = Math.round(baseLuckValue * vipMultiplier * xyzMultiplier);
+    
+    // Update input field
+    luckInput.value = finalValue;
+    
+    // Reset flag after update
+    setTimeout(() => { isProgrammaticUpdate = false; }, 0);
+}
+
+// Function to reset multipliers
+function resetMultipliers() {
+    document.getElementById('vipNone').checked = true;
+    document.getElementById('xyzBuff').checked = false;
+}
+
+// Add event listeners when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    const bgMusic = document.getElementById('bgMusic');
+    
+    // Set initial volume and play state
+    bgMusic.volume = 0.05;
+    bgMusic.play().catch(function(error) {
+        console.log("Audio play failed:", error);
+    });
+    
+    // Add event listeners for luck presets
+    document.querySelectorAll('.luck-preset').forEach(button => {
+        button.addEventListener('click', function() {
+            const luckValue = parseInt(this.getAttribute('data-luck'));
+            updateLuckValue(luckValue);
+        });
+    });
+    
+    // Add event listeners for multipliers
+    document.querySelectorAll('input[name="vipStatus"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            updateLuckValue();
+        });
+    });
+    
+    document.getElementById('xyzBuff').addEventListener('change', function() {
+        updateLuckValue();
+    });
+    
+    // Track manual changes to the luck input
+    const luckInput = document.getElementById('luck');
+    
+    // Use the input event to detect changes to the luck input
+    luckInput.addEventListener('input', function() {
+        // Only reset multipliers if the change wasn't triggered programmatically
+        if (!isProgrammaticUpdate) {
+            // Keep the current value but reset multipliers
+            const currentValue = parseInt(this.value) || 0;
+            baseLuckValue = currentValue;
+            resetMultipliers();
+        }
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function() {
     const bgMusic = document.getElementById('bgMusic');

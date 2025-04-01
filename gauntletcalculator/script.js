@@ -3,27 +3,30 @@ function calculateGauntlets() {
     var luck = parseFloat(document.getElementById("luck").value);
     var gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
     var elementSpeed = parseFloat(document.getElementById("elementSpeed").value);
-    var hastePotion = parseFloat(document.getElementById("hastePotion").value);
     var vip = parseFloat(document.getElementById("vip").value);
 
     // Check if inputs are valid
     if (isNaN(luck)) luck = 1;
     if (isNaN(elementSpeed)) elementSpeed = 0;
 
-    // Get the values from checkboxes (adjusted logic for specific values)
-    var speedPotion = document.getElementById("speedPotion").checked ? 0.25 : 0;
+    // Get values from radio buttons
+    var hastePotion = parseFloat(document.querySelector('input[name="hastePotion"]:checked').value);
+    var ragePotion = parseFloat(document.querySelector('input[name="ragePotion"]:checked').value);
+    var godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:checked').value);
+    var seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
+
+    // Get the values from checkboxes (adjusted speed potion from 0.25 to 0.1)
+    var speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
     var transcendant = document.getElementById("transcendant").checked ? 10 : 0;
     var knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
     var knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
-    var hwachae = document.getElementById("hwachae").checked ? 0.25 : 0;
     var bank = document.getElementById("bank").checked ? 0.07 : 0;
-    var santa = document.getElementById("santa").checked ? 0.25 : 0;
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
 
     // True Roll Speed calculation for all gauntlets (adjustments can be applied later)
     var trsDecimal = gauntletSpeed / 100;
     var realElementSpeed = elementSpeed / 100;
-    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + hwachae + bank + hastePotion + transcendant + realElementSpeed + santa;
+    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
     var trsJackpot = trs + 0.07;
 
 
@@ -97,7 +100,6 @@ function calculateDifference() {
     // Get input values (excluding luck)
     var gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
     var elementSpeed = parseFloat(document.getElementById("elementSpeed").value);
-    var hastePotion = parseFloat(document.getElementById("hastePotion").value);
     var vip = parseFloat(document.getElementById("vip").value);
 
     // Handle invalid inputs
@@ -105,20 +107,24 @@ function calculateDifference() {
     if (isNaN(elementSpeed)) elementSpeed = 0;
     if (isNaN(vip)) vip = 1;
 
-    // Get checkbox states
-    var speedPotion = document.getElementById("speedPotion").checked ? 0.25 : 0;
+    // Get values from radio buttons
+    var hastePotion = parseFloat(document.querySelector('input[name="hastePotion"]:checked').value);
+    var ragePotion = parseFloat(document.querySelector('input[name="ragePotion"]:checked').value);
+    var godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:checked').value);
+    var seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
+
+    // Get checkbox states with updated speed potion value (0.1)
+    var speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
     var transcendant = document.getElementById("transcendant").checked ? 10 : 0;
     var knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
     var knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
-    var hwachae = document.getElementById("hwachae").checked ? 0.25 : 0;
     var bank = document.getElementById("bank").checked ? 0.07 : 0;
-    var santa = document.getElementById("santa").checked ? 0.25 : 0;
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
 
-    // Calculate True Roll Speeds
+    // Calculate True Roll Speeds with new potions
     var trsDecimal = gauntletSpeed / 100;
     var realElementSpeed = elementSpeed / 100;
-    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + hwachae + bank + hastePotion + transcendant + realElementSpeed + santa;
+    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
     var trsJackpot = trs + 0.07; // Jackpot has extra 0.07
 
     // Common constants

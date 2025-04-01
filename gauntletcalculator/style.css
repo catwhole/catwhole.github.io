@@ -309,3 +309,69 @@ button:hover, .back-button:hover {
     justify-content: space-between;
     align-items: center;
 }
+
+/* Radio Button Styles */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0 15px;
+}
+
+.radio-container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #363636;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.radio-container:hover {
+    background-color: #3a3a3a;
+    transform: translateX(4px);
+}
+
+.radio-container input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #2dd4bf;
+    border-radius: 50%;
+    margin-right: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.radio-container input[type="radio"]:checked {
+    background-color: transparent;
+    border-color: #2dd4bf;
+    box-shadow: 0 0 5px rgba(45, 212, 191, 0.3);
+}
+
+.radio-container input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #2dd4bf;
+}
+
+.radio-container label {
+    margin: 0;
+    flex: 1;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.radio-container:hover label {
+    color: #2dd4bf;
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <audio id="bgMusic" loop muted src="crossingthoseislands.mp3" type="audio/mpeg"></audio>
+    <audio id="rollSound" loop muted src="Sols_Roll.mp3" type="audio/mpeg"></audio>
+    <audio id="clickSound" loop muted src="Sols_Click.mp3" type="audio/mpeg"></audio>
+    <audio id="hoverSound" loop muted src="Sols_Hover.mp3" type="audio/mpeg"></audio>
+    <audio id="1kSound" loop muted src="1k+_Roll.ogg" type="audio/ogg"></audio>
+    <audio id="10kSound" loop muted src="10k+_Roll.ogg" type="audio/ogg"></audio>
+    <audio id="100kSound" loop muted src="100k+_Roll.ogg" type="audio/ogg"></audio>
+    <audio id="10mSound" loop muted src="10m+_Roll.ogg" type="audio/ogg"></audio>
+    <audio id="100mSound" loop muted src="100m+_Roll.ogg" type="audio/ogg"></audio>
+    <video id="lumi" class="aura-video" preload="auto">
+        <source src="lumi.webm" type="video/webm">
+    </video>
+    <video id="aegis-video" class="aura-video" preload="auto">
+        <source src="aegis.webm" type="video/webm">
+    </video>
+    <video id="sovereign-video" class="aura-video" preload="auto">
+        <source src="sovereign.webm" type="video/webm">
+    </video>
+    <div id="video-overlay" class="video-overlay"></div>
+    <div class="container">
+        <div class="top">
+            <a href="../" class="back-button">Back</a>
+            <h1>Rolling Simulator</h1>
+            <button class="play-sound" id="soundToggle" onclick="toggleSound()">Sounds On</button>
+        </div>
+        <div class="inputs">
+                <label for="luck-input">Luck</label>
+                <input class="luck-input" type="number" id="luck" placeholder="Luck" min="1" required>
+                <label for="rolls-input">Amount of Rolls:</label>
+                <input class="rolls-input" type="number" id="rolls" min="1" max="100000000" placeholder="Rolls" required>
+        </div>
+    </div>
+    <div class = "roll-container">
+        <button class="roll-button" onclick="roll()">Roll</button>
+        <label for="roll-button">JavaScript Rolling? Slightly faster but worse randomness</label>
+        <input class="hidden-xs-up" id="cbx" type="checkbox" checked="">
+        <label class="cbx" for="cbx"></label>
+    </div>
+    <div class="result-container">
+        <div class="result" id="result">
+            <h2>Results</h2>
+            <p id="result-text"></p>
+        </div>
+    </div>
+<script src="functions.js"></script>  
+<script src="script.js"></script>
+</body>
+</html>

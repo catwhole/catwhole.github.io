@@ -13,95 +13,187 @@
     <audio id="bgMusic" loop muted>
         <source id="bgMusicSource" src="elevator.mp3" type="audio/mpeg">
     </audio>
-    <div class="container">
-        <div class="button-group">
-            <a href="../" class="back-button">Back</a>
-            <button id="musicToggle" onclick="toggleMusic()" class="button-music">Play Music</button>
-        </div>
-        <h2>Aura Chance Calculator</h2>
-
-        <button id="modeToggle" onclick="toggleMode()" class="button-secondary">Switch to Advanced Mode</button>
-
-        <div class="search-container">
-            <label for="auraInput">Search and Select Aura:</label>
-            <div style="position: relative;">
-                <input type="text" id="auraInput" placeholder="Start typing to search auras..." autocomplete="on">
-                <button id="resetSearch" onclick="resetSearch()">✕</button>
-            </div>
-            <select id="auraSelect" size="5">
-            </select>
-        </div>
-
-        <div id="luckContainer">
-            <label for="luck">Input your Luck:</label>
-            <input type="number" id="luck" placeholder="Enter your Luck" required>
-        </div>
-
-        <div id="advancedOptions" style="display: none;">
-            <p class="warning-text">If you want an accurate calculation, ensure that the inputted luck is your luck from the stats board.</p>
+    
+    <h1 class="page-title">Aura Chance Calculator</h1>
+    
+    <div class="layout-wrapper">
+        <div class="sidebar-container">
+            <h3>Luck Presets</h3>
+            <button class="luck-preset" data-luck="700000">Pump King's Blood (700,000x)</button>
+            <button class="luck-preset" data-luck="600000">Oblivion Potion (600,000x)</button>
+            <button class="luck-preset" data-luck="400000">Godlike Potion (400,000x)</button>
+            <button class="luck-preset" data-luck="150000">Heavenly Potion (150,000x)</button>
+            <button class="luck-preset" data-luck="50000">Potion of Bound (50,000x)</button>
             
-            <button id="toggleRollSpeed" onclick="toggleRollSpeed()" class="button-secondary">Toggle Roll Speed Options</button>
-            <div id="rollSpeedOptions" style="display: none;">
-                <label for="gauntletSpeed">What is your R Gauntlet?</label>
-                <select id="gauntletSpeed">
-                    <option value="0">None</option>     
-                    <option value="0.15">Lunar / Eclipse Device</option>
-                    <option value="0.2">Exo Gauntlet</option>
-                    <option value="0.3">Galactic Device / Windstorm Device / Subzero Device / Snow Rider</option>
-                    <option value="0.35">Volcanic Device / Exoflex Device / Hologrammer</option>
-                    <option value="0.4">Ragnaröker</option>
-                    <option value="0.5">Starshaper</option>
-                </select>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="speedPotion">
-                    <label for="speedPotion">Speed Potion?</label>
+            <div class="vip-selection">
+                <label>VIP?</label>
+                <div class="radio-group">
+                    <div class="radio-container">
+                        <input type="radio" id="vipNone" name="vipStatus" value="1" checked>
+                        <label for="vipNone">None</label>
+                    </div>
+                    <div class="radio-container">
+                        <input type="radio" id="vipRegular" name="vipStatus" value="1.2">
+                        <label for="vipRegular">VIP</label>
+                    </div>
+                    <div class="radio-container">
+                        <input type="radio" id="vipPlus" name="vipStatus" value="1.3">
+                        <label for="vipPlus">VIP and VIP+</label>
+                    </div>
                 </div>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="knowledgeOne">
-                    <label for="knowledgeOne">The Knowledge 1 or Chosen?</label>
-                </div>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="knowledgeTwo">
-                    <label for="knowledgeTwo">The Knowledge 2 or Godlike?</label>
-                </div>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="hwachae">
-                    <label for="hwachae">Hwachae?</label>
-                </div>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="bank">
-                    <label for="bank">Bank?</label>
-                </div>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="transcendant">
-                    <label for="transcendant">Transcendant or Warp Potion?</label>
-                </div>
-
-                <div class="checkbox-container">
-                    <input type="checkbox" id="santa">
-                    <label for="santa">Santa Claus Potion?</label>
-                </div>
-
-                <label for="hastePotion">Haste Potion?</label>
-                <select id="hastePotion">
-                    <option value="0">None</option>
-                    <option value="0.3">1</option>
-                    <option value="0.5">2</option>
-                    <option value="0.7">3</option>
-                </select>
-
-                <label for="elementSpeed">Resonance of Elements speed (the thingy on mountain):</label>
-                <input type="number" id="elementSpeed" placeholder="Enter Resonance of Elements Speed in %" required>
+            </div>
+            
+            <div class="checkbox-container">
+                <input type="checkbox" id="xyzBuff">
+                <label for="xyzBuff">XYZ buff (2x luck)?</label>
             </div>
         </div>
+        
+        <div class="container">
+            <div class="button-group">
+                <a href="../" class="back-button">Back</a>
+                <button id="modeToggle" onclick="toggleMode()" class="button-secondary">Switch to Advanced Mode</button>
+                <button id="musicToggle" onclick="toggleMusic()" class="button-music">Play Music</button>
+                
+            </div>
 
-        <button onclick="calculateChance()">Calculate</button>
+            
+
+            <div class="search-container">
+                <label for="auraInput">Search and Select Aura:</label>
+                <div style="position: relative;">
+                    <input type="text" id="auraInput" placeholder="Start typing to search auras..." autocomplete="on">
+                    <button id="resetSearch" onclick="resetSearch()">✕</button>
+                </div>
+                <select id="auraSelect" size="5">
+                </select>
+            </div>
+
+            <div id="luckContainer">
+                <label for="luck">Input your Luck:</label>
+                <input type="number" id="luck" placeholder="Enter your Luck" required>
+            </div>
+
+            <div id="advancedOptions" style="display: none;">
+                
+                <div class="advanced-button-group">
+                    <button id="toggleRollSpeed" onclick="toggleRollSpeed()" class="button-secondary">Toggle Roll Speed Options</button>
+                    <button id="simulateButton" onclick="simulateRolls()" class="button-secondary">Simulate Until You Get This Aura</button>
+                </div>
+                
+                <div id="rollSpeedOptions" style="display: none;">
+                    <label for="gauntletSpeed">What is your R Gauntlet?</label>
+                    <select id="gauntletSpeed">
+                        <option value="0">None</option>     
+                        <option value="0.15">Lunar / Eclipse Device (15%)</option>
+                        <option value="0.2">Exo Gauntlet (20%)</option>
+                        <option value="0.3">Galactic Device / Windstorm Device / Subzero Device / Snow Rider (30%)</option>
+                        <option value="0.35">Volcanic Device / Exoflex Device / Hologrammer (35%)</option>
+                        <option value="0.4">Ragnaröker (40%)</option>
+                        <option value="0.5">Starshaper (50%)</option>
+                        <option value="0.7">Neuralyzer (70%)</option>
+                    </select>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="speedPotion">
+                        <label for="speedPotion">Speed Potion (10%)?</label>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="bank">
+                        <label for="bank">Bank (7%)?</label>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="knowledgeOne">
+                        <label for="knowledgeOne">The Knowledge 1 or Chosen (30%)?</label>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="knowledgeTwo">
+                        <label for="knowledgeTwo">The Knowledge 2 or Godlike (40%)?</label>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="transcendant">
+                        <label for="transcendant">Transcendant or Warp Potion (1000%)?</label>
+                    </div>
+
+                    <label>Hwachae/Santa Potion:</label>
+                    <div class="radio-group">
+                        <div class="radio-container">
+                            <input type="radio" id="seasonalNone" name="seasonalPotion" value="0" checked>
+                            <label for="seasonalNone">None</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="hwachae" name="seasonalPotion" value="0.25">
+                            <label for="hwachae">Hwachae (25%)</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="santa" name="seasonalPotion" value="0.2">
+                            <label for="santa">Santa Claus Potion (20%)</label>
+                        </div>
+                    </div>
+
+                    <label>Haste Potion:</label>
+                    <div class="radio-group">
+                        <div class="radio-container">
+                            <input type="radio" id="hasteNone" name="hastePotion" value="0" checked>
+                            <label for="hasteNone">None</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="haste1" name="hastePotion" value="0.2">
+                            <label for="haste1">Haste 1 (20%)</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="haste2" name="hastePotion" value="0.25">
+                            <label for="haste2">Haste 2 (25%)</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="haste3" name="hastePotion" value="0.3">
+                            <label for="haste3">Haste 3 (30%)</label>
+                        </div>
+                    </div>
+
+                    <label>Rage/Diver Potion:</label>
+                    <div class="radio-group">
+                        <div class="radio-container">
+                            <input type="radio" id="rageNone" name="ragePotion" value="0" checked>
+                            <label for="rageNone">None</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="rage" name="ragePotion" value="0.35">
+                            <label for="rage">Rage Potion (35%)</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="diver" name="ragePotion" value="0.4">
+                            <label for="diver">Diver Potion (40%)</label>
+                        </div>
+                    </div>
+
+                    <label>Godly Potion:</label>
+                    <div class="radio-group">
+                        <div class="radio-container">
+                            <input type="radio" id="godlyNone" name="godlyPotion" value="0" checked>
+                            <label for="godlyNone">None</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="zeus" name="godlyPotion" value="0.3">
+                            <label for="zeus">Godly Potion (Zeus) (30%)</label>
+                        </div>
+                        <div class="radio-container">
+                            <input type="radio" id="poseidon" name="godlyPotion" value="0.75">
+                            <label for="poseidon">Godly Potion (Poseidon) (75%)</label>
+                        </div>
+                    </div>
+
+                    <label for="elementSpeed">Resonance of Elements speed (the thingy on mountain):</label>
+                    <input type="number" id="elementSpeed" placeholder="Enter Resonance of Elements Speed in %" required>
+                </div>
+            </div>
+
+            <button onclick="calculateChance()">Calculate</button>
+        </div>
     </div>
 
     <div id="resultModal" class="modal">
