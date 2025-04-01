@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { name: "Velocity", file: "Velocity.png", type: "image", rarity: "1 in 7,630,000" },
         { name: "Cosmos", file: "Cosmos.png", type: "image", rarity: "1 in 1,520,000" },
         { name: "Flushed : Troll", file: "Troll.png", type: "image", rarity: "2 in 1" },
-        { name: "Origin : Onion", file: "Onion.png", type: "image", rarity: "1 in ?"},
-        { name: "pukeko", file: "pukeko.png", type: "image", rarity: "1 in ?" },
+        { name: "Origin : Onion", file: "", type: "image", rarity: "1 in ?"},
+        { name: "pukeko", file: "", type: "image", rarity: "1 in ?" },
     ];
     
     const auraList = document.getElementById('aura-list');
