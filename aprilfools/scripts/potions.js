@@ -93,7 +93,9 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         { 
             name: "Gladiator Potion", 
-            files: [], 
+            files: [
+                "gladiator.png"
+            ], 
             type: "multi-image", 
             rarity: "Unknown" 
         }
