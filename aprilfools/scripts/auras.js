@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Auras data: name, file name, type (image or video), and rarity
     const auras = [
-        { name: "Pixelation", file: "Pixelation.mp4", type: "video", rarity: "1 in 1,073,741,824" },
+        { name: "Pixelation", file: "Pixelation.png", type: "image", rarity: "1 in 1,073,741,824" },
         { name: "Ruins : Withered", file: "Withered.png", type: "image", rarity: "1 in 800,000,000" },
         { name: "Glock : shieldofthesky", file: "Glockofthesky.png", type: "image", rarity: "1 in 170,000,000" },
         { name: "Helios", file: "Helios.png", type: "image", rarity: "1 in 9,000,000" },
