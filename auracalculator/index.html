@@ -21,7 +21,7 @@
             <h3>Luck Presets</h3>
             <button class="luck-preset" data-luck="700000">Pump King's Blood (700,000x)</button>
             <button class="luck-preset" data-luck="600000">Oblivion Potion (600,000x)</button>
-            <button class="luck-preset" data-luck="400000">Godlike Potion (400,000x)</button>
+            <button class="luck-preset" data-luck="350000">Godlike Potion (350,000x)</button>
             <button class="luck-preset" data-luck="150000">Heavenly Potion (150,000x)</button>
             <button class="luck-preset" data-luck="50000">Potion of Bound (50,000x)</button>
             
@@ -105,18 +105,24 @@
                     </div>
 
                     <div class="checkbox-container">
-                        <input type="checkbox" id="knowledgeOne">
-                        <label for="knowledgeOne">The Knowledge 1 or Chosen (30%)?</label>
-                    </div>
-
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="knowledgeTwo">
-                        <label for="knowledgeTwo">The Knowledge 2 or Godlike (40%)?</label>
-                    </div>
-
-                    <div class="checkbox-container">
                         <input type="checkbox" id="transcendant">
                         <label for="transcendant">Transcendant or Warp Potion (1000%)?</label>
+                    </div>
+
+                    <label>Strange Potions:</label>
+                    <div class="radio-group">
+                        <div class="radio-container">
+                        <input type="radio" id="knowledgeNone" name="knowledge" value="0" checked>
+                        <label for="knowledgeNone">None</label>
+                        </div>
+                        <div class="radio-container">
+                        <input type="radio" id="knowledgeOne" name="knowledge" value="0.3">
+                        <label for="knowledgeOne">The Knowledge 1 or Chosen (30%)</label>
+                        </div>
+                        <div class="radio-container">
+                        <input type="radio" id="knowledgeTwo" name="knowledge" value="0.4">
+                        <label for="knowledgeTwo">The Knowledge 2 or Godlike (40%)</label>
+                        </div>
                     </div>
 
                     <label>Hwachae/Santa Potion:</label>

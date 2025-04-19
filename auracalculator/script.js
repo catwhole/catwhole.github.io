@@ -11,13 +11,13 @@ const auras = [
     { name: "Gargantua - 430,000,000", chance: 430000000 },
     { name: "Abyssal Hunter - 400,000,000", chance: 400000000 },
     { name: "Atlas - 360,000,000", chance: 360000000 },
+    { name: "Jazz : Orchestra - 336,870,912", chance: 300000000 },
     { name: "Overture : History - 300,000,000", chance: 300000000 },
     { name: "Bloodlust - 300,000,000", chance: 300000000 },
     { name: "Archangel - 250,000,000", chance: 250000000 },
     { name: "Oppression - 220,000,000", chance: 220000000 },
     { name: "Impeached - 200,000,000", chance: 200000000 },
     { name: "Symphony - 175,000,000", chance: 175000000 },
-    { name: "Glock : shieldofthesky - 170,000,000", chance: 170000000 }, ////event
     { name: "Overture - 150,000,000", chance: 150000000 },
     { name: "Starscourge : Radiant - 100,000,000", chance: 100000000 },
     { name: "Chromatic : GENESIS - 99,999,999", chance: 99999999 },
@@ -31,6 +31,7 @@ const auras = [
     { name: "Exotic : Void - 29,999,999", chance: 29999999 },
     { name: "Aviator - 24,000,000", chance: 24000000 },
     { name: "Chromatic - 20,000,000", chance: 20000000 },
+    { name: "Blizzard - 19,720,000", chance: 19720000 },
     { name: "Arcane : Legacy - 15,000,000", chance: 15000000 },
     { name: "Sirius - 14,000,000", chance: 14000000 },
     { name: "Stormal : Hurricane - 13,500,000", chance: 13500000 },
@@ -39,7 +40,7 @@ const auras = [
     { name: "Starscourge - 10,000,000", chance: 10000000 },
     { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000 },
-    { name: "Origin : Onion - 8,000,000", chance: 8000000 }, ////event
+    { name: "Anubis - 8,500,000", chance: 8500000 },
     { name: "Velocity - 7,630,000", chance: 7630000 },
     { name: "HYPER-VOLT - 7,500,000", chance: 7500000 },
     { name: "Hades - 6,666,666", chance: 6666666 },
@@ -60,7 +61,6 @@ const auras = [
     { name: "Undefined - 1,111,000", chance: 1111000 },
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000 },
     { name: "Arcane - 1,000,000", chance: 1000000 },
-    { name: "Flushed : Troll - 2 in 1", chance: 1000000 }, ////event
     { name: "Kyawthuite - 850,000", chance: 850000 },
     { name: "Celestial - 350,000", chance: 350000 },
     { name: "Bounded - 200,000", chance: 200000 },
@@ -91,7 +91,6 @@ const auras = [
     { name: "Flushed - 6,900", chance: 6900 },
     { name: "Bleeding - 4,444", chance: 4444 },
     { name: "Sidereum - 4,096", chance: 4096 },
-    { name: "pukeko - 3,198", chance: 3198 }, ////event
     { name: "Player - 3,000", chance: 3000 },
     { name: "Fault - 3,000", chance: 3000 },
     { name: "Glacier - 2,304", chance: 2304 },
@@ -128,10 +127,12 @@ const nativeAuras = [
     { name: "[Native] Impeached - 40,000,000", chance: 40000000 },
     { name: "[Native] Sailor : Flying Dutchman - 20,000,000", chance: 20000000 },
     { name: "[Native] Starscourge : Radiant - 20,000,000", chance: 20000000 },
+    { name: "[Native] Blizzard - 6,573,333", chance: 6573333 },
     { name: "[Native] Twilight : Iridescent Memory - 6,000,000", chance: 6000000 },
     { name: "[Native] Stormal : Hurricane - 4,500,000", chance: 4500000 },
     { name: "[Native] Sailor - 3,000,000", chance: 3000000 },
     { name: "[Native] Sirius - 2,800,000", chance: 2800000 },
+    { name: "[Native] Anubis - 2,125,000", chance: 2125000 },
     { name: "[Native] Starscourge - 2,000,000", chance: 2000000 },
     { name: "[Native] Hades - 1,111,111", chance: 1111111 },
     { name: "[Native] Galaxy - 1,000,000", chance: 1000000 },
@@ -279,14 +280,14 @@ let godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:c
 // Get value from seasonal potion radio buttons
 let seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
 
+var knowledge = parseFloat(document.querySelector('input[name="knowledge"]:checked').value);
+
 // Update speed potion value from 0.25 to 0.1
 let speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
 let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
-let knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
-let knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
 let bank = document.getElementById("bank").checked ? 0.07 : 0;
 
-return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledgeOne + knowledgeTwo + seasonalPotion + bank + ragePotion + godlyPotion;
+return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledge + seasonalPotion + bank + ragePotion + godlyPotion;
 }
 
 function calculateTime(adjustedChance, speed) {

@@ -1,21 +1,17 @@
 function calculateGauntlets() {
-    // Get the input values
     var luck = parseFloat(document.getElementById("luck").value);
     var gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
     var elementSpeed = parseFloat(document.getElementById("elementSpeed").value);
     var vip = parseFloat(document.getElementById("vip").value);
 
-    // Check if inputs are valid
     if (isNaN(luck)) luck = 1;
     if (isNaN(elementSpeed)) elementSpeed = 0;
 
-    // Get values from radio buttons
     var hastePotion = parseFloat(document.querySelector('input[name="hastePotion"]:checked').value);
     var ragePotion = parseFloat(document.querySelector('input[name="ragePotion"]:checked').value);
     var godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:checked').value);
     var seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
 
-    // Get the values from checkboxes (adjusted speed potion from 0.25 to 0.1)
     var speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
     var transcendant = document.getElementById("transcendant").checked ? 10 : 0;
     var knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
@@ -23,7 +19,6 @@ function calculateGauntlets() {
     var bank = document.getElementById("bank").checked ? 0.07 : 0;
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
 
-    // True Roll Speed calculation for all gauntlets (adjustments can be applied later)
     var trsDecimal = gauntletSpeed / 100;
     var realElementSpeed = elementSpeed / 100;
     var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
@@ -47,10 +42,9 @@ function calculateGauntlets() {
     var finalShaderValue = alShader * trs;
 
     //Pole Light Core calculation 
-    var alPole = ((luck + (5 * xyz * vip)) * 4 + (luck + (5 * xyz * vip)) * 18)/(15 + ((((1)/(trs + 10)) * 5)/(((1)/(trs))))); 
+    var alPole = ((luck + (3 * xyz * vip)) * 6 + (luck + (3 * xyz * vip)) * 27)/(25 + ((((1)/(trs + 10)) * 5)/(((1)/(trs))))); 
     var finalPoleValue = alPole * trs;
 
-    // Compare the final gauntlet values and determine which is the best
     let bestGauntlet = "";
     let bestValue = Math.max(finalJackpotValue, finalGravValue, finalFleshValue, finalShaderValue, finalPoleValue);
 
@@ -112,19 +106,18 @@ function calculateDifference() {
     var ragePotion = parseFloat(document.querySelector('input[name="ragePotion"]:checked').value);
     var godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:checked').value);
     var seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
+    var knowledge = parseFloat(document.querySelector('input[name="knowledge"]:checked').value);
 
     // Get checkbox states with updated speed potion value (0.1)
     var speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
     var transcendant = document.getElementById("transcendant").checked ? 10 : 0;
-    var knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
-    var knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
     var bank = document.getElementById("bank").checked ? 0.07 : 0;
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
 
     // Calculate True Roll Speeds with new potions
     var trsDecimal = gauntletSpeed / 100;
     var realElementSpeed = elementSpeed / 100;
-    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
+    var trs = 1 + trsDecimal + speedPotion + knowledge + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
     var trsJackpot = trs + 0.07; // Jackpot has extra 0.07
 
     // Common constants
@@ -132,7 +125,7 @@ function calculateDifference() {
     
     // Calculate thresholds for each comparison
     // 1. Darkshader vs Pole Light Core
-    var dsVsPole = (110 * C * (trs + 10)) / (14 * trs + 50);
+    var dsVsPole = (33 * C * (trs + 10)) / (7 * trs + 40);
     
     // 2. Jackpot vs Gravitational
     var jackVsGrav =  ((-0.847) * C * trsJackpot) / ((1.1 * trsJackpot) - (1.5 * trs));
