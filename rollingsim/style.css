@@ -413,7 +413,6 @@ label {
     align-items: center;
     gap: 20px;
     overflow-y: visible;
-    margin-top: 80px; /* Add space below the fixed buttons */
     position: relative;
     z-index: 1;
     order: 1; /* Add default order */
