@@ -218,9 +218,8 @@ label {
 }
 
 .back-button, .play-sound {
-    position: fixed;
+    position: absolute;
     top: 20px;
-    z-index: 100;
     width: 120px;
     white-space: nowrap;
     overflow: hidden;
@@ -413,9 +412,6 @@ label {
     align-items: center;
     gap: 20px;
     overflow-y: visible;
-    margin-top: 80px; /* Add space below the fixed buttons */
-    position: relative;
-    z-index: 1;
 }
 
 .luck-sidebar {
@@ -505,7 +501,6 @@ label {
     }
     
     .main-content {
-        margin-top: 0; /* Remove extra margin on mobile since buttons are positioned differently */
         width: auto;
     }
 
@@ -527,13 +522,11 @@ label {
 
     .back-button {
         position: absolute;
-        top: -50px;
         left: 0;
     }
 
     .play-sound {
         position: absolute;
-        top: -50px;
         right: 0;
     }
 
