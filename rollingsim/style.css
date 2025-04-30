@@ -218,8 +218,9 @@ label {
 }
 
 .back-button, .play-sound {
-    position: absolute;
+    position: fixed;
     top: 20px;
+    z-index: 100;
     width: 120px;
     white-space: nowrap;
     overflow: hidden;
@@ -412,6 +413,10 @@ label {
     align-items: center;
     gap: 20px;
     overflow-y: visible;
+    margin-top: 80px; /* Add space below the fixed buttons */
+    position: relative;
+    z-index: 1;
+    order: 1; /* Add default order */
 }
 
 .luck-sidebar {
@@ -430,6 +435,7 @@ label {
     border: 1px solid rgba(212, 204, 255, 0.2);
     box-shadow: 0 4px 20px rgba(26, 24, 50, 0.8);
     padding: 20px;
+    order: 2; /* Add default order */
 }
 
 .luck-multipliers {
@@ -491,6 +497,7 @@ label {
         flex-direction: column;
         overflow-y: visible;
         padding: 10px;
+        display: flex; /* Ensure flex display is set */
     }
     
     .luck-sidebar {
@@ -498,10 +505,13 @@ label {
         width: auto;
         min-width: 0;
         margin: 10px;
+        order: 2; /* Keep luck sidebar second */
     }
     
     .main-content {
+        margin-top: 0; /* Remove extra margin on mobile since buttons are positioned differently */
         width: auto;
+        order: 1; /* Keep main content first */
     }
 
     button {
