@@ -1,26 +1,26 @@
 body {
-    font-family: 'Changa', sans-serif;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #434343;
-    color: #efefef;
+    background-color: #1a1832;
+    color: #f8f7ff;
     background-image: url('solsbg.jpg');
     background-size: cover;
-    background-blend-mode: soft-light;
     background-position-x: center;
     background-attachment: fixed;
+    background-blend-mode: multiply;
     overflow-y: scroll;
 }
 
 button {
-    color: #aaebe1;
+    color: #d4ccff;
     border: 3px solid transparent;
-    background: linear-gradient(#1b1b1b67, #434343) padding-box,
-                linear-gradient(to right, #a2c5c0, #78aaa281) border-box;
+    background: linear-gradient(#1a183267, #1a1832) padding-box,
+                linear-gradient(to right, #6b4fd1, #4b367c) border-box;
     border-radius: 8px;
     padding: 8px 16px;
     margin: 10px;
-    font-family: 'Changa', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     cursor: pointer;
     outline: none;
@@ -31,30 +31,32 @@ button {
 
 button:hover {
     transform: scale(1.02);
-    background: linear-gradient(#1b1b1b67, #434343) padding-box,
-                linear-gradient(to right, #ddf3ef, #929e9c) border-box;
-    box-shadow: 0 0 15px rgba(185, 197, 195, 0.3);
-    color: #efefef;
+    background: linear-gradient(#1a183267, #1a1832) padding-box,
+                linear-gradient(to right, #8e75f5, #6b4fd1) border-box;
+    box-shadow: 0 0 15px rgba(107, 79, 209, 0.3);
+    color: #f8f7ff;
 }
 
 .container, .roll-container, .result-container {
     align-items: center;
     display: flex;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(212, 204, 255, 0.2);
     flex-direction: column;
     width: 100%;
     max-width: 600px;
     margin: 20px auto;
     padding: 40px 20px;
-    background-color: rgba(255, 255, 255, 0.075);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+    background-color: rgba(26, 24, 50, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 20px rgba(26, 24, 50, 0.8);
 }
 
 .result-container {
     padding: 20px;
+    max-height: none;
+    width: 100%;
 }
 
 .roll-container {
@@ -62,24 +64,24 @@ button:hover {
 }
 
 h1 {
-    color: #aaebe1;
+    color: #d4ccff;
     margin: 4px auto;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 2px 4px rgba(26, 24, 50, 0.6);
     text-align: center;
     width: 100%;
 }
 
 h2 {
-    color: #aaebe1;
+    color: #d4ccff;
     margin: 4px auto;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 2px 4px rgba(26, 24, 50, 0.6);
     text-align: center;
     width: 100%;
 }
 
 p {
-    color: #fefefe;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    color: #f8f7ff;
+    text-shadow: 0 1px 3px rgba(26, 24, 50, 0.5);
     text-align: center;
     width: 100%;
 }
@@ -102,6 +104,34 @@ p {
     margin: 0 auto;
 }
 
+.progress-container {
+    width: 100%;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background: rgba(26, 24, 50, 0.4);
+    border: 2px solid #6b4fd1;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(to right, #6b4fd1, #8e75f5);
+    transition: width 0.3s ease;
+}
+
+.progress-text {
+    margin-top: 8px;
+    color: #f8f7ff;
+    font-size: 14px;
+}
+
 .inputs {
     display: flex;
     flex-direction: column;
@@ -111,14 +141,14 @@ p {
 }
 
 .input, .rolls-input, .luck-input {
-    font-family: 'Changa', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 16px;
-    color: #fff;
-    background-color: rgba(136, 136, 136, 0.274);
-    box-shadow:rgba(0, 0, 0, 0.4) 0 0 15px;
+    color: #f8f7ff;
+    background-color: rgba(26, 24, 50, 0.9);
+    box-shadow: 0 2px 8px rgba(26, 24, 50, 0.6);
     border-radius: 0.4vw;
-    border: 2px solid skyblue;
+    border: 2px solid #6b4fd1;
     outline: none;
     padding: 8px;
     transition: .4s;
@@ -126,28 +156,36 @@ p {
     margin: 5px auto;
 }
   
-.input:hover {
-    box-shadow: 0 0 5px rgba(135, 207, 235, 0.575);
+.input:hover, .rolls-input:hover, .luck-input:hover {
+    box-shadow: 0 2px 12px rgba(107, 79, 209, 0.2);
 }
 
 .input:focus, .rolls-input:focus, .luck-input:focus {
-    box-shadow: 0 0 5px 1px rgba(135, 207, 235);
+    box-shadow: 0 2px 12px rgba(107, 79, 209, 0.3);
 }
 
 .luck-input {
-    border: 2px solid rgb(88, 163, 92)
-} .luck-input:hover {
-    box-shadow: 0 0 5px rgba(88, 163, 92, 0.575);
-} .luck-input:focus {
-    box-shadow: 0 0 5px rgba(88, 163, 92);
+    border: 2px solid #6b4fd1;
+} 
+
+.luck-input:hover {
+    box-shadow: 0 2px 12px rgba(107, 79, 209, 0.2);
+} 
+
+.luck-input:focus {
+    box-shadow: 0 2px 12px rgba(107, 79, 209, 0.3);
 }
 
 .rolls-input {
-    border: 2px solid rgba(235, 220, 135);
-} .rolls-input:hover {
-    box-shadow: 0 0 5px rgba(235, 220, 135, 0.575);
-} .rolls-input:focus {
-    box-shadow: 0 0 5px rgba(235, 220, 135);
+    border: 2px solid #6b4fd1;
+} 
+
+.rolls-input:hover {
+    box-shadow: 0 2px 12px rgba(107, 79, 209, 0.2);
+} 
+
+.rolls-input:focus {
+    box-shadow: 0 2px 12px rgba(107, 79, 209, 0.3);
 }
 
 input::-webkit-outer-spin-button,
@@ -157,13 +195,13 @@ input::-webkit-inner-spin-button {
 }
 
 input::placeholder {
-    color: #e2e3e48e;
+    color: #d4ccff80;
 }
 
 label {
-    color: #fefefe;
+    color: #f8f7ff;
     margin: 4px auto;
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 3px rgba(26, 24, 50, 0.5);
     text-align: center;
     display: block;
     width: 100%;
@@ -181,36 +219,33 @@ label {
     border-radius: 8px;
     padding: 8px 16px;
     margin: 10px;
-    font-family: 'Changa', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     cursor: pointer;
     outline: none;
     transition: all 0.3s ease, border 0.3s ease;
     text-align: center;
-    box-shadow: 0 0 15px rgba(27, 27, 27, 0.164);
+    box-shadow: 0 2px 12px rgba(26, 24, 50, 0.4);
+    background: linear-gradient(#1a183267, #1a1832) padding-box,
+                linear-gradient(to right, #6b4fd1, #4b367c) border-box;
+    color: #d4ccff;
 }
 
 .back-button {
     left: 20px;
-    background: linear-gradient(#1b1b1b67, #434343) padding-box,
-                linear-gradient(to right, #af86d1, #cc92e65b) border-box;
-    color: #e3caf7;
 }
 
 .play-sound {
     right: 20px;
-    background: linear-gradient(#1b1b1b67, #434343) padding-box,
-                linear-gradient(to right, #c47c7c, #d38c9865) border-box;
-    color:#ebc1c1;
 }
 
 .back-button:hover, .play-sound:hover {
     transform: scale(1.02) rotate(1deg);
     translate: 0 -3px;
-    background: linear-gradient(#1b1b1b67, #434343) padding-box,
-                linear-gradient(to right, #ddf3ef, #929e9c) border-box;
-    box-shadow: 0 0 15px rgba(164, 165, 165, 0.3);
-    color: #efefef;
+    background: linear-gradient(#1a183267, #1a1832) padding-box,
+                linear-gradient(to right, #8e75f5, #6b4fd1) border-box;
+    box-shadow: 0 4px 16px rgba(107, 79, 209, 0.2);
+    color: #f8f7ff;
 }
 
 .play-sound:hover {
@@ -222,12 +257,12 @@ label {
     top: 1px;
     width: 27px;
     height: 27px;
-    border: 1px solid #475569;
+    border: 1px solid #6b4fd1;
     border-radius: 10px;
     transition: background 0.2s ease;
     cursor: pointer;
     display: block;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(26, 24, 50, 0.4);
   }
   
   .cbx:after {
@@ -247,7 +282,7 @@ label {
   
   #cbx:checked ~ .cbx {
     border-color: transparent;
-    background: #48b0ec;
+    background: #6b4fd1;
     animation: jelly 0.4s ease;
   }
   
@@ -325,4 +360,160 @@ label {
     z-index: 999;
     display: none;
     cursor: default;
+}
+
+.skip-button {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #f8f7ff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    z-index: 1001;
+    cursor: pointer;
+    display: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s;
+}
+
+.skip-button:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.page-layout {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    overflow-y: visible;
+}
+
+.luck-sidebar {
+    position: sticky;
+    align-self: flex-start;
+    top: 20px;
+    width: 300px;
+    min-width: 300px;
+    height: fit-content;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    background-color: rgba(26, 24, 50, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(212, 204, 255, 0.2);
+    box-shadow: 0 4px 20px rgba(26, 24, 50, 0.8);
+    padding: 20px;
+}
+
+.luck-multipliers {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.luck-presets {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.luck-presets button {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+.styled-checkbox {
+    position: relative;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    background-color: rgba(26, 24, 50, 0.9);
+    border: 2px solid #6b4fd1;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 3px;
+}
+
+.styled-checkbox:checked {
+    background-color: #6b4fd1;
+    animation: jelly 0.4s ease;
+}
+
+.styled-checkbox:checked::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+}
+
+@media (max-width: 768px) {
+    .page-layout {
+        flex-direction: column;
+        overflow-y: visible;
+    }
+    
+    .luck-sidebar {
+        position: static;
+        width: 100%;
+        margin-bottom: 20px;
+        max-height: none;
+    }
+    
+    .main-content {
+        width: 100%;
+    }
+}
+
+.rarity-basic { color: #d3d3d3; text-shadow: 1px 1px 2px #000; }
+.rarity-epic { color: #754c73; text-shadow: 1px 1px 2px #000; }
+.rarity-unique { color: #976627; text-shadow: 1px 1px 2px #000; }
+.rarity-legendary { color: #fff130; text-shadow: 1px 1px 2px #000; }
+.rarity-mythic { color: #be3a9d; text-shadow: 1px 1px 2px #000; }
+.rarity-exalted { color: #0f467e; text-shadow: 1px 1px 2px #000; }
+.rarity-glorious { color: #790707; text-shadow: 1px 1px 2px #000; }
+.rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
+.rarity-challenged { color: #000000; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
+
+.version-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 15px;
+}
+
+.version, .credits {
+    color: #d4ccff80;
+    font-size: 0.8em;
+    text-align: center;
 }

@@ -42,7 +42,7 @@ function calculateGauntlets() {
     var finalShaderValue = alShader * trs;
 
     //Pole Light Core calculation 
-    var alPole = ((luck + (3 * xyz * vip)) * 6 + (luck + (3 * xyz * vip)) * 27)/(25 + ((((1)/(trs + 10)) * 5)/(((1)/(trs))))); 
+    var alPole = ((luck + (5 * xyz * vip)) * 6 + (luck + (5 * xyz * vip)) * 27)/(25 + ((((1)/(trs + 10)) * 5)/(((1)/(trs))))); 
     var finalPoleValue = alPole * trs;
 
     let bestGauntlet = "";
@@ -125,7 +125,7 @@ function calculateDifference() {
     
     // Calculate thresholds for each comparison
     // 1. Darkshader vs Pole Light Core
-    var dsVsPole = (33 * C * (trs + 10)) / (7 * trs + 40);
+    var dsVsPole = (55 * C * (trs + 10)) / (7 * trs + 40);
     
     // 2. Jackpot vs Gravitational
     var jackVsGrav =  ((-0.847) * C * trsJackpot) / ((1.1 * trsJackpot) - (1.5 * trs));
