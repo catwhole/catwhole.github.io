@@ -278,7 +278,7 @@ function roll() {
             let resultEntries = [];
             for (let aura of auras) {
                 if (aura.wonCount > 0) {
-                    let rarityClass = getRarityClass(aura.chance);
+                    let rarityClass = getRarityClass(aura); // Pass the full aura object
                     if (btAuras[aura.name]) {
                         let btName = aura.name.replace(
                             /-\s*[\d,]+/,

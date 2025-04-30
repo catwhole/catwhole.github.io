@@ -55,12 +55,10 @@ function toggleSound() {
         playSound(document.getElementById('clickSound'));
         bgMusic.muted = false;
         bgMusic.play();
-        soundToggle.textContent = 'Sounds Off';
     } else {
         bgMusic.muted = true;
         bgMusic.pause();
         bgMusic.currentTime = 0;
-        soundToggle.textContent = 'Sounds On';
     }
 }
 
@@ -223,9 +221,11 @@ function playAuraVideo(videoId) {
     };
 }
 
-function getRarityClass(chance) {
-    const aura = auras.find(a => a.chance === chance);
+function getRarityClass(aura) {
+    // Special case for Fault
+    if (aura && aura.name === "Fault") return 'rarity-challenged';
     if (aura && aura.exclusiveTo) return 'rarity-challenged';
+    const chance = aura.chance;
     if (chance >= 1000000000) return 'rarity-transcendent';
     if (chance >= 99999999) return 'rarity-glorious';
     if (chance >= 10000000) return 'rarity-exalted';
