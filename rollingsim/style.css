@@ -480,17 +480,61 @@ label {
     .page-layout {
         flex-direction: column;
         overflow-y: visible;
+        padding: 10px;
     }
     
     .luck-sidebar {
         position: static;
-        width: 100%;
-        margin-bottom: 20px;
-        max-height: none;
+        width: auto;
+        min-width: 0;
+        margin: 10px;
     }
     
     .main-content {
+        width: auto;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+        min-width: 100px;
+    }
+
+    .back-button, .play-sound {
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: auto;
+        margin: 5px auto;
+    }
+
+    .container, .roll-container, .result-container {
+        padding: 20px 10px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .input, .rolls-input, .luck-input {
+        width: 80%;
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .aura-video {
         width: 100%;
+    }
+
+    .luck-presets button {
+        padding: 12px 8px;
+        font-size: 14px;
     }
 }
 

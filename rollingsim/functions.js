@@ -27,7 +27,10 @@ let videoPlaying = false;
 
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-        || (window.matchMedia("(max-width: 768px)").matches);
+        || (window.matchMedia("(max-width: 768px)").matches)
+        || ('ontouchstart' in window)
+        || (navigator.maxTouchPoints > 0)
+        || (navigator.msMaxTouchPoints > 0);
 }
 
 function playSound(audioElement) {
@@ -132,6 +135,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function playAuraVideo(videoId) {
     if (isMobileDevice()) {
+        const bgMusic = document.getElementById('bgMusic');
+        if (bgMusic && !bgMusic.paused) {
+            bgMusic.pause();
+            setTimeout(() => {
+                if (soundEnabled) bgMusic.play();
+            }, 500);
+        }
         return;
     }
 
