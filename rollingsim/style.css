@@ -37,6 +37,16 @@ button:hover {
     color: #f8f7ff;
 }
 
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+button:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
 .container, .roll-container, .result-container {
     align-items: center;
     display: flex;
@@ -501,12 +511,25 @@ label {
     }
 
     .back-button, .play-sound {
-        position: relative;
-        top: 0;
+        position: static;
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .top {
+        margin-top: 60px;  /* Add space for buttons */
+    }
+
+    .back-button {
+        position: absolute;
+        top: -50px;
         left: 0;
+    }
+
+    .play-sound {
+        position: absolute;
+        top: -50px;
         right: 0;
-        width: auto;
-        margin: 5px auto;
     }
 
     .container, .roll-container, .result-container {
@@ -560,4 +583,12 @@ label {
     color: #d4ccff80;
     font-size: 0.8em;
     text-align: center;
+}
+
+.top {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }

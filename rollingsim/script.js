@@ -1,5 +1,6 @@
 let results = document.getElementById('result-text');
 let luck = document.getElementById('luck');
+let isRolling = false;
 
 const auras = [
     { name: "Luminosity - 1,200,000,000", chance: 1200000000, wonCount: 0, cutscene: "lumi" },
@@ -126,6 +127,13 @@ const auras = [
 ];
 
 function roll() {
+    if (isRolling) return;
+    
+    isRolling = true;
+    const rollButton = document.querySelector('.roll-button');
+    rollButton.disabled = true;
+    rollButton.style.opacity = '0.5';
+    
     playSound(document.getElementById('rollSound'));
     if (isNaN(parseInt(document.getElementById('rolls').value))) {
         document.getElementById('rolls').value = 1;
@@ -226,6 +234,11 @@ function roll() {
         } else {
             // Hide progress bar
             progressContainer.style.display = 'none';
+            
+            // Enable roll button
+            rollButton.disabled = false;
+            rollButton.style.opacity = '1';
+            isRolling = false;
             
             const endTime = performance.now();
             const executionTime = ((endTime - startTime) / 1000).toFixed(0);
