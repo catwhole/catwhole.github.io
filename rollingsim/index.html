@@ -57,32 +57,49 @@
                     <a href="../" class="back-button">Back</a>
                     <h1>Rolling Simulator</h1>
                     <div class="version-info">
-                        <small class="version">v.1.0.4</small>
+                        <small class="version">v.1.0.5</small>
                         <small class="credits">made by @catwhore</small>
                     </div>
                     <button class="play-sound" id="soundToggle" onclick="toggleSound()">Sound</button>
                 </div>
                 <div class="inputs">
-                    <label for="luck-input">Luck</label>
-                    <input class="luck-input" type="number" id="luck" placeholder="Luck" min="1" required>
-                    <label for="rolls-input">Amount of Rolls:</label>
-                    <input class="rolls-input" type="number" id="rolls" min="1" max="100000000" placeholder="Rolls" required>
-                    <label for="biome-select">Biome:</label>
-                    <select id="biome-select" class="input" style="width:160px;">
-                        <option value="normal">Normal</option>
-                        <option value="day">Day</option>
-                        <option value="night">Night</option>
-                        <option value="rainy">Rainy</option>
-                        <option value="windy">Windy</option>
-                        <option value="snowy">Snowy</option>
-                        <option value="sandstorm">Sandstorm</option>
-                        <option value="hell">Hell</option>
-                        <option value="starfall">Starfall</option>
-                        <option value="corruption">Corruption</option>
-                        <option value="null">NULL</option>
-                        <option value="dreamspace">Dreamspace</option>
-                        <option value="glitch">Glitch</option>
-                    </select>
+                    <div class="input-with-button">
+                        <label for="luck-input">Luck:</label>
+                        <div class="input-group">
+                            <input class="luck-input" type="number" id="luck" placeholder="Luck" min="1" required>
+                            <button class="input-button" onclick="resetLuck()">Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-with-button">
+                        <label for="rolls-input">Amount of Rolls:</label>
+                        <div class="input-group">
+                            <input class="rolls-input" type="number" id="rolls" min="1" max="100000000" placeholder="Rolls" required>
+                            <button class="input-button" onclick="resetRolls()">Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="input-with-button">
+                        <label for="biome-select">Biome:</label>
+                        <div class="input-group">
+                            <select id="biome-select" class="input">
+                                <option value="normal">Normal</option>
+                                <option value="day">Day</option>
+                                <option value="night">Night</option>
+                                <option value="rainy">Rainy</option>
+                                <option value="windy">Windy</option>
+                                <option value="snowy">Snowy</option>
+                                <option value="sandstorm">Sandstorm</option>
+                                <option value="hell">Hell</option>
+                                <option value="starfall">Starfall</option>
+                                <option value="corruption">Corruption</option>
+                                <option value="null">NULL</option>
+                                <option value="dreamspace">Dreamspace</option>
+                                <option value="glitch">Glitch</option>
+                            </select>
+                            <button class="input-button" onclick="setGlitch()">Set Glitch</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="roll-container">

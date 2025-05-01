@@ -98,6 +98,22 @@ function updateLuckValue() {
     luckInput.value = currentLuck;
 }
 
+function resetLuck() {
+    document.getElementById('luck').value = 1;
+    playSound(document.getElementById('clickSound'));
+    updateLuckValue();
+}
+
+function resetRolls() {
+    document.getElementById('rolls').value = 1;
+    playSound(document.getElementById('clickSound'));
+}
+
+function setGlitch() {
+    document.getElementById('biome-select').value = 'glitch';
+    playSound(document.getElementById('clickSound'));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('button');
     const inputs = document.querySelectorAll('input');

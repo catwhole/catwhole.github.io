@@ -89,6 +89,7 @@ const auras = [
     { name: "Rage : Heated - 12,800", chance: 12800, wonCount: 0 },
     { name: "Corrosive - 12,000", chance: 12000, wonCount: 0, breakthrough: { corruption: 5 } },
     { name: "Undead - 12,000", chance: 12000, wonCount: 0, breakthrough: { hell: 6 } },
+    { name: "★★★ - 10,000", chance: 10000, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
     { name: "Lost Soul - 9,200", chance: 9200, wonCount: 0 },
     { name: "Quartz - 8,192", chance: 8192, wonCount: 0 },
     { name: "Hazard - 7,000", chance: 7000, wonCount: 0, breakthrough: { corruption: 5 } },
@@ -103,6 +104,7 @@ const auras = [
     { name: "Glock - 1,700", chance: 1700, wonCount: 0 },
     { name: "Precious - 1,024", chance: 1024, wonCount: 0 },
     { name: "Diaboli - 1,004", chance: 1004, wonCount: 0 },
+    { name: "★★ - 1,000", chance: 1000, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
     { name: "Wind - 900", chance: 900, wonCount: 0, breakthrough: { windy: 3 } },
     { name: "Aquamarine - 900", chance: 900, wonCount: 0 },
     { name: "Sapphire - 800", chance: 800, wonCount: 0 },
@@ -114,15 +116,13 @@ const auras = [
     { name: "Ruby - 350", chance: 350, wonCount: 0 },
     { name: "Topaz - 150", chance: 150, wonCount: 0 },
     { name: "Rage - 128", chance: 128, wonCount: 0 },
+    { name: "★ - 100", chance: 100, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
     { name: "Crystallized - 64", chance: 64, wonCount: 0 },
     { name: "Divinus - 32", chance: 32, wonCount: 0 },
     { name: "Rare - 16", chance: 16, wonCount: 0 },
     { name: "Natural - 8", chance: 8, wonCount: 0 },
     { name: "Good - 5", chance: 5, wonCount: 0 },
     { name: "Uncommon - 4", chance: 4, wonCount: 0 },
-    { name: "★★★ - 10,000", chance: 10000, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
-    { name: "★★ - 1,000", chance: 1000, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
-    { name: "★ - 100", chance: 100, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
     { name: "Common - 2", chance: 1, wonCount: 0 }
 ];
 
@@ -162,7 +162,7 @@ function roll() {
     const progressContainer = document.querySelector('.progress-container');
     const progressFill = document.querySelector('.progress-fill');
     const progressText = document.querySelector('.progress-text');
-    progressContainer.style.display = 'block';
+    progressContainer.style.display = total >= 100000 ? 'block' : 'none';
     progressFill.style.width = '0%';
     progressText.textContent = '0%';
 
@@ -223,10 +223,13 @@ function roll() {
         // Update progress
         currentRoll = chunkEnd;
         const progress = (currentRoll / total) * 100;
-        requestAnimationFrame(() => {
-            progressFill.style.width = `${progress}%`;
-            progressText.textContent = `${Math.floor(progress)}%`;
-        });
+        // Only update progress UI if we're showing it
+        if (total >= 100000) {
+            requestAnimationFrame(() => {
+                progressFill.style.width = `${progress}%`;
+                progressText.textContent = `${Math.floor(progress)}%`;
+            });
+        }
 
         // Continue or finish
         if (currentRoll < total) {
@@ -273,7 +276,8 @@ function roll() {
 
             let resultText = `
             Execution time: ${executionTime} seconds. <br> 
-            Rolls: ${rolls.toLocaleString()}<br><br>
+            Rolls: ${rolls.toLocaleString()}<br>
+            Luck: ${parseFloat(luck.value).toLocaleString()}<br><br>
             `;
             let resultEntries = [];
             for (let aura of auras) {
