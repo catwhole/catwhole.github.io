@@ -41,7 +41,7 @@ const auras = [
     { name: "Glitch - 12,210,110", chance: 12210110 },
     { name: "Sailor - 12,000,000", chance: 12000000 },
     { name: "Starscourge - 10,000,000", chance: 10000000 },
-    { name: "Harnessed - 9,740,000", chance: 9740000 },
+    { name: "Harnessed - 8,500,000", chance: 85000000 },
     { name: "Stargazer - 9,200,000", chance: 9200000 },
     { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000 },
