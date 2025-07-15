@@ -1,18 +1,24 @@
 const auras = [
     { name: "Luminosity - 1,200,000,000", chance: 1200000000 },
     { name: "Pixelation - 1,073,741,824", chance: 1073741824 },
+    { name: "Dreamscape - 850,000,000", chance: 850000000 },
+    { name: "Aegis : Watergun - 825,000,000", chance: 825000000 },
     { name: "Aegis - 825,000,000", chance: 825000000 },
     { name: "Ruins : Withered - 800,000,000", chance: 800000000 },
     { name: "Sovereign - 750,000,000", chance: 750000000 },
+    { name: "PROLOGUE - 666,616,111", chance: 666616111 },
     { name: "Matrix : Reality - 601,020,102", chance: 601020102 },
+    { name: "Elude - 555,555,555", chance: 555555555 },
     { name: "Matrix : Overdrive - 503,000,000", chance: 503000000 },
     { name: "Ruins - 500,000,000", chance: 500000000 },
     { name: "Kyawthite : Remembrance - 450,000,000", chance: 450000000 },
+    { name: "unknown - 444,444,444", chance: 444444444 },
     { name: "Apostolos - 444,000,000", chance: 444000000 },
     { name: "Gargantua - 430,000,000", chance: 430000000 },
     { name: "Abyssal Hunter - 400,000,000", chance: 400000000 },
     { name: "Atlas - 360,000,000", chance: 360000000 },
     { name: "Jazz : Orchestra - 336,870,912", chance: 300000000 },
+    { name: "Manta - 300,000,000", chance: 300000000 },
     { name: "Overture : History - 300,000,000", chance: 300000000 },
     { name: "Bloodlust - 300,000,000", chance: 300000000 },
     { name: "Astral : Legendarium - 267,200,000", chance: 267200000 },
@@ -23,11 +29,15 @@ const auras = [
     { name: "Overture - 150,000,000", chance: 150000000 },
     { name: "Starscourge : Radiant - 100,000,000", chance: 100000000 },
     { name: "Chromatic : GENESIS - 99,999,999", chance: 99999999 },
+    { name: "Carriage - 80,000,000", chance: 80000000 },
     { name: "Sailor : Flying Dutchman - 80,000,000", chance: 80000000 },
+    { name: "SENTINEL - 60,000,000", chance: 60000000 },
     { name: "Twilight : Iridescent Memory - 60,000,000", chance: 60000000 },
     { name: "Matrix - 50,000,000", chance: 50000000 },
+    { name: "Runic - 50,000,000", chance: 50000000 },
     { name: "Exotic : APEX - 49,999,500", chance: 49999500 },
     { name: "Overseer - 45,000,000", chance: 45000000 },
+    { name: "{Juxtaposition} - 40,440,400", chance: 40440400 },
     { name: "Virtual : Fatal Error - 40,413,000", chance: 40413000 },
     { name: "Ethereal - 35,000,000", chance: 35000000 },
     { name: "Arcane : Dark - 30,000,000", chance: 30000000 },
@@ -51,6 +61,7 @@ const auras = [
     { name: "Hades - 6,666,666", chance: 6666666 },
     { name: "Origin - 6,500,000", chance: 6500000 },
     { name: "Twilight - 6,000,000", chance: 6000000 },
+    { name: "Anima - 5,730,000", chance: 5730000 },
     { name: "Galaxy - 5,000,000", chance: 5000000 },
     { name: "Lunar : Full Moon - 5,000,000", chance: 5000000 },
     { name: "Solar : Solstice - 5,000,000", chance: 5000000 },
@@ -67,6 +78,8 @@ const auras = [
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000 },
     { name: "Arcane - 1,000,000", chance: 1000000 },
     { name: "Kyawthuite - 850,000", chance: 850000 },
+    { name: "Warlock - 666,000", chance: 666000 },
+    { name: "Raven - 500,000", chance: 500000 },
     { name: "Celestial - 350,000", chance: 350000 },
     { name: "Bounded - 200,000", chance: 200000 },
     { name: "Aether - 180,000", chance: 180000 },
@@ -85,12 +98,15 @@ const auras = [
     { name: "Starlight - 50,000", chance: 50000 },
     { name: "Star Rider - 50,000", chance: 50000 },
     { name: "Aquatic - 40,000", chance: 40000 },
+    { name: "Watt - 32,768", chance: 32768 },
     { name: "Powered - 16,384", chance: 16384 },
     { name: "LEAK - 14,000", chance: 14000 },
     { name: "Rage : Heated - 12,800", chance: 12800 },
     { name: "Corrosive - 12,000", chance: 12000 },
     { name: "Undead - 12,000", chance: 12000 },
+    { name: "★★★ - 10,000", chance: 10000 },
     { name: "Lost Soul - 9,200", chance: 9200 },
+    { name: "Honey - 8,335", chance: 8335 },
     { name: "Quartz - 8,192", chance: 8192 },
     { name: "Hazard - 7,000", chance: 7000 },
     { name: "Flushed - 6,900", chance: 6900 },
@@ -104,6 +120,7 @@ const auras = [
     { name: "Glock - 1,700", chance: 1700 },
     { name: "Precious - 1,024", chance: 1024 },
     { name: "Diaboli - 1,004", chance: 1004 },
+    { name: "★★ - 1,000", chance: 1000 },
     { name: "Wind - 900", chance: 900 },
     { name: "Aquamarine - 900", chance: 900 },
     { name: "Sapphire - 800", chance: 800 },
@@ -115,16 +132,20 @@ const auras = [
     { name: "Ruby - 350", chance: 350 },
     { name: "Topaz - 150", chance: 150 },
     { name: "Rage - 128", chance: 128 },
+    { name: "★ - 100", chance: 100 },
     { name: "Crystallized - 64", chance: 64 },
     { name: "Divinus - 32", chance: 32 },
     { name: "Rare - 16", chance: 16 },
     { name: "Natural - 8", chance: 8 },
     { name: "Good - 5", chance: 5 },
     { name: "Uncommon - 4", chance: 4 },
-    { name: "Common - 2", chance: 2 }
+    { name: "Common - 2", chance: 2 },
+    { name: "Nothing - 1", chance: 1 }
 ];
 
 const nativeAuras = [
+    { name: "[Native] Aegis : Watergun - 412,500,000", chance: 412500000 },
+    { name: "[Native] Manta - 150,000,000", chance: 150000000 },
     { name: "[Native] Abyssal Hunter - 100,000,000", chance: 100000000 },
     { name: "[Native] Atlas - 90,000,000", chance: 90000000 },
     { name: "[Native] Gargantua - 86,000,000", chance: 86000000 },
@@ -294,7 +315,13 @@ let speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
 let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
 let bank = document.getElementById("bank").checked ? 0.07 : 0;
 
-return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledge + seasonalPotion + bank + ragePotion + godlyPotion;
+// Add Forbidden potions
+let forbidden1 = document.getElementById("forbidden1").checked ? 0.10 : 0;
+let forbidden2 = document.getElementById("forbidden2").checked ? 0.25 : 0;
+let forbidden3 = document.getElementById("forbidden3").checked ? 0.75 : 0;
+
+return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledge + seasonalPotion + bank + ragePotion + godlyPotion
+    + forbidden1 + forbidden2 + forbidden3;
 }
 
 function calculateTime(adjustedChance, speed) {
@@ -359,6 +386,9 @@ function calculateChance() {
         const timeToGetAura = calculateTime(adjustedChance, speed);
         resultHTML += `
             <div class="result-line">
+                <span class="highlight">Your Speed:</span> ${speed.toFixed(2)}x
+            </div>
+            <div class="result-line">
                 <span class="highlight">Average Time to Get Aura:</span> ${timeToGetAura}
             </div>`;
     }
@@ -385,6 +415,9 @@ function calculateChance() {
         if (advancedOptions.style.display === 'block') {
             const nativeTimeToGetAura = calculateTime(nativeAdjustedChance, speed);
             resultHTML += `
+            <div class="result-line">
+                <span class="highlight">Your Speed:</span> ${speed.toFixed(2)}x
+            </div>
             <div class="result-line">
                 <span class="highlight">Average Time to Get Aura:</span> ${nativeTimeToGetAura}
             </div>`;
@@ -570,14 +603,15 @@ function updateLuckValue(newBaseValue = null) {
     // Get selected radio button value
     const vipMultiplier = parseFloat(document.querySelector('input[name="vipStatus"]:checked').value);
     const xyzMultiplier = document.getElementById('xyzBuff').checked ? 2 : 1;
-    
+    const davesHopeMultiplier = parseFloat(document.getElementById('davesHopeSelect')?.value || 1);
+
     // Update base value if provided
     if (newBaseValue !== null) {
         baseLuckValue = newBaseValue;
     }
     
     // Calculate final luck value with multipliers
-    const finalValue = Math.round(baseLuckValue * vipMultiplier * xyzMultiplier);
+    const finalValue = Math.round(baseLuckValue * vipMultiplier * xyzMultiplier * davesHopeMultiplier);
     
     // Update input field
     luckInput.value = finalValue;
@@ -590,6 +624,7 @@ function updateLuckValue(newBaseValue = null) {
 function resetMultipliers() {
     document.getElementById('vipNone').checked = true;
     document.getElementById('xyzBuff').checked = false;
+    document.getElementById('davesHopeSelect').value = "1";
 }
 
 // Add event listeners when DOM is loaded
@@ -608,6 +643,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const luckValue = parseInt(this.getAttribute('data-luck'));
             updateLuckValue(luckValue);
         });
+    });
+
+    // Dave's Hope dropdown event
+    document.getElementById('davesHopeSelect').addEventListener('change', function() {
+        updateLuckValue();
     });
     
     // Add event listeners for multipliers
@@ -644,4 +684,80 @@ document.addEventListener('DOMContentLoaded', function() {
     bgMusic.play().catch(function(error) {
         console.log("Audio play failed:", error);
     });
+});
+
+function updateLimboState() {
+    const forbidden1 = document.getElementById('forbidden1').checked;
+    const forbidden2 = document.getElementById('forbidden2').checked;
+    const forbidden3 = document.getElementById('forbidden3').checked;
+    const anyLimbo = forbidden1 || forbidden2 || forbidden3;
+
+    const speedBuffs = document.getElementById('speed-buffs');
+    if (speedBuffs) {
+        if (anyLimbo) {
+            // Hide the speed buffs section
+            speedBuffs.style.display = 'none';
+            
+            // Disable and reset all speed buff elements
+            const speedPotion = document.getElementById('speedPotion');
+            const bank = document.getElementById('bank');
+            const transcendant = document.getElementById('transcendant');
+            const elementSpeed = document.getElementById('elementSpeed');
+            
+            if (speedPotion) { speedPotion.checked = false; speedPotion.disabled = true; }
+            if (bank) { bank.checked = false; bank.disabled = true; }
+            if (transcendant) { transcendant.checked = false; transcendant.disabled = true; }
+            if (elementSpeed) { elementSpeed.value = ''; elementSpeed.disabled = true; }
+
+            // Reset and disable all radio groups
+            const radioGroups = ['knowledge', 'seasonalPotion', 'hastePotion', 'ragePotion', 'godlyPotion'];
+            radioGroups.forEach(groupName => {
+                const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+                radios.forEach(radio => {
+                    radio.disabled = true;
+                    // Check the "None" option for each group
+                    if (radio.id === `${groupName}None` || radio.value === '0') {
+                        radio.checked = true;
+                    } else {
+                        radio.checked = false;
+                    }
+                });
+            });
+        } else {
+            // Show the speed buffs section
+            speedBuffs.style.display = 'block';
+            
+            // Re-enable all speed buff elements
+            const speedPotion = document.getElementById('speedPotion');
+            const bank = document.getElementById('bank');
+            const transcendant = document.getElementById('transcendant');
+            const elementSpeed = document.getElementById('elementSpeed');
+            
+            if (speedPotion) speedPotion.disabled = false;
+            if (bank) bank.disabled = false;
+            if (transcendant) transcendant.disabled = false;
+            if (elementSpeed) elementSpeed.disabled = false;
+
+            // Re-enable all radio groups
+            const radioGroups = ['knowledge', 'seasonalPotion', 'hastePotion', 'ragePotion', 'godlyPotion'];
+            radioGroups.forEach(groupName => {
+                const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+                radios.forEach(radio => {
+                    radio.disabled = false;
+                });
+            });
+        }
+    }
+}
+
+// Add event listeners for Limbo checkboxes after DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+    // ...existing code...
+
+    // Limbo (Forbidden) logic
+    ['forbidden1', 'forbidden2', 'forbidden3'].forEach(id => {
+        document.getElementById(id).addEventListener('change', updateLimboState);
+    });
+    // Initialize state on load
+    updateLimboState();
 });

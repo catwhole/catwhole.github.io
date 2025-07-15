@@ -213,6 +213,7 @@ p {
     justify-content: center;
     width: 100%;
     max-width: 400px;
+    margin: 5px;
 }
 
 .input-button {
@@ -231,6 +232,7 @@ p {
     .input-group {
         flex-direction: column;
         gap: 5px;
+        margin: 5px;
     }
     
     .input-button {
@@ -479,7 +481,56 @@ label {
 .luck-multipliers {
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin-bottom: 20px;
+    width: 100%;
+}
+
+#dave-luck-container,
+#xyz-luck-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 8px 0 0 0;
+}
+
+#dave-luck-select,
+#xyz-luck {
+    margin: 0 auto;
+    display: block;
+}
+
+#dave-luck-container label,
+#xyz-luck-container label {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2px;
+}
+
+.luck-multipliers > label,
+.luck-multipliers > select {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}
+
+.luck-multipliers select.input {
+    margin: 0 auto 8px auto;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    #dave-luck-container,
+    #xyz-luck-container {
+        align-items: center;
+        width: 100%;
+    }
+    #dave-luck-select,
+    #xyz-luck {
+        width: 80%;
+    }
 }
 
 .luck-presets {
@@ -612,6 +663,7 @@ label {
 .rarity-glorious { color: #790707; text-shadow: 1px 1px 2px #000; }
 .rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
 .rarity-challenged { color: #000000; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
+.rarity-limbo { color: #000; text-shadow: 0 0 2px #aaa, 0 0 4px #aaa, 1px 1px 0 #aaa, -1px -1px 0 #aaa; }
 
 .version-info {
     display: flex;

@@ -5,18 +5,25 @@ let isRolling = false;
 const auras = [
     { name: "Luminosity - 1,200,000,000", chance: 1200000000, wonCount: 0, cutscene: "lumi" },
     { name: "Pixelation - 1,073,741,824", chance: 1073741824, wonCount: 0, cutscene: "pixelation" },
+    { name: "{J u x t a p o s i t i o n} - 40,440,400", chance: 40440400, wonCount: 0, exclusiveTo: ["limbo"] },
+    { name: "Dreamscape - 850,000,000", chance: 850000000, wonCount: 0, exclusiveTo: ["limbo"] },
     { name: "Aegis - 825,000,000", chance: 825000000, wonCount: 0, cutscene: "aegis" },
+    { name: "Aegis : Watergun - 825,000,000", chance: 825000000, wonCount: 0, breakthrough: { blazing: 2 }},
     { name: "Ruins : Withered - 800,000,000", chance: 800000000, wonCount: 0, cutscene: "ruinswithered" },
     { name: "Sovereign - 750,000,000", chance: 750000000, wonCount: 0, cutscene: "sovereign" },
+    { name: "PROLOGUE - 666,616,111", chance: 666616111, wonCount: 0, exclusiveTo: ["limbo"] },
     { name: "Matrix : Reality - 601,020,102", chance: 601020102, wonCount: 0 },
+    { name: "Elude - 555,555,555", chance: 555555555, wonCount: 0, exclusiveTo: ["limbo"] },    
     { name: "Matrix : Overdrive - 503,000,000", chance: 503000000, wonCount: 0 },
     { name: "Ruins - 500,000,000", chance: 500000000, wonCount: 0 },
     { name: "Kyawthuite : Remembrance - 450,000,000", chance: 450000000, wonCount: 0 },
+    { name: "unknown - 444,444,444", chance: 444444444, wonCount: 0, exclusiveTo: ["limbo"] },
     { name: "Apostolos - 444,000,000", chance: 444000000, wonCount: 0 },
     { name: "Gargantua - 430,000,000", chance: 430000000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Abyssal Hunter - 400,000,000", chance: 400000000, wonCount: 0, breakthrough: { rainy: 4 } },
     { name: "Atlas - 360,000,000", chance: 360000000, wonCount: 0, breakthrough: { sandstorm: 4 } },
     { name: "Jazz : Orchestra - 336,870,912", chance: 336870912, wonCount: 0 },
+    { name: "Manta - 300,000,000", chance: 300000000, wonCount: 0, breakthrough: { blazing: 2 } },
     { name: "Overture : History - 300,000,000", chance: 300000000, wonCount: 0 },
     { name: "Bloodlust - 300,000,000", chance: 300000000, wonCount: 0, breakthrough: { hell: 6 } },
     { name: "Exotic : Void - 299,999,999", chance: 299999999, wonCount: 0 },
@@ -29,8 +36,11 @@ const auras = [
     { name: "Starscourge : Radiant - 100,000,000", chance: 100000000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Chromatic : GENESIS - 99,999,999", chance: 99999999, wonCount: 0 },
     { name: "Sailor : Flying Dutchman - 80,000,000", chance: 80000000, wonCount: 0, breakthrough: { rainy: 4 } },
+    { name: "Carriage - 80,000,000", chance: 80000000, wonCount: 0 },
     { name: "Twilight : Iridescent Memory - 60,000,000", chance: 60000000, wonCount: 0, breakthrough: { night: 10 } },
+    { name: "SENTINEL - 60,000,000", chance: 60000000, wonCount: 0 },
     { name: "Matrix - 50,000,000", chance: 50000000, wonCount: 0 },
+    { name: "Runic - 50,000,000", chance: 50000000, wonCount: 0 },
     { name: "Exotic : APEX - 49,999,500", chance: 49999500, wonCount: 0 },
     { name: "Overseer - 45,000,000", chance: 45000000, wonCount: 0 },
     { name: "Virtual : Fatal Error - 40,413,000", chance: 40413000, wonCount: 0 },
@@ -47,7 +57,7 @@ const auras = [
     { name: "Starscourge - 10,000,000", chance: 10000000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Stargazer - 9,200,000", chance: 9200000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Helios - 9,000,000", chance: 9000000, wonCount: 0 },
-    { name: "Nihility - 9,000,000", chance: 9000000, wonCount: 0, breakthrough: { null: 1000 } },
+    { name: "Nihility - 9,000,000", chance: 9000000, wonCount: 0, breakthrough: { null: 1000, limbo: 1000 }, exclusiveTo: ["limbo-null"] },
     { name: "Harnessed - 8,500,000", chance: 85000000, wonCount: 0 },
     { name: "Velocity - 7,630,000", chance: 7630000, wonCount: 0 },
     { name: "HYPER-VOLT - 7,500,000", chance: 7500000, wonCount: 0 },
@@ -55,6 +65,7 @@ const auras = [
     { name: "Hades - 6,666,666", chance: 6666666, wonCount: 0, breakthrough: { hell: 6 } },
     { name: "Origin - 6,500,000", chance: 6500000, wonCount: 0 },
     { name: "Twilight - 6,000,000", chance: 6000000, wonCount: 0, breakthrough: { night: 10 } },
+    { name: "Anima - 5,730,000", chance: 5730000, wonCount: 0, exclusiveTo: ["limbo"] },
     { name: "Galaxy - 5,000,000", chance: 5000000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Lunar : Full Moon - 5,000,000", chance: 5000000, wonCount: 0, breakthrough: { night: 10 } },
     { name: "Solar : Solstice - 5,000,000", chance: 5000000, wonCount: 0, breakthrough: { day: 10 } },
@@ -67,10 +78,12 @@ const auras = [
     { name: "Cosmos - 1,520,000", chance: 1520000, wonCount: 0 },
     { name: "Astral - 1,336,000", chance: 1336000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Rage : Brawler - 1,280,000", chance: 1280000, wonCount: 0 },
-    { name: "Undefined - 1,111,000", chance: 1111000, wonCount: 0, breakthrough: { null: 1000 } },
+    { name: "Undefined - 1,111,000", chance: 1111000, wonCount: 0, breakthrough: { null: 1000, limbo: 1000 }, exclusiveTo: ["limbo-null"] },
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000, wonCount: 0 },
     { name: "Arcane - 1,000,000", chance: 1000000, wonCount: 0 },
     { name: "Kyawthuite - 850,000", chance: 850000, wonCount: 0 },
+    { name: "Warlock - 666,000", chance: 666000, wonCount: 0 },
+    { name: "Raven - 500,000", chance: 500000, wonCount: 0, exclusiveTo: ["limbo"] },
     { name: "Celestial - 350,000", chance: 350000, wonCount: 0 },
     { name: "Bounded - 200,000", chance: 200000, wonCount: 0 },
     { name: "Aether - 180,000", chance: 180000, wonCount: 0 },
@@ -89,6 +102,7 @@ const auras = [
     { name: "Starlight - 50,000", chance: 50000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Star Rider - 50,000", chance: 50000, wonCount: 0, breakthrough: { starfall: 5 } },
     { name: "Aquatic - 40,000", chance: 40000, wonCount: 0 },
+    { name: "Watt - 32,768", chance: 32768, wonCount: 0 },
     { name: "Powered - 16,384", chance: 16384, wonCount: 0 },
     { name: "LEAK - 14,000", chance: 14000, wonCount: 0 },
     { name: "Rage : Heated - 12,800", chance: 12800, wonCount: 0 },
@@ -96,6 +110,7 @@ const auras = [
     { name: "Undead - 12,000", chance: 12000, wonCount: 0, breakthrough: { hell: 6 } },
     { name: "★★★ - 10,000", chance: 10000, wonCount: 0, exclusiveTo: ["glitch", "dreamspace"] },
     { name: "Lost Soul - 9,200", chance: 9200, wonCount: 0 },
+    { name: "Honey - 8,335", chance: 8335, wonCount: 0 },
     { name: "Quartz - 8,192", chance: 8192, wonCount: 0 },
     { name: "Hazard - 7,000", chance: 7000, wonCount: 0, breakthrough: { corruption: 5 } },
     { name: "Flushed - 6,900", chance: 6900, wonCount: 0 },
@@ -128,7 +143,8 @@ const auras = [
     { name: "Natural - 8", chance: 8, wonCount: 0 },
     { name: "Good - 5", chance: 5, wonCount: 0 },
     { name: "Uncommon - 4", chance: 4, wonCount: 0 },
-    { name: "Common - 2", chance: 1, wonCount: 0 }
+    { name: "Common - 2", chance: 1, wonCount: 0 },
+    { name: "Nothing - 1", chance: 1, wonCount: 0, exclusiveTo: ["limbo"] }
 ];
 
 function roll() {
@@ -151,7 +167,6 @@ function roll() {
     const jsEnabled = document.getElementById('cbx').checked;
     const biome = document.getElementById('biome-select').value;
     
-    // Reset state
     results.innerHTML = `Rolling...`;
     let rolls = 0;
     const startTime = performance.now();
@@ -163,7 +178,6 @@ function roll() {
 
     let btAuras = {};
 
-    // Show progress bar
     const progressContainer = document.querySelector('.progress-container');
     const progressFill = document.querySelector('.progress-fill');
     const progressText = document.querySelector('.progress-text');
@@ -171,34 +185,50 @@ function roll() {
     progressFill.style.width = '0%';
     progressText.textContent = '0%';
 
-    // Calculate effective auras
-    const effectiveAuras = auras.map(aura => {
-        if (aura.exclusiveTo) {
-            if (!aura.exclusiveTo.includes(biome)) {
-                aura.effectiveChance = Infinity;
-                return aura;
+    let effectiveAuras;
+    if (biome === "limbo") {
+        effectiveAuras = auras.filter(aura =>
+            aura.exclusiveTo && (aura.exclusiveTo.includes("limbo") || aura.exclusiveTo.includes("limbo-null"))
+        ).map(aura => {
+            let effectiveChance = aura.chance;
+            if (aura.breakthrough && aura.breakthrough.limbo) {
+                effectiveChance = Math.floor(aura.chance / aura.breakthrough.limbo);
             }
-        }
-
-        let effectiveChance = aura.chance;
-        if (aura.breakthrough) {
-            if (biome === "glitch") {
-                let minChance = aura.chance;
-                for (const mult of Object.values(aura.breakthrough)) {
-                    minChance = Math.min(minChance, Math.floor(aura.chance / mult));
+            effectiveChance = Math.max(1, effectiveChance);
+            aura.effectiveChance = effectiveChance;
+            return aura;
+        }).sort((a, b) => b.effectiveChance - a.effectiveChance);
+    } else {
+        effectiveAuras = auras.map(aura => {
+            if (aura.exclusiveTo) {
+                if (aura.exclusiveTo.includes("limbo") && !aura.exclusiveTo.includes("limbo-null")) {
+                    aura.effectiveChance = Infinity;
+                    return aura;
                 }
-                effectiveChance = minChance;
-            } else if (aura.breakthrough[biome]) {
-                effectiveChance = Math.floor(aura.chance / aura.breakthrough[biome]);
+                if (!aura.exclusiveTo.includes("limbo-null") && !aura.exclusiveTo.includes(biome)) {
+                    aura.effectiveChance = Infinity;
+                    return aura;
+                }
             }
-        }
-        effectiveChance = Math.max(1, effectiveChance);
-        aura.effectiveChance = effectiveChance;
-        return aura;
-    }).sort((a, b) => b.effectiveChance - a.effectiveChance)
-    .filter(aura => aura.effectiveChance !== Infinity);
+            let effectiveChance = aura.chance;
+            if (aura.breakthrough) {
+                if (biome === "glitch") {
+                    let minChance = aura.chance;
+                    for (const mult of Object.values(aura.breakthrough)) {
+                        minChance = Math.min(minChance, Math.floor(aura.chance / mult));
+                    }
+                    effectiveChance = minChance;
+                } else if (aura.breakthrough[biome]) {
+                    effectiveChance = Math.floor(aura.chance / aura.breakthrough[biome]);
+                }
+            }
+            effectiveChance = Math.max(1, effectiveChance);
+            aura.effectiveChance = effectiveChance;
+            return aura;
+        }).sort((a, b) => b.effectiveChance - a.effectiveChance)
+        .filter(aura => aura.effectiveChance !== Infinity);
+    }
 
-    // Process rolls in chunks
     const CHUNK_SIZE = 100000;
     let currentRoll = 0;
 
@@ -225,10 +255,8 @@ function roll() {
             rolls++;
         }
 
-        // Update progress
         currentRoll = chunkEnd;
         const progress = (currentRoll / total) * 100;
-        // Only update progress UI if we're showing it
         if (total >= 100000) {
             requestAnimationFrame(() => {
                 progressFill.style.width = `${progress}%`;
@@ -236,14 +264,10 @@ function roll() {
             });
         }
 
-        // Continue or finish
         if (currentRoll < total) {
             setTimeout(processChunk, 0);
         } else {
-            // Hide progress bar
             progressContainer.style.display = 'none';
-            
-            // Enable roll button
             rollButton.disabled = false;
             rollButton.style.opacity = '1';
             isRolling = false;
@@ -287,7 +311,7 @@ function roll() {
             let resultEntries = [];
             for (let aura of auras) {
                 if (aura.wonCount > 0) {
-                    let rarityClass = getRarityClass(aura); // Pass the full aura object
+                    let rarityClass = getRarityClass(aura, biome);
                     if (btAuras[aura.name]) {
                         let btName = aura.name.replace(
                             /-\s*[\d,]+/,
@@ -319,7 +343,6 @@ function roll() {
         }
     }
 
-    // Start processing
     setTimeout(processChunk, 0);
 }
 

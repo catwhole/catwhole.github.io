@@ -591,3 +591,34 @@ button[onclick="calculateChance()"] {
         padding: 10px;
     }
 }
+
+#limbo-group {
+    margin: 20px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(120, 0, 120, 0.10);
+    border: 1px solid #a855f7;
+}
+
+#limbo-group label:first-child {
+    color: #a855f7;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.disabled-buff,
+.disabled-buff input,
+.disabled-buff label {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+    filter: grayscale(0.7);
+}
+
+.version-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}

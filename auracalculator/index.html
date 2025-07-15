@@ -15,6 +15,10 @@
     </audio>
     
     <h1 class="page-title">Aura Chance Calculator</h1>
+        <div class="version-info">
+            <small class="version">v.1.1.0 - 2025/07/15</small>
+            <small class="credits">made by @catwhore</small>
+        </div>
     
     <div class="layout-wrapper">
         <div class="sidebar-container">
@@ -24,6 +28,18 @@
             <button class="luck-preset" data-luck="400000">Godlike Potion (400,000x)</button>
             <button class="luck-preset" data-luck="150000">Heavenly Potion (150,000x)</button>
             <button class="luck-preset" data-luck="50000">Potion of Bound (50,000x)</button>
+            <button class="luck-preset" data-luck="300000">Void Heart (300,000x)</button>
+            <div style="margin: 12px 0;">
+                <label for="davesHopeSelect">Dave's Hope:</label>
+                <select id="davesHopeSelect" style="width:100%;margin-top:4px;">
+                    <option value="1">None</option>
+                    <option value="1.2">Dave's Hope 1 (1.2x)</option>
+                    <option value="1.4">Dave's Hope 2 (1.4x)</option>
+                    <option value="1.6">Dave's Hope 3 (1.6x)</option>
+                    <option value="1.8">Dave's Hope 4 (1.8x)</option>
+                    <option value="2">Dave's Hope 5 (2x)</option>
+                </select>
+            </div>
             
             <div class="vip-selection">
                 <label>VIP?</label>
@@ -94,107 +110,125 @@
                         <option value="0.7">Neuralyzer (70%)</option>
                     </select>
 
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="speedPotion">
-                        <label for="speedPotion">Speed Potion (10%)?</label>
-                    </div>
-
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="bank">
-                        <label for="bank">Bank (7%)?</label>
-                    </div>
-
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="transcendant">
-                        <label for="transcendant">Transcendant or Warp Potion (1000%)?</label>
-                    </div>
-
-                    <label>Strange Potions:</label>
-                    <div class="radio-group">
-                        <div class="radio-container">
-                        <input type="radio" id="knowledgeNone" name="knowledge" value="0" checked>
-                        <label for="knowledgeNone">None</label>
+                    <div id="limbo-group" style="margin: 20px 0; padding: 12px; border-radius: 8px; background: rgba(120, 0, 120, 0.10); border: 1px solid #a855f7;">
+                        <label style="color:#a855f7; font-weight:600; margin-bottom:8px; display:block;">Limbo:</label>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="forbidden1">
+                            <label for="forbidden1">Forbidden 1 (10%)</label>
                         </div>
-                        <div class="radio-container">
-                        <input type="radio" id="knowledgeOne" name="knowledge" value="0.3">
-                        <label for="knowledgeOne">The Knowledge 1 or Chosen (30%)</label>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="forbidden2">
+                            <label for="forbidden2">Forbidden 2 (25%)</label>
                         </div>
-                        <div class="radio-container">
-                        <input type="radio" id="knowledgeTwo" name="knowledge" value="0.4">
-                        <label for="knowledgeTwo">The Knowledge 2 or Godlike (40%)</label>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="forbidden3">
+                            <label for="forbidden3">Forbidden 3 (75%)</label>
                         </div>
                     </div>
 
-                    <label>Hwachae/Santa Potion:</label>
-                    <div class="radio-group">
-                        <div class="radio-container">
-                            <input type="radio" id="seasonalNone" name="seasonalPotion" value="0" checked>
-                            <label for="seasonalNone">None</label>
+                    <div id="speed-buffs">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="speedPotion">
+                            <label for="speedPotion">Speed Potion (10%)?</label>
                         </div>
-                        <div class="radio-container">
-                            <input type="radio" id="hwachae" name="seasonalPotion" value="0.25">
-                            <label for="hwachae">Hwachae (25%)</label>
-                        </div>
-                        <div class="radio-container">
-                            <input type="radio" id="santa" name="seasonalPotion" value="0.2">
-                            <label for="santa">Santa Claus Potion (20%)</label>
-                        </div>
-                    </div>
 
-                    <label>Haste Potion:</label>
-                    <div class="radio-group">
-                        <div class="radio-container">
-                            <input type="radio" id="hasteNone" name="hastePotion" value="0" checked>
-                            <label for="hasteNone">None</label>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="bank">
+                            <label for="bank">Bank (7%)?</label>
                         </div>
-                        <div class="radio-container">
-                            <input type="radio" id="haste1" name="hastePotion" value="0.2">
-                            <label for="haste1">Haste 1 (20%)</label>
-                        </div>
-                        <div class="radio-container">
-                            <input type="radio" id="haste2" name="hastePotion" value="0.25">
-                            <label for="haste2">Haste 2 (25%)</label>
-                        </div>
-                        <div class="radio-container">
-                            <input type="radio" id="haste3" name="hastePotion" value="0.3">
-                            <label for="haste3">Haste 3 (30%)</label>
-                        </div>
-                    </div>
 
-                    <label>Rage/Diver Potion:</label>
-                    <div class="radio-group">
-                        <div class="radio-container">
-                            <input type="radio" id="rageNone" name="ragePotion" value="0" checked>
-                            <label for="rageNone">None</label>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="transcendant">
+                            <label for="transcendant">Transcendant or Warp Potion (1000%)?</label>
                         </div>
-                        <div class="radio-container">
-                            <input type="radio" id="rage" name="ragePotion" value="0.35">
-                            <label for="rage">Rage Potion (35%)</label>
-                        </div>
-                        <div class="radio-container">
-                            <input type="radio" id="diver" name="ragePotion" value="0.4">
-                            <label for="diver">Diver Potion (40%)</label>
-                        </div>
-                    </div>
 
-                    <label>Godly Potion:</label>
-                    <div class="radio-group">
-                        <div class="radio-container">
-                            <input type="radio" id="godlyNone" name="godlyPotion" value="0" checked>
-                            <label for="godlyNone">None</label>
+                        <label>Strange Potions:</label>
+                        <div class="radio-group">
+                            <div class="radio-container">
+                            <input type="radio" id="knowledgeNone" name="knowledge" value="0" checked>
+                            <label for="knowledgeNone">None</label>
+                            </div>
+                            <div class="radio-container">
+                            <input type="radio" id="knowledgeOne" name="knowledge" value="0.3">
+                            <label for="knowledgeOne">The Knowledge 1 or Chosen (30%)</label>
+                            </div>
+                            <div class="radio-container">
+                            <input type="radio" id="knowledgeTwo" name="knowledge" value="0.4">
+                            <label for="knowledgeTwo">The Knowledge 2 or Godlike (40%)</label>
+                            </div>
                         </div>
-                        <div class="radio-container">
-                            <input type="radio" id="zeus" name="godlyPotion" value="0.3">
-                            <label for="zeus">Godly Potion (Zeus) (30%)</label>
-                        </div>
-                        <div class="radio-container">
-                            <input type="radio" id="poseidon" name="godlyPotion" value="0.75">
-                            <label for="poseidon">Godly Potion (Poseidon) (75%)</label>
-                        </div>
-                    </div>
 
-                    <label for="elementSpeed">Resonance of Elements speed (the thingy on mountain):</label>
-                    <input type="number" id="elementSpeed" placeholder="Enter Resonance of Elements Speed in %" required>
+                        <label>Hwachae/Santa Potion:</label>
+                        <div class="radio-group">
+                            <div class="radio-container">
+                                <input type="radio" id="seasonalNone" name="seasonalPotion" value="0" checked>
+                                <label for="seasonalNone">None</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="hwachae" name="seasonalPotion" value="0.25">
+                                <label for="hwachae">Hwachae (25%)</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="santa" name="seasonalPotion" value="0.2">
+                                <label for="santa">Santa Claus Potion (20%)</label>
+                            </div>
+                        </div>
+
+                        <label>Haste Potion:</label>
+                        <div class="radio-group">
+                            <div class="radio-container">
+                                <input type="radio" id="hasteNone" name="hastePotion" value="0" checked>
+                                <label for="hasteNone">None</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="haste1" name="hastePotion" value="0.2">
+                                <label for="haste1">Haste 1 (20%)</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="haste2" name="hastePotion" value="0.25">
+                                <label for="haste2">Haste 2 (25%)</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="haste3" name="hastePotion" value="0.3">
+                                <label for="haste3">Haste 3 (30%)</label>
+                            </div>
+                        </div>
+
+                        <label>Rage/Diver Potion:</label>
+                        <div class="radio-group">
+                            <div class="radio-container">
+                                <input type="radio" id="rageNone" name="ragePotion" value="0" checked>
+                                <label for="rageNone">None</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="rage" name="ragePotion" value="0.35">
+                                <label for="rage">Rage Potion (35%)</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="diver" name="ragePotion" value="0.4">
+                                <label for="diver">Diver Potion (40%)</label>
+                            </div>
+                        </div>
+
+                        <label>Godly Potion:</label>
+                        <div class="radio-group">
+                            <div class="radio-container">
+                                <input type="radio" id="godlyNone" name="godlyPotion" value="0" checked>
+                                <label for="godlyNone">None</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="zeus" name="godlyPotion" value="0.3">
+                                <label for="zeus">Godly Potion (Zeus) (30%)</label>
+                            </div>
+                            <div class="radio-container">
+                                <input type="radio" id="poseidon" name="godlyPotion" value="0.75">
+                                <label for="poseidon">Godly Potion (Poseidon) (75%)</label>
+                            </div>
+                        </div>
+
+                        <label for="elementSpeed">Resonance of Elements speed (the thingy on mountain):</label>
+                        <input type="number" id="elementSpeed" placeholder="Enter Resonance of Elements Speed in %" required>
+                    </div>
                 </div>
             </div>
 

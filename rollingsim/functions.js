@@ -66,35 +66,46 @@ let baseLuck = 1;
 let currentLuck = 1;
 let lastVipMultiplier = 1;
 let lastXyzMultiplier = 1;
+let lastDaveMultiplier = 1;
 
 function setLuck(value) {
     baseLuck = value;
     currentLuck = value;
     lastVipMultiplier = 1;
     lastXyzMultiplier = 1;
+    lastDaveMultiplier = 1;
     document.getElementById('vip-select').value = "1";
     document.getElementById('xyz-luck').checked = false;
+    if (document.getElementById('dave-luck-select')) document.getElementById('dave-luck-select').value = "1";
     document.getElementById('luck').value = value;
 }
 
 function updateLuckValue() {
+    const biome = document.getElementById('biome-select').value;
     const vipMultiplier = parseFloat(document.getElementById('vip-select').value);
-    const xyzMultiplier = document.getElementById('xyz-luck').checked ? 2 : 1;
+    let xyzMultiplier = 1;
+    let daveMultiplier = 1;
+    if (biome === "limbo") {
+        daveMultiplier = parseFloat(document.getElementById('dave-luck-select').value);
+    } else {
+        xyzMultiplier = document.getElementById('xyz-luck').checked ? 2 : 1;
+    }
     const luckInput = document.getElementById('luck');
-    
     if (luckInput.value && parseFloat(luckInput.value) !== currentLuck) {
         baseLuck = parseFloat(luckInput.value);
         currentLuck = baseLuck;
         lastVipMultiplier = 1;
         lastXyzMultiplier = 1;
+        lastDaveMultiplier = 1;
         document.getElementById('vip-select').value = "1";
         document.getElementById('xyz-luck').checked = false;
+        if (document.getElementById('dave-luck-select')) document.getElementById('dave-luck-select').value = "1";
         return;
     }
-
-    currentLuck = baseLuck * vipMultiplier * xyzMultiplier;
+    currentLuck = baseLuck * vipMultiplier * xyzMultiplier * daveMultiplier;
     lastVipMultiplier = vipMultiplier;
     lastXyzMultiplier = xyzMultiplier;
+    lastDaveMultiplier = daveMultiplier;
     luckInput.value = currentLuck;
 }
 
@@ -112,6 +123,56 @@ function resetRolls() {
 function setGlitch() {
     document.getElementById('biome-select').value = 'glitch';
     playSound(document.getElementById('clickSound'));
+    handleBiomeUI();
+}
+
+function setLimbo() {
+    document.getElementById('biome-select').value = 'limbo';
+    playSound(document.getElementById('clickSound'));
+    handleBiomeUI();
+}
+
+function resetBiome() {
+    document.getElementById('biome-select').value = 'normal';
+    playSound(document.getElementById('clickSound'));
+    handleBiomeUI();
+}
+
+function handleBiomeUI() {
+    const biome = document.getElementById('biome-select').value;
+    const daveLuckContainer = document.getElementById('dave-luck-container');
+    const xyzLuckContainer = document.getElementById('xyz-luck-container');
+    const luckPresets = document.getElementById('luck-presets');
+    const voidHeartBtn = document.getElementById('void-heart-btn');
+    const vipSelect = document.getElementById('vip-select');
+    if (biome === "limbo") {
+        if (daveLuckContainer) daveLuckContainer.style.display = "";
+        if (xyzLuckContainer) xyzLuckContainer.style.display = "none";
+        if (luckPresets) {
+            Array.from(luckPresets.children).forEach(btn => {
+                if (btn === voidHeartBtn) {
+                    btn.style.display = "";
+                } else if (btn.textContent.includes("VIP") || btn.textContent.includes("Dave") || btn === voidHeartBtn) {
+                    btn.style.display = "";
+                } else {
+                    btn.style.display = "none";
+                }
+            });
+        }
+    } else {
+        if (daveLuckContainer) daveLuckContainer.style.display = "none";
+        if (xyzLuckContainer) xyzLuckContainer.style.display = "";
+        if (luckPresets) {
+            Array.from(luckPresets.children).forEach(btn => {
+                if (btn === voidHeartBtn) {
+                    btn.style.display = "none";
+                } else {
+                    btn.style.display = "";
+                }
+            });
+        }
+    }
+    updateLuckValue();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -120,31 +181,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const backButton = document.querySelector('.back-button');
     const clickSound = document.getElementById('clickSound');
     const hoverSound = document.getElementById('hoverSound');
-
     buttons.forEach(button => {
         button.addEventListener('click', () => playSound(clickSound));
         button.addEventListener('mouseenter', () => playSound(hoverSound));
     });
-
     inputs.forEach(input => {
         input.addEventListener('click', () => playSound(clickSound));
         input.addEventListener('mouseenter', () => playSound(hoverSound));
     });
-
     backButton.addEventListener('click', () => playSound(clickSound));
     backButton.addEventListener('mouseenter', () => playSound(hoverSound));
-
     document.getElementById('vip-select').addEventListener('change', updateLuckValue);
     document.getElementById('xyz-luck').addEventListener('change', updateLuckValue);
+    if (document.getElementById('dave-luck-select')) {
+        document.getElementById('dave-luck-select').addEventListener('change', updateLuckValue);
+    }
     document.getElementById('luck').addEventListener('input', function() {
         const value = parseInt(this.value) || 1;
         baseLuck = value;
         currentLuck = value;
         lastVipMultiplier = 1;
         lastXyzMultiplier = 1;
+        lastDaveMultiplier = 1;
         document.getElementById('vip-select').value = "1";
         document.getElementById('xyz-luck').checked = false;
+        if (document.getElementById('dave-luck-select')) document.getElementById('dave-luck-select').value = "1";
     });
+    document.getElementById('biome-select').addEventListener('change', handleBiomeUI);
+    handleBiomeUI();
 });
 
 function playAuraVideo(videoId) {
@@ -237,10 +301,14 @@ function playAuraVideo(videoId) {
     };
 }
 
-function getRarityClass(aura) {
+function getRarityClass(aura, biome) {
     // Special case for Fault
     if (aura && aura.name === "Fault") return 'rarity-challenged';
-    if (aura && aura.exclusiveTo) return 'rarity-challenged';
+    if (aura && aura.exclusiveTo && (aura.exclusiveTo.includes("limbo") || aura.exclusiveTo.includes("limbo-null"))) {
+        if (biome === "limbo") return 'rarity-limbo';
+        // fallback to normal rarity if not in limbo biome
+    }
+    if (aura && aura.exclusiveTo && !aura.exclusiveTo.includes("limbo-null")) return 'rarity-challenged';
     const chance = aura.chance;
     if (chance >= 1000000000) return 'rarity-transcendent';
     if (chance >= 99999999) return 'rarity-glorious';
