@@ -1,4 +1,5 @@
 const auras = [
+    { name: "Equinox - 2,500,000,000", chance: 2500000000 },
     { name: "Luminosity - 1,200,000,000", chance: 1200000000 },
     { name: "Pixelation - 1,073,741,824", chance: 1073741824 },
     { name: "Dreamscape - 850,000,000", chance: 850000000 },
@@ -110,6 +111,7 @@ const auras = [
     { name: "Quartz - 8,192", chance: 8192 },
     { name: "Hazard - 7,000", chance: 7000 },
     { name: "Flushed - 6,900", chance: 6900 },
+    { name: "Megaphone - 5000", chance: 5000 },
     { name: "Bleeding - 4,444", chance: 4444 },
     { name: "Sidereum - 4,096", chance: 4096 },
     { name: "Player - 3,000", chance: 3000 },

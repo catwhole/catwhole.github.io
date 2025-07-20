@@ -3,6 +3,7 @@ let luck = document.getElementById('luck');
 let isRolling = false;
 
 const auras = [
+    { name: "Equinox - 2,500,000,000", chance: 2500000000, wonCount: 0 },
     { name: "Luminosity - 1,200,000,000", chance: 1200000000, wonCount: 0, cutscene: "lumi" },
     { name: "Pixelation - 1,073,741,824", chance: 1073741824, wonCount: 0, cutscene: "pixelation" },
     { name: "{J u x t a p o s i t i o n} - 40,440,400", chance: 40440400, wonCount: 0, exclusiveTo: ["limbo"] },
@@ -114,6 +115,7 @@ const auras = [
     { name: "Quartz - 8,192", chance: 8192, wonCount: 0 },
     { name: "Hazard - 7,000", chance: 7000, wonCount: 0, breakthrough: { corruption: 5 } },
     { name: "Flushed - 6,900", chance: 6900, wonCount: 0 },
+    { name: "Megaphone - 5,000", chance: 5000, wonCount: 0 },
     { name: "Bleeding - 4,444", chance: 4444, wonCount: 0 },
     { name: "Sidereum - 4,096", chance: 4096, wonCount: 0 },
     { name: "Player - 3,000", chance: 3000, wonCount: 0 },
