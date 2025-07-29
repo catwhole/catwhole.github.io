@@ -19,13 +19,25 @@
     <audio id="100kSound" loop muted src="100k+_Roll.ogg" type="audio/ogg"></audio>
     <audio id="10mSound" loop muted src="10m+_Roll.ogg" type="audio/ogg"></audio>
     <audio id="100mSound" loop muted src="100m+_Roll.ogg" type="audio/ogg"></audio>
-    <video id="lumi" class="aura-video" preload="auto">
+    <video id="equinox-cs" class="aura-video" preload="auto">
+        <source src="equinox.webm" type="video/webm">
+    </video>
+    <video id="lumi-cs" class="aura-video" preload="auto">
         <source src="lumi.webm" type="video/webm">
     </video>
-    <video id="aegis-video" class="aura-video" preload="auto">
+    <video id="pixelation-cs" class="aura-video" preload="auto">
+        <source src="pixelation.webm" type="video/webm">
+    </video>
+    <video id="dreamscape-cs" class="aura-video" preload="auto">
+        <source src="dreamscape.webm" type="video/webm">
+    </video>
+    <video id="aegis-cs" class="aura-video" preload="auto">
         <source src="aegis.webm" type="video/webm">
     </video>
-    <video id="sovereign-video" class="aura-video" preload="auto">
+    <video id="ruinswithered-cs" class="aura-video" preload="auto">
+        <source src="ruinswithered.webm" type="video/webm">
+    </video>
+    <video id="sovereign-cs" class="aura-video" preload="auto">
         <source src="sovereign.webm" type="video/webm">
     </video>
     <div id="video-overlay" class="video-overlay"></div>
@@ -69,12 +81,12 @@
             <div class="container">
                 <div class="top">
                     <a href="../" class="back-button">Back</a>
-                    <h1>Rolling Simulator</h1>
-                    <div class="version-info">
-                        <small class="version">v.1.1.2 - 2025/07/29</small>
-                        <small class="credits">made by @catwhore</small>
-                    </div>
                     <button class="play-sound" id="soundToggle" onclick="toggleSound()">Sound</button>
+                </div>
+                <h1>Rolling Simulator</h1>
+                <div class="version-info">
+                    <small class="version">v.1.2.1 - 2025/07/29</small>
+                    <small class="credits">made by @catwhore</small>
                 </div>
                 <div class="inputs">
                     <div class="input-with-button">
@@ -127,17 +139,17 @@
                 <label for="roll-button">JavaScript Rolling? Slightly faster but worse randomness</label>
                 <input type="checkbox" id="cbx" class="styled-checkbox">
             </div>
-            <div class="result-container">
-                <div class="progress-container" style="display: none;">
-                    <div class="progress-bar">
-                        <div class="progress-fill"></div>
-                    </div>
-                    <div class="progress-text">0%</div>
+        </div>
+        <div class="result-container">
+            <div class="progress-container" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
                 </div>
-                <div class="result" id="result">
-                    <h2>Results</h2>
-                    <p id="result-text"></p>
-                </div>
+                <div class="progress-text">0%</div>
+            </div>
+            <div class="result" id="result">
+                <h2>Results</h2>
+                <p id="result-text"></p>
             </div>
         </div>
     </div>

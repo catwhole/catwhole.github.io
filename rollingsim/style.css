@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #1a1832;
-    color: #f8f7ff;
+    color: #dad4f8;
     background-image: url('solsbg.jpg');
     background-size: cover;
     background-position-x: center;
@@ -13,7 +13,7 @@ body {
 }
 
 button {
-    color: #d4ccff;
+    color: #dad4f8;
     border: 3px solid transparent;
     background: linear-gradient(#1a183267, #1a1832) padding-box,
                 linear-gradient(to right, #6b4fd1, #4b367c) border-box;
@@ -47,34 +47,28 @@ button:disabled:hover {
     box-shadow: none;
 }
 
-.container, .roll-container, .result-container {
+.container, .roll-container, .result-container, .luck-sidebar {
     align-items: center;
     display: flex;
-    border: 1px solid rgba(212, 204, 255, 0.2);
+    border: 1px solid rgba(255, 204, 251, 0.2);
     flex-direction: column;
     width: 100%;
-    max-width: 600px;
-    margin: 20px auto;
+    margin: 5px;
     padding: 40px 20px;
-    background-color: rgba(26, 24, 50, 0.2);
+    background-color: rgba(43, 24, 50, 0.2);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(26, 24, 50, 0.8);
+    box-shadow: 0 4px 20px rgba(50, 24, 50, 0.8);
 }
 
-.result-container {
-    padding: 20px;
-    max-height: none;
-    width: 100%;
-}
 
 .roll-container {
     padding: 20px;
 }
 
 h1 {
-    color: #d4ccff;
+    color: #eae7f7;
     margin: 4px auto;
     text-shadow: 0 2px 4px rgba(26, 24, 50, 0.6);
     text-align: center;
@@ -82,7 +76,7 @@ h1 {
 }
 
 h2 {
-    color: #d4ccff;
+    color: #eae7f7;
     margin: 4px auto;
     text-shadow: 0 2px 4px rgba(26, 24, 50, 0.6);
     text-align: center;
@@ -90,7 +84,7 @@ h2 {
 }
 
 p {
-    color: #f8f7ff;
+    color: #eae7f7;
     text-shadow: 0 1px 3px rgba(26, 24, 50, 0.5);
     text-align: center;
     width: 100%;
@@ -243,6 +237,13 @@ p {
     .input-with-button select {
         width: 80%;
     }
+
+    .result-container, .luck-sidebar {
+        padding: 20px 10px;
+        margin: 10px;
+        max-height: 250px;
+        overflow-y: auto;
+    }
 }
 
 input::-webkit-outer-spin-button,
@@ -276,6 +277,7 @@ label {
     border-radius: 8px;
     padding: 8px 16px;
     margin: 10px;
+    margin-bottom: 50px;
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     cursor: pointer;
@@ -299,8 +301,6 @@ label {
 .back-button:hover, .play-sound:hover {
     transform: scale(1.02) rotate(1deg);
     translate: 0 -3px;
-    background: linear-gradient(#1a183267, #1a1832) padding-box,
-                linear-gradient(to right, #8e75f5, #6b4fd1) border-box;
     box-shadow: 0 4px 16px rgba(107, 79, 209, 0.2);
     color: #f8f7ff;
 }
@@ -382,24 +382,13 @@ label {
     display: none!important;
   }
 
-#lumi {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: auto;
-    z-index: 1000;
-}
-
 .aura-video {
     display: none;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 80%;
+    width: 100%;
     height: auto;
     z-index: 1000;
     background-color: transparent !important;
@@ -443,31 +432,30 @@ label {
 
 .page-layout {
     display: flex;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    gap: 60px;
     padding: 20px;
     position: relative;
     min-height: 100vh;
     overflow-y: auto;
+    justify-content: center;
 }
 
 .main-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-y: visible;
+    width: 450px;
 }
 
-.luck-sidebar {
+.luck-sidebar, .result-container {
     position: sticky;
     align-self: flex-start;
     top: 20px;
-    width: 300px;
+    width: 520px;
     min-width: 300px;
     height: fit-content;
-    max-height: calc(100vh - 40px);
+    max-height: 70vh;
     overflow-y: auto;
     background-color: rgba(26, 24, 50, 0.2);
     backdrop-filter: blur(10px);
@@ -476,6 +464,11 @@ label {
     border: 1px solid rgba(212, 204, 255, 0.2);
     box-shadow: 0 4px 20px rgba(26, 24, 50, 0.8);
     padding: 20px;
+}
+
+.luck-sidebar {
+    width: 330px;
+    margin-left: 190px;
 }
 
 .luck-multipliers {
@@ -540,7 +533,7 @@ label {
 }
 
 .luck-presets button {
-    width: 100%;
+    width: 320px;
     margin: 5px 0;
 }
 
@@ -588,7 +581,7 @@ label {
         padding: 10px;
     }
     
-    .luck-sidebar {
+    .luck-sidebar, .result-container {
         position: static;
         width: auto;
         min-width: 0;
@@ -625,7 +618,7 @@ label {
         right: 0;
     }
 
-    .container, .roll-container, .result-container {
+    .container, .roll-container, .result-container, .luck-sidebar {
         padding: 20px 10px;
         margin: 10px;
     }
@@ -680,8 +673,28 @@ label {
 }
 
 .top {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+    margin-bottom: 50px;
 }
+
+.container button,
+.back-button,
+.roll-container button,
+.roll-container .styled-checkbox {
+    color: #f1daf5;
+    border: 3px solid transparent;
+    background: linear-gradient(#3b244b67, #231832) padding-box,
+                linear-gradient(to right, #6f507e, #39183d) border-box;
+}
+
+.container input,
+.container select {
+    color: #f1daf5;
+    border: 3px solid transparent;
+    background: linear-gradient(#35244b67, #201832) padding-box,
+                linear-gradient(to right, #64507e, #32183d) border-box;
+}
+
+select option {
+    background: rgb(65, 52, 70);
+}
+

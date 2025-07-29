@@ -319,3 +319,4 @@ function getRarityClass(aura, biome) {
     if (chance >= 1000) return 'rarity-epic';
     return 'rarity-basic';
 }
+
