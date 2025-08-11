@@ -10,7 +10,7 @@ const auras = [
     { name: "Aegis - 825,000,000", chance: 825000000, cutscene: "aegis-cs" },
     { name: "Aegis : Watergun - 825,000,000", chance: 825000000, breakthrough: { blazing: 2 }},
     { name: "Ruins : Withered - 800,000,000", chance: 800000000, cutscene: "ruinswithered-cs" },
-    { name: "Sovereign - 750,000,000", chance: 750000000, cutscene: "sovereign-cs" },
+    { name: "Sovereign - 750,000,000", chance: 750000000 },
     { name: "PROLOGUE - 666,616,111", chance: 666616111, exclusiveTo: ["limbo"] },
     { name: "Matrix : Reality - 601,020,102", chance: 601020102 },
     { name: "Elude - 555,555,555", chance: 555555555, exclusiveTo: ["limbo"] },    
