@@ -165,6 +165,18 @@ auras.forEach(aura => {
     aura.wonCount = 0;
 });
 
+// xp
+function getXpForChance(chance) {
+    if (chance >= 10000 && chance <= 99998) return 5;
+    if (chance >= 99999 && chance <= 999999) return 50;
+    if (chance >= 1000000 && chance <= 9999999) return 500;
+    if (chance >= 10000000 && chance <= 99999998) return 5000;
+    if (chance >= 99999999 && chance <= 1000000000) return 50000;
+    if (chance > 1000000000) return 100000;
+    return 0; // below 1m gives no XP under current rules
+}
+// end xp
+
 function roll() {
     if (isRolling) return;
     
@@ -357,6 +369,26 @@ function roll() {
             for (let entry of resultEntries) {
                 resultText += entry.label + "<br>";
             }
+
+            // xp
+            let totalXP = 0;
+            let xpLines = [];
+            for (let aura of auras) {
+                if (aura.wonCount > 0) {
+                    const xpPer = getXpForChance(aura.chance);
+                    const auraXp = xpPer * aura.wonCount;
+                    if (xpPer > 0) {
+                        totalXP += auraXp;
+                    }
+                }
+            }
+
+            resultText += `<br><strong>Total XP Earned: ${totalXP.toLocaleString()}</strong><br>`;
+            for (let line of xpLines) {
+                resultText += line + "<br>";
+            }
+            // end xp
+
             results.innerHTML = resultText;
         }
     }
