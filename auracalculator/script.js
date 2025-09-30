@@ -19,6 +19,7 @@ const auras = [
     { name: "Apostolos - 444,000,000", chance: 444000000 },
     { name: "Gargantua - 430,000,000", chance: 430000000 },
     { name: "Abyssal Hunter - 400,000,000", chance: 400000000 },
+    { name: "CHILLSEAR - 375,000,000", chance: 375000000 },
     { name: "Atlas - 360,000,000", chance: 360000000 },
     { name: "Jazz : Orchestra - 336,870,912", chance: 300000000 },
     { name: "LOTUSFALL- 320,000,000", chance: 320000000 },
@@ -121,6 +122,7 @@ const auras = [
     { name: "Corrosive - 12,000", chance: 12000 },
     { name: "Undead - 12,000", chance: 12000 },
     { name: "★★★ - 10,000", chance: 10000 },
+    { name: "Atomic : Riboneucleic - 9876", chance: 9876 },
     { name: "Lost Soul - 9,200", chance: 9200 },
     { name: "Honey - 8,335", chance: 8335 },
     { name: "Quartz - 8,192", chance: 8192 },
@@ -165,6 +167,7 @@ const auras = [
 const nativeAuras = [
     { name: "[Native] Aegis : Watergun - 412,500,000", chance: 412500000 },
     { name: "[Native] Manta - 150,000,000", chance: 150000000 },
+    { name: "[Native] CHILLSEAR - 125,000,000", chance: 125000000 },
     { name: "[Native] Maelstrom - 103,333,333", chance: 103333333 },
     { name: "[Native] Abyssal Hunter - 100,000,000", chance: 100000000 },
     { name: "[Native] Atlas - 90,000,000", chance: 90000000 },
