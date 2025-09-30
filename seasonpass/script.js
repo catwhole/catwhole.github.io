@@ -20,8 +20,8 @@
 		const displayed = Number.isFinite(raw) ? Math.floor(raw) : NaN;
 
 		if (!Number.isFinite(displayed) || displayed < 0) {
-			outRequired.textContent = 'Xp required to level up: — (enter a level ≥ 0)';
-			outAccum.textContent = 'Accumulated xp until this level: —';
+			outRequired.textContent = 'bro enter an actual number';
+			outAccum.textContent = 'please man...';
 			return;
 		}
 
