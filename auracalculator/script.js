@@ -165,8 +165,6 @@ const auras = [
 ];
 
 const nativeAuras = [
-    { name: "[Native] Aegis : Watergun - 412,500,000", chance: 412500000 },
-    { name: "[Native] Manta - 150,000,000", chance: 150000000 },
     { name: "[Native] CHILLSEAR - 125,000,000", chance: 125000000 },
     { name: "[Native] Maelstrom - 103,333,333", chance: 103333333 },
     { name: "[Native] Abyssal Hunter - 100,000,000", chance: 100000000 },
