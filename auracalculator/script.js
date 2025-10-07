@@ -635,12 +635,12 @@ function updateLuckValue(newBaseValue = null) {
         baseLuckValue = newBaseValue;
     }
     
-    // Calculate final luck value with multipliers
-    const finalValue = Math.round(baseLuckValue * vipMultiplier * xyzMultiplier * davesHopeMultiplier);
+    // Calculate final luck value with multipliers (no rounding, allow decimals)
+    const finalValue = baseLuckValue * vipMultiplier * xyzMultiplier * davesHopeMultiplier;
     
-    // Update input field
+    // Update input field (preserve decimals)
     luckInput.value = finalValue;
-    
+
     // Reset flag after update
     setTimeout(() => { isProgrammaticUpdate = false; }, 0);
 }
@@ -694,7 +694,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Only reset multipliers if the change wasn't triggered programmatically
         if (!isProgrammaticUpdate) {
             // Keep the current value but reset multipliers
-            const currentValue = parseInt(this.value) || 0;
+            const currentValue = parseFloat(this.value) || 0;
             baseLuckValue = currentValue;
             resetMultipliers();
         }
