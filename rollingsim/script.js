@@ -172,13 +172,13 @@ auras.forEach(aura => {
 
 // xp
 function getXpForChance(chance) {
-    if (chance >= 10000 && chance <= 99998) return 0;
-    if (chance >= 99999 && chance <= 999999) return 0;
-    if (chance >= 1000000 && chance <= 9999999) return 200;
-    if (chance >= 10000000 && chance <= 99999998) return 2000;
-    if (chance >= 99999999 && chance <= 1000000000) return 20000;
-    if (chance > 1000000000) return 20000;
-    return 0; // below 1m gives no XP under current rules
+    if (chance >= 10000 && chance <= 99998) return 3;
+    if (chance >= 99999 && chance <= 999999) return 30;
+    if (chance >= 1000000 && chance <= 9999999) return 300;
+    if (chance >= 10000000 && chance <= 99999998) return 3000;
+    if (chance >= 99999999 && chance <= 1000000000) return 30000;
+    if (chance > 1000000000) return 30000;
+    return 0;
 }
 // end xp
 
