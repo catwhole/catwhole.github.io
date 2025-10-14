@@ -15,7 +15,7 @@
 			<a href="../" class="back-button">Back</a>
 			<h1 class="site-title">Season Pass Things</h1>
 			    <div class="version-info">
-                    <small class="version">v.1.0.0 - 2025/09/30</small>
+                    <small class="version">v.1.1.0 - 2025/10/14</small>
                     <small class="credits">made by @catwhore</small>
                 </div>
 		</div>
@@ -36,6 +36,22 @@
 				<p id="xp-accumulated"></p>
 			</div>
 		</section>
+
+        <section class="panel">
+            <h2>XP Between Level Calculator</h2>
+            <p>
+                Input a <span class="highlight">starting level</span> and an <span class="highlight">ending level</span>.<br>
+                You will get the <span class="highlight">total XP required</span> to go from the starting level <span class="highlight">up to</span> the ending level.
+            </p>
+            <div class="actions">
+                <input id="range-start" type="number" class="input" placeholder="Start level" min="1" max="10000" aria-label="Start Level">
+                <input id="range-end" type="number" class="input" placeholder="End level" min="1" max="10000" aria-label="End Level">
+                <button id="range-calc-btn" class="btn" onclick="calculateRange()">Calculate!</button>
+            </div>
+            <div id="range-results" class="top" aria-live="polite" style="margin-top:12px; text-align:center;">
+                <p id="xp-range-result"></p>
+            </div>
+        </section>
 	</main>
 	<script src="script.js"></script>
 </body>
