@@ -16,12 +16,14 @@ function calculateGauntlets() {
     var transcendant = document.getElementById("transcendant").checked ? 10 : 0;
     var knowledgeOne = document.getElementById("knowledgeOne").checked ? 0.3 : 0;
     var knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
+    var slothOne = document.getElementById("slothOne").checked ? -0.15 : 0;
+    var slothTwo = document.getElementById("slothTwo").checked ? -0.25 : 0;
     var bank = document.getElementById("bank").checked ? 0.07 : 0;
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
 
     var trsDecimal = gauntletSpeed / 100;
     var realElementSpeed = elementSpeed / 100;
-    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
+    var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + slothOne + slothTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
     var trsJackpot = trs + 0.07;
 
 

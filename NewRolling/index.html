@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
+    <title>New Rolling</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video class="background-video" autoplay muted loop playsinline>
+        <source src="normal day.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+        <h1 class="title">Sol's RNG Rolling Simulator</h1>
+
+        <section class="main-content">
+        </section>
+
+        <section class="bottom-controls">
+            <button class="control-btn" data-action="settings">Settings</button>
+
+            <div class="controls-center">
+                <button class="control-btn" data-action="roll-options">Roll Options</button>
+
+                <button class="roll-btn" data-action="roll">
+                    <div class="cooldown-line"></div>
+                    <span>Roll</span>
+                </button>
+
+                <button class="control-btn" data-action="biomes">Biomes</button>
+            </div>
+
+            <button class="control-btn" data-action="credits">Credits</button>
+        </section>
+
+    </div>
+    <script src="functions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -20,9 +20,12 @@ body {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #25282b;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 }
 
 h2, h3 {
@@ -38,6 +41,11 @@ label {
     text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
+input:hover, select:hover, button:hover, .back-button:hover, .radio-container:hover, .checkbox-container:hover, .button-secondary:hover, .tool-button:hover {
+    border: 2px solid #2dd4be;
+    transition: border 0s;
+}
+
 input, select, button, .back-button {
     width: 100%;
     padding: 12px;
@@ -45,7 +53,12 @@ input, select, button, .back-button {
     border: 2px solid #2dd4bf;
     border-radius: 8px;
     font-size: 16px;
-    background-color: #3a3a3a;
+    background: rgba(32, 32, 32, 0.5);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
     color: #e0e0e0;
     outline: none;
     transition: all 0.2s ease;
@@ -53,22 +66,26 @@ input, select, button, .back-button {
     box-sizing: border-box;
 }
 
-input:focus, select:focus, button:focus, .back-button:focus {
-    border: 2px solid #2dd4bf;
-    font-family: 'Changa', sans-serif;
-    box-shadow: 0 0 8px rgba(45, 212, 191, 0.3);
+select option {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
 }
 
-button, .back-button {
-    background-color: #2dd4bf;
-    color: #1a1a1a;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+input:hover, select:hover, .back-button:hover {
+    transform: scale(1.02);
+    color:#2dd4be;
+}
+
+#luck:hover::placeholder, #elementSpeed:hover::placeholder {
+    color:#2dd4be77;
+}
+
+button {
+    color: #e0e0e0;
 }
 
 button:hover, .back-button:hover {
-    background-color: #14b8a6;
+    transform: scale(1.02);
 }
 
 .back-button {
@@ -80,28 +97,25 @@ button:hover, .back-button:hover {
 }
 
 .button-music {
-    background-color: #3a3a3a;
+    background-color: #3a3a3a77;
     color: #ff9393;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
     padding: 8px;
     margin: 20px 0;
     text-align: center;
     width: 25%;
     align-self: center;
     border: 2px solid #ff9393;
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
 }
 
 .button-music:hover {
-    background-color: #ff9393;
-    color: #1a1a1a;
-}
-
-.button-music:focus {
-    border: 2px solid #db8181;
-    font-family: 'Changa', sans-serif;
-    box-shadow: 0 0 8px rgba(212, 45, 45, 0.3);
+    transform: scale(1.02);
+    color: #ff9393;
+    border: 2px solid #ff9393;
 }
 
 .checkbox-container {
@@ -111,12 +125,16 @@ button:hover, .back-button:hover {
     padding: 8px;
     border-radius: 8px;
     transition: all 0.2s ease;
-    background-color: #363636;
+    background: rgba(32, 32, 32, 0.5);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
 }
 
 .checkbox-container:hover {
-    background-color: #3a3a3a;
-    transform: translateX(4px);
+    transform: scale(1.02);
 }
 
 .checkbox-container input[type="checkbox"] {
@@ -152,7 +170,7 @@ button:hover, .back-button:hover {
     flex: 1;
     color: #e0e0e0;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .checkbox-container:hover label {
@@ -218,6 +236,7 @@ button:hover, .back-button:hover {
 
 .close:hover {
     color: #14b8a6;
+    transform: scale(1.02);
 }
 
 #modalResult {
@@ -226,12 +245,13 @@ button:hover, .back-button:hover {
 }
 
 .button-secondary {
-    background-color: #71d1e9; 
+    color: #e0e0e0;
+    background-color: #71d1e979; 
     margin-top: 10px;
 }
 
 .button-secondary:hover {
-    background-color: #639ac7;
+    transform: scale(1.02);
 }
 
 #toolsModal .modal-content {
@@ -239,12 +259,13 @@ button:hover, .back-button:hover {
 }
 
 .tool-button {
+    color: #e0e0e0;
     margin: 5px 0;
-    background-color: #71d1e9;
+    background-color: #71d1e979; 
 }
 
 .tool-button:hover {
-    background-color: #639ac7;
+    transform: scale(1.02);
 }
 
 #comparisonModal .modal-content {
@@ -322,15 +343,18 @@ button:hover, .back-button:hover {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-radius: 8px;
-    background-color: #363636;
+    background: rgba(32, 32, 32, 0.5);
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
     transition: all 0.2s ease;
     cursor: pointer;
 }
 
 .radio-container:hover {
-    background-color: #3a3a3a;
-    transform: translateX(4px);
+    transform: scale(1.02);
 }
 
 .radio-container input[type="radio"] {
@@ -369,9 +393,13 @@ button:hover, .back-button:hover {
     flex: 1;
     color: #e0e0e0;
     cursor: pointer;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .radio-container:hover label {
     color: #2dd4bf;
+}
+
+.red-text {
+    color: rgb(182, 55, 55);
 }
