@@ -132,6 +132,12 @@ function setLimbo() {
     handleBiomeUI();
 }
 
+function setCyberspace() {
+    document.getElementById('biome-select').value = 'cyberspace';
+    playSound(document.getElementById('clickSound'));
+    handleBiomeUI();
+}
+
 function resetBiome() {
     document.getElementById('biome-select').value = 'normal';
     playSound(document.getElementById('clickSound'));
@@ -302,13 +308,41 @@ function playAuraVideo(videoId) {
 }
 
 function getRarityClass(aura, biome) {
-    // Special case for Fault
-    if (aura && aura.name === "Fault") return 'rarity-challenged';
-    if (aura && aura.exclusiveTo && (aura.exclusiveTo.includes("limbo") || aura.exclusiveTo.includes("limbo-null"))) {
+    if (!aura) return 'rarity-basic';
+    
+    // Oppression, Dreammetric, and Illusionary get challenged+ rarity
+    if (aura.name && (aura.name.startsWith("Oppression") || aura.name.startsWith("Dreammetric") || aura.name.startsWith("Illusionary"))) {
+        return 'rarity-challengedplus';
+    }
+    
+    // Glitch stays challenged
+    if (aura.name && aura.name.startsWith("Glitch")) {
+        return 'rarity-challenged';
+    }
+    
+    // Fault and star auras use normal chance-based rarity (skip exclusiveTo check)
+    if (aura.name && (aura.name.startsWith("Fault") || aura.name.startsWith("★"))) {
+        const chance = aura.chance;
+        if (chance >= 1000000000) return 'rarity-transcendent';
+        if (chance >= 99999999) return 'rarity-glorious';
+        if (chance >= 10000000) return 'rarity-exalted';
+        if (chance >= 1000000) return 'rarity-mythic';
+        if (chance >= 99999) return 'rarity-legendary';
+        if (chance >= 10000) return 'rarity-unique';
+        if (chance >= 1000) return 'rarity-epic';
+        return 'rarity-basic';
+    }
+    
+    // Limbo exclusives
+    if (aura.exclusiveTo && (aura.exclusiveTo.includes("limbo") || aura.exclusiveTo.includes("limbo-null"))) {
         if (biome === "limbo") return 'rarity-limbo';
         // fallback to normal rarity if not in limbo biome
     }
-    if (aura && aura.exclusiveTo && !aura.exclusiveTo.includes("limbo-null")) return 'rarity-challenged';
+    
+    // Other exclusives get challenged
+    if (aura.exclusiveTo && !aura.exclusiveTo.includes("limbo-null")) return 'rarity-challenged';
+    
+    // Normal chance-based rarity
     const chance = aura.chance;
     if (chance >= 1000000000) return 'rarity-transcendent';
     if (chance >= 99999999) return 'rarity-glorious';

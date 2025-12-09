@@ -2,6 +2,7 @@ const auras = [
     { name: "Equinox - 2,500,000,000", chance: 2500000000 },
     { name: "Luminosity - 1,200,000,000", chance: 1200000000 },
     { name: "Pixelation - 1,073,741,824", chance: 1073741824 },
+    { name: "Nyctophobia - 1,011,111,010", chance: 1011111010 },
     { name: "Dreamscape - 850,000,000", chance: 850000000 },
     { name: "Aegis : Watergun - 825,000,000", chance: 825000000 },
     { name: "Aegis - 825,000,000", chance: 825000000 },
@@ -22,17 +23,19 @@ const auras = [
     { name: "CHILLSEAR - 375,000,000", chance: 375000000 },
     { name: "Flora : Evergreen - 370,073,730", chance: 370073730 },
     { name: "Atlas - 360,000,000", chance: 360000000 },
-    { name: "Jazz : Orchestra - 336,870,912", chance: 300000000 },
+    { name: "Archangel - 350,000,000", chance: 350000000 },
+    { name: "Jazz : Orchestra - 336,870,912", chance: 336870912 },
     { name: "LOTUSFALL- 320,000,000", chance: 320000000 },
     { name: "Maelstrom - 309,999,999", chance: 309999999 },
     { name: "Manta - 300,000,000", chance: 300000000 },
     { name: "Overture : History - 300,000,000", chance: 300000000 },
     { name: "Bloodlust - 300,000,000", chance: 300000000 },
     { name: "Astral : Legendarium - 267,200,000", chance: 267200000 },
-    { name: "Archangel - 250,000,000", chance: 250000000 },
     { name: "HYPER-VOLT : EVER-STORM - 225,000,000", chance: 225000000 },
     { name: "Oppression - 220,000,000", chance: 220000000 },
+    { name: "Lumenpool - 220,000,000", chance: 220000000 },
     { name: "Impeached - 200,000,000", chance: 200000000 },
+    { name: "Felled - 180,000,000", chance: 180000000 },
     { name: "Twilight : Withering Grace - 180,000,000", chance: 180000000 },
     { name: "Symphony - 175,000,000", chance: 175000000 },
     { name: "Overture - 150,000,000", chance: 150000000 },
@@ -42,13 +45,14 @@ const auras = [
     { name: "Harnessed : Elements - 85,000,000", chance: 85000000 },
     { name: "Carriage - 80,000,000", chance: 80000000 },
     { name: "Sailor : Flying Dutchman - 80,000,000", chance: 80000000 },
+    { name: "ANTIVIRUS - 62,500,000", chance: 62500000 },
     { name: "SENTINEL - 60,000,000", chance: 60000000 },
     { name: "Twilight : Iridescent Memory - 60,000,000", chance: 60000000 },
     { name: "Matrix - 50,000,000", chance: 50000000 },
     { name: "Runic - 50,000,000", chance: 50000000 },
     { name: "Exotic : APEX - 49,999,500", chance: 49999500 },
     { name: "Overseer - 45,000,000", chance: 45000000 },
-    { name: "{Juxtaposition} - 40,440,400", chance: 40440400 },
+    { name: "{J u x t a p o s i t i o n} - 40,440,400", chance: 40440400 },
     { name: "Virtual : Fatal Error - 40,413,000", chance: 40413000 },
     { name: "Ethereal - 35,000,000", chance: 35000000 },
     { name: "Arcane : Dark - 30,000,000", chance: 30000000 },
@@ -57,19 +61,23 @@ const auras = [
     { name: "Aviator - 24,000,000", chance: 24000000 },
     { name: "Chromatic - 20,000,000", chance: 20000000 },
     { name: "Lullaby - 17,000,000", chance: 17000000 },
+    { name: "Icarus - 15,660,000", chance: 15660000 },
     { name: "Arcane : Legacy - 15,000,000", chance: 15000000 },
     { name: "Sirius - 14,000,000", chance: 14000000 },
     { name: "Stormal : Hurricane - 13,500,000", chance: 13500000 },
     { name: "Glitch - 12,210,110", chance: 12210110 },
     { name: "Sailor - 12,000,000", chance: 12000000 },
     { name: "Starscourge - 10,000,000", chance: 10000000 },
-    { name: "Harnessed - 8,500,000", chance: 85000000 },
+    { name: "Illusionary - 10,000,000", chance: 10000000 },
     { name: "Stargazer - 9,200,000", chance: 9200000 },
     { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000 },
+    { name: "Harnessed - 8,500,000", chance: 8500000 },
+    { name: "Divinus : Guardian - 7,777,777", chance: 7777777 },
     { name: "Nautilus : Lost - 7,700,000", chance: 7700000 },
     { name: "Velocity - 7,630,000", chance: 7630000 },
     { name: "HYPER-VOLT - 7,500,000", chance: 7500000 },
+    { name: "Faith - 7,250,000", chance: 7250000 },
     { name: "Anubis - 7,200,000", chance: 7200000 },
     { name: "Hades - 6,666,666", chance: 6666666 },
     { name: "Origin - 6,500,000", chance: 6500000 },
@@ -95,6 +103,7 @@ const auras = [
     { name: "Kyawthuite - 850,000", chance: 850000 },
     { name: "Warlock - 666,000", chance: 666000 },
     { name: "Raven - 500,000", chance: 500000 },
+    { name: "Hope - 488,725", chance: 488725 },
     { name: "Terror - 400,000", chance: 400000 },
     { name: "Celestial - 350,000", chance: 350000 },
     { name: "Bounded - 200,000", chance: 200000 },
@@ -168,26 +177,41 @@ const auras = [
 ];
 
 const nativeAuras = [
+    { name: "[Native] Pixelation - 536,870,912", chance: 536870912},
+    { name: "[Native] Aegis - 412,500,000", chance: 412500000},
+    { name: "[Native] Matrix : Reality - 300,510,051", chance: 300510051},
+    { name: "[Native] Matrix : Overdrive - 251,500,000", chance: 251500000},
     { name: "[Native] CHILLSEAR - 125,000,000", chance: 125000000 },
     { name: "[Native] Maelstrom - 103,333,333", chance: 103333333 },
     { name: "[Native] Abyssal Hunter - 100,000,000", chance: 100000000 },
     { name: "[Native] Atlas - 90,000,000", chance: 90000000 },
     { name: "[Native] Gargantua - 86,000,000", chance: 86000000 },
+    { name: "[Native] Archangel - 70,000,000", chance: 70000000 },
+    { name: "[Native] Lumenpool - 55,000,000", chance: 55000000},
     { name: "[Native] Astral : Legendarium - 53,440,000", chance: 53440000 },
     { name: "[Native] Bloodlust - 50,000,000", chance: 50000000 },
+    { name: "[Native] Virtual : Worldwide - 43,750,000", chance: 43750000},
     { name: "[Native] Impeached - 40,000,000", chance: 40000000 },
+    { name: "[Native] ANTIVIRUS - 31,250,000", chance: 31250000},
+    { name: "[Native] Felled - 30,000,000", chance: 30000000},
+    { name: "[Native] Matrix - 25,000,000", chance: 25000000},
+    { name: "[Native] Virtual : Fatal Error - 20,206,500", chance: 20206500},
     { name: "[Native] Sailor : Flying Dutchman - 20,000,000", chance: 20000000 },
     { name: "[Native] Starscourge : Radiant - 20,000,000", chance: 20000000 },
     { name: "[Native] Twilight : Withering Grace - 18,000,000", chance: 18000000 },
     { name: "[Native] Blizzard - 9,105,000", chance: 9105000 },
     { name: "[Native] Twilight : Iridescent Memory - 6,000,000", chance: 6000000 },
     { name: "[Native] Stormal : Hurricane - 4,500,000", chance: 4500000 },
+    { name: "[Native] Icarus - 3,132,000", chance: 3132000},
     { name: "[Native] Sailor - 3,000,000", chance: 3000000 },
     { name: "[Native] Sirius - 2,800,000", chance: 2800000 },
+    { name: "[Native] Starscourge - 2,000,000", chance: 2000000 },
     { name: "[Native] Stargazer - 1,840,000", chance: 1840000 },
     { name: "[Native] Anubis - 1,800,000", chance: 1800000 },
     { name: "[Native] LOTUSFALL - 1,700,000", chance: 1700000 },
-    { name: "[Native] Starscourge - 2,000,000", chance: 2000000 },
+    { name: "[Native] Divinus : Guardian - 1,555,555", chance: 1555555},
+    { name: "[Native] Faith - 1,450,000", chance: 1450000},
+    { name: "[Native] Virtual - 1,250,000", chance: 1250000},
     { name: "[Native] Hades - 1,111,111", chance: 1111111 },
     { name: "[Native] Galaxy - 1,000,000", chance: 1000000 },
     { name: "[Native] Poseidon - 1,000,000", chance: 1000000 },
@@ -196,9 +220,11 @@ const nativeAuras = [
     { name: "[Native] Solar : Solstice - 500,000", chance: 500000 },
     { name: "[Native] Lunar : Full Moon - 500,000", chance: 500000 },
     { name: "[Native] Astral - 267,200", chance: 267200 },
+    { name: "[Native] Hope - 97,745", chance: 97745 },
     { name: "[Native] Stormal - 30,000", chance: 30000 },
     { name: "[Native] Flow - 29,000", chance: 29000 },
     { name: "[Native] Permafrost - 24,500", chance: 24500 },
+    { name: "[Native] Divinus : Angel - 24,000", chance: 24000 },
     { name: "[Native] Comet - 24,000", chance: 24000 },
     { name: "[Native] Undead : Devil - 20,000", chance: 20000 },
     { name: "[Native] Hazard : Rays - 14,000", chance: 14000 },
@@ -210,16 +236,31 @@ const nativeAuras = [
     { name: "[Native] Shift Lock - 3,325", chance: 3325 },
     { name: "[Native] Corrosive - 2,400", chance: 2400 },
     { name: "[Native] Undead - 2,000", chance: 2000 },
+    { name: "[Native] Player - 1,500", chance: 1500},
     { name: "[Native] Hazard - 1,400", chance: 1400 },
     { name: "[Native] Undefined - 1,111", chance: 1111 },
     { name: "[Native] Glacier - 768", chance: 768 },
     { name: "[Native] Wind - 300", chance: 300 },
+    { name: "[Native] Forbidden - 202", chance: 202},
     { name: "[Native] Jackpot - 194", chance: 194 },
-    { name: "[Native] Gilded - 128", chance: 128 }
+    { name: "[Native] Gilded - 128", chance: 128 },
+    { name: "[Native] Divinus - 6", chance: 6},
 ];
 
 // Add getRarityClass function after auras declaration
-function getRarityClass(chance) {
+function getRarityClass(chance, auraName) {
+    // Check for special aura-specific classes first
+    if (auraName) {
+        const baseName = auraName.split(' - ')[0];
+        if (baseName === 'Glitch') {
+            return 'rarity-challenged';
+        }
+        if (baseName === 'Oppression' || baseName === 'Dreammetric' || baseName === 'Illusionary') {
+            return 'rarity-challengedplus';
+        }
+    }
+    
+    // Default rarity based on chance
     if (chance >= 1000000000) return 'rarity-transcendent';
     if (chance >= 100000000) return 'rarity-glorious';
     if (chance >= 10000000) return 'rarity-exalted';
@@ -237,7 +278,7 @@ sortedAuras.forEach(aura => {
     const selectOption = document.createElement('option');
     selectOption.value = aura.name;
     selectOption.textContent = aura.name;
-    selectOption.className = getRarityClass(aura.chance);
+    selectOption.className = getRarityClass(aura.chance, aura.name);
     auraSelect.appendChild(selectOption);
 });
 
@@ -284,7 +325,7 @@ function updateAuraList() {
         const selectOption = document.createElement('option');
         selectOption.value = aura.name;
         selectOption.textContent = aura.name;
-        selectOption.className = getRarityClass(aura.chance);
+        selectOption.className = getRarityClass(aura.chance, aura.name);
         auraSelect.appendChild(selectOption);
     });
 
@@ -402,7 +443,7 @@ function calculateChance() {
         <h2 style="color: #2dd4bf; text-align: center;">Results</h2>
         <p class="warning-text" style="margin: 10px 0 10px;">Note: The results are entirely statistical, not based on simulations. This means that there is a very high possibility you will get this aura faster/easier than displayed.</p>
         <div class="result-line">
-            <span class="highlight">Aura:</span> <span class="${getRarityClass(baseChance)}">${selectedAura.name}</span>
+            <span class="highlight">Aura:</span> <span class="${getRarityClass(baseChance, selectedAura.name)}">${selectedAura.name}</span>
         </div>
         <div class="result-line">
             <span class="highlight">Chance:</span> 1 in ${formattedAdjusted}
@@ -432,7 +473,7 @@ function calculateChance() {
 
         resultHTML += `
             <div class="result-line" style="margin-top: 20px;">
-                <span class="highlight">Native Version:</span> <span class="${getRarityClass(nativeVersion.chance)}">${nativeVersion.name}</span>
+                <span class="highlight">Native Version:</span> <span class="${getRarityClass(nativeVersion.chance, nativeVersion.name)}">${nativeVersion.name}</span>
             </div>
             <div class="result-line">
                 <span class="highlight">Chance:</span> 1 in ${nativeFormattedAdjusted}
@@ -524,7 +565,7 @@ function simulateRolls() {
                 <h2 style="color: #2dd4bf; text-align: center;">Simulation Results</h2>
                 <p class="warning-text" style="margin: 10px 0 10px;">Note: Results vary A LOT per simulation. Please run a few simulations for a more accurate result.</p>
                 <div class="result-line">
-                    <span class="highlight">Aura:</span> <span class="${getRarityClass(selectedAura.chance)}">${selectedAura.name}</span>
+                    <span class="highlight">Aura:</span> <span class="${getRarityClass(selectedAura.chance, selectedAura.name)}">${selectedAura.name}</span>
                 </div>
                 <div class="result-line">
                     <span class="highlight">Luck Used:</span> ${luck.toLocaleString()}
@@ -541,7 +582,7 @@ function simulateRolls() {
                     Rolls exceeded 500 million - aborted simulation
                 </div>
                 <div class="result-line">
-                    <span class="highlight">Aura:</span> <span class="${getRarityClass(selectedAura.chance)}">${selectedAura.name}</span>
+                    <span class="highlight">Aura:</span> <span class="${getRarityClass(selectedAura.chance, selectedAura.name)}">${selectedAura.name}</span>
                 </div>
                 <div class="result-line">
                     <span class="highlight">Luck Used:</span> ${luck.toLocaleString()}

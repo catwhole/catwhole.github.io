@@ -210,6 +210,11 @@ p {
     margin: 5px;
 }
 
+.biome-buttons {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 .input-button {
     min-width: 80px;
     padding: 8px 12px;
@@ -656,6 +661,7 @@ label {
 .rarity-glorious { color: #790707; text-shadow: 1px 1px 2px #000; }
 .rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
 .rarity-challenged { color: #000000; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
+.rarity-challengedplus { color: #ffffff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -2px -2px 0 #d3d3d3, 2px -2px 0 #d3d3d3, -2px 2px 0 #d3d3d3, 2px 2px 0 #d3d3d3, -2px -1px 0 #d3d3d3, 2px -1px 0 #d3d3d3, -2px 1px 0 #d3d3d3, 2px 1px 0 #d3d3d3, -1px -2px 0 #d3d3d3, 1px -2px 0 #d3d3d3, -1px 2px 0 #d3d3d3, 1px 2px 0 #d3d3d3; }
 .rarity-limbo { color: #000; text-shadow: 0 0 2px #aaa, 0 0 4px #aaa, 1px 1px 0 #aaa, -1px -1px 0 #aaa; }
 
 .version-info {

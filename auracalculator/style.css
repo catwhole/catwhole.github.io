@@ -474,6 +474,8 @@ button[onclick="calculateChance()"] {
 .rarity-exalted { color: #1e90ff; text-shadow: 1px 1px 2px #000; }
 .rarity-glorious { color: #dc143c; text-shadow: 1px 1px 2px #000; }
 .rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
+.rarity-challenged { color: #000000; text-shadow: 1px 1px 2px #383838; }
+.rarity-challengedplus { color: #000000; text-shadow: 1px 1px 2px #ffffff; }
 
 /* Radio Button Styles */
 .vip-selection {
