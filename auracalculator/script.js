@@ -1,13 +1,17 @@
 const auras = [
     { name: "Equinox - 2,500,000,000", chance: 2500000000 },
+    { name: "BREAKTHROUGH - 1,999,999,999", chance: 1999999999 },
+    { name: "Leviathan - 1,730,400,000", chance: 1730400000 },
     { name: "Luminosity - 1,200,000,000", chance: 1200000000 },
     { name: "Pixelation - 1,073,741,824", chance: 1073741824 },
     { name: "Nyctophobia - 1,011,111,010", chance: 1011111010 },
+    { name: "Ascendant - 935,000,000", chance: 935000000 },
     { name: "Dreamscape - 850,000,000", chance: 850000000 },
     { name: "Aegis : Watergun - 825,000,000", chance: 825000000 },
     { name: "Aegis - 825,000,000", chance: 825000000 },
     { name: "Ruins : Withered - 800,000,000", chance: 800000000 },
     { name: "Sovereign - 750,000,000", chance: 750000000 },
+    { name: "Pythios - 666,666,666", chance: 666666666 },
     { name: "PROLOGUE - 666,616,111", chance: 666616111 },
     { name: "Matrix : Reality - 601,020,102", chance: 601020102 },
     { name: "Sophyra - 570,000,000", chance: 570000000 },
@@ -30,6 +34,8 @@ const auras = [
     { name: "Manta - 300,000,000", chance: 300000000 },
     { name: "Overture : History - 300,000,000", chance: 300000000 },
     { name: "Bloodlust - 300,000,000", chance: 300000000 },
+    { name: "Exotic : Void - 299,999,999", chance: 299999999 },
+    { name: "Prophecy - 275,649,430", chance: 275649430 },
     { name: "Astral : Legendarium - 267,200,000", chance: 267200000 },
     { name: "HYPER-VOLT : EVER-STORM - 225,000,000", chance: 225000000 },
     { name: "Oppression - 220,000,000", chance: 220000000 },
@@ -55,9 +61,10 @@ const auras = [
     { name: "{J u x t a p o s i t i o n} - 40,440,400", chance: 40440400 },
     { name: "Virtual : Fatal Error - 40,413,000", chance: 40413000 },
     { name: "Ethereal - 35,000,000", chance: 35000000 },
+    { name: "Flora : Florest - 32,800,000", chance: 32800000 },
     { name: "Arcane : Dark - 30,000,000", chance: 30000000 },
-    { name: "Exotic : Void - 29,999,999", chance: 29999999 },
     { name: "Blizzard - 27,315,000", chance: 27315000 },
+    { name: "Apotheosis - 24,649,430", chance: 24649430 },
     { name: "Aviator - 24,000,000", chance: 24000000 },
     { name: "Chromatic - 20,000,000", chance: 20000000 },
     { name: "Lullaby - 17,000,000", chance: 17000000 },
@@ -65,10 +72,13 @@ const auras = [
     { name: "Arcane : Legacy - 15,000,000", chance: 15000000 },
     { name: "Sirius - 14,000,000", chance: 14000000 },
     { name: "Stormal : Hurricane - 13,500,000", chance: 13500000 },
+    { name: "Borealis - 13,333,333", chance: 13333333 },
     { name: "Glitch - 12,210,110", chance: 12210110 },
     { name: "Sailor - 12,000,000", chance: 12000000 },
+    { name: "Melodic - 11,300,000", chance: 11300000 },
     { name: "Starscourge - 10,000,000", chance: 10000000 },
     { name: "Illusionary - 10,000,000", chance: 10000000 },
+    { name: "Sharkyn - 10,000,000", chance: 10000000 },
     { name: "Stargazer - 9,200,000", chance: 9200000 },
     { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000 },
@@ -92,8 +102,10 @@ const auras = [
     { name: "Savior - 3,200,000", chance: 3200000 },
     { name: "Parasite - 3,000,000", chance: 3000000 },
     { name: "Virtual - 2,500,000", chance: 2500000 },
+    { name: "Flowed - 2,121,121", chance: 2121121 },
     { name: "Bounded : Unbound - 2,000,000", chance: 2000000 },
     { name: "Gravitational - 2,000,000", chance: 2000000 },
+    { name: "Player : Respawn - 1,999,999", chance: 1999999 },
     { name: "Cosmos - 1,520,000", chance: 1520000 },
     { name: "Astral - 1,336,000", chance: 1336000 },
     { name: "Rage : Brawler - 1,280,000", chance: 1280000 },
@@ -106,6 +118,7 @@ const auras = [
     { name: "Hope - 488,725", chance: 488725 },
     { name: "Terror - 400,000", chance: 400000 },
     { name: "Celestial - 350,000", chance: 350000 },
+    { name: "Lantern - 333,333", chance: 333333 },
     { name: "Bounded - 200,000", chance: 200000 },
     { name: "Aether - 180,000", chance: 180000 },
     { name: "Jade - 125,000", chance: 125000 },
@@ -139,6 +152,7 @@ const auras = [
     { name: "Quartz - 8,192", chance: 8192 },
     { name: "Hazard - 7,000", chance: 7000 },
     { name: "Flushed - 6,900", chance: 6900 },
+    { name: "Flutter - 5,000", chance: 5000 },
     { name: "Megaphone - 5000", chance: 5000 },
     { name: "Bleeding - 4,444", chance: 4444 },
     { name: "Sidereum - 4,096", chance: 4096 },
@@ -181,12 +195,15 @@ const nativeAuras = [
     { name: "[Native] Aegis - 412,500,000", chance: 412500000},
     { name: "[Native] Matrix : Reality - 300,510,051", chance: 300510051},
     { name: "[Native] Matrix : Overdrive - 251,500,000", chance: 251500000},
+    { name: "[Native] Ascendant - 187,000,000", chance: 187000000 },
     { name: "[Native] CHILLSEAR - 125,000,000", chance: 125000000 },
+    { name: "[Native] Pythios - 111,111,111", chance: 111111111 },
     { name: "[Native] Maelstrom - 103,333,333", chance: 103333333 },
     { name: "[Native] Abyssal Hunter - 100,000,000", chance: 100000000 },
     { name: "[Native] Atlas - 90,000,000", chance: 90000000 },
     { name: "[Native] Gargantua - 86,000,000", chance: 86000000 },
     { name: "[Native] Archangel - 70,000,000", chance: 70000000 },
+    { name: "[Native] Prophecy - 55,129,886", chance: 55129886 },
     { name: "[Native] Lumenpool - 55,000,000", chance: 55000000},
     { name: "[Native] Astral : Legendarium - 53,440,000", chance: 53440000 },
     { name: "[Native] Bloodlust - 50,000,000", chance: 50000000 },
@@ -205,6 +222,7 @@ const nativeAuras = [
     { name: "[Native] Icarus - 3,132,000", chance: 3132000},
     { name: "[Native] Sailor - 3,000,000", chance: 3000000 },
     { name: "[Native] Sirius - 2,800,000", chance: 2800000 },
+    { name: "[Native] Sharkyn - 2,500,000", chance: 2500000 },
     { name: "[Native] Starscourge - 2,000,000", chance: 2000000 },
     { name: "[Native] Stargazer - 1,840,000", chance: 1840000 },
     { name: "[Native] Anubis - 1,800,000", chance: 1800000 },
@@ -384,13 +402,14 @@ var knowledge = parseFloat(document.querySelector('input[name="knowledge"]:check
 let speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
 let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
 let bank = document.getElementById("bank").checked ? 0.07 : 0;
+let rudolph = document.getElementById("rudolph").checked ? 0.2 : 0;
 
 // Add Forbidden potions
 let forbidden1 = document.getElementById("forbidden1").checked ? 0.10 : 0;
 let forbidden2 = document.getElementById("forbidden2").checked ? 0.25 : 0;
 let forbidden3 = document.getElementById("forbidden3").checked ? 0.75 : 0;
 
-return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledge + seasonalPotion + bank + ragePotion + godlyPotion
+return speed = 1 + gauntletSpeed + elementSpeed + hastePotion + speedPotion + transcendant + knowledge + seasonalPotion + bank + ragePotion + godlyPotion + rudolph;
     + forbidden1 + forbidden2 + forbidden3;
 }
 

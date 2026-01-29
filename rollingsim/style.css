@@ -216,9 +216,15 @@ p {
 }
 
 .input-button {
-    min-width: 80px;
-    padding: 8px 12px;
+    min-width: 0;
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
     margin: 0;
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 
 .input-with-button input,

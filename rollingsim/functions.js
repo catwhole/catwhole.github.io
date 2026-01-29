@@ -138,6 +138,12 @@ function setCyberspace() {
     handleBiomeUI();
 }
 
+function setDreamspace() {
+    document.getElementById('biome-select').value = 'dreamspace';
+    playSound(document.getElementById('clickSound'));
+    handleBiomeUI();
+}
+
 function resetBiome() {
     document.getElementById('biome-select').value = 'normal';
     playSound(document.getElementById('clickSound'));
