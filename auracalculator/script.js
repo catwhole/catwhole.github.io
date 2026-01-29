@@ -270,7 +270,7 @@ function getRarityClass(chance, auraName) {
     // Check for special aura-specific classes first
     if (auraName) {
         const baseName = auraName.split(' - ')[0];
-        if (baseName === 'Glitch') {
+        if (baseName === 'Glitch' || baseName === 'Leviathan' || baseName === 'Borealis') {
             return 'rarity-challenged';
         }
         if (baseName === 'Oppression' || baseName === 'Dreammetric' || baseName === 'Illusionary') {
