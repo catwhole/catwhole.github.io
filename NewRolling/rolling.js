@@ -427,8 +427,8 @@ function updateBuffDisplay() {
 		cyberspace: 'Cyberspace',
 		limbo: 'LIMBO'
 	};
-	if (luckEl) luckEl.textContent = String(luck);
-	if (rollsEl) rollsEl.textContent = String(count);
+	if (luckEl) luckEl.textContent = (Number(luck)).toLocaleString('en-US');
+	if (rollsEl) rollsEl.textContent = (Number(count)).toLocaleString('en-US');
 	if (biomeEl) biomeEl.textContent = biome ? (biomeLabels[biome] || biome) : 'None';
 	if (rollSpeedEl) rollSpeedEl.textContent = String(getRollSpeed());
 }
@@ -560,7 +560,7 @@ function renderResults(counts) {
 	};
 	const statsRow = document.createElement('div');
 	statsRow.id = 'resultsStatsRow';
-	let statsText = `Luck: ${luck} | Rolls: ${count.toLocaleString()} | Biome: ${biome ? (biomeLabels[biome] || biome) : 'None'}`;
+	let statsText = `Luck: ${Number(luck).toLocaleString('en-US')} | Rolls: ${count.toLocaleString('en-US')} | Biome: ${biome ? (biomeLabels[biome] || biome) : 'None'}`;
 	if (allowOblivion) statsText += ' | Oblivion/Memory: ON';
 	if (allowDune) statsText += ' | Neferkhaf: ON';
 	statsRow.innerHTML = statsText;
