@@ -1,7 +1,7 @@
 // ==================== AUDIO SYSTEM ====================
 const AUDIO_CONFIG = {
-    sfxVolume: 0.36,     // SFX volume (0-1) - slightly higher than BGM
-    bgmVolume: 0.3,      // Background music volume (0-1) - lowered globally
+    sfxVolume: 0.25,     // SFX volume (0-1) - 50% default, max 0.5 for safety
+    bgmVolume: 0.25,     // Background music volume (0-1) - 50% default, max 0.5 for safety
     sfxEnabled: true,    // SFX toggle state
     bgmEnabled: true,    // BGM toggle state
 };
@@ -160,35 +160,55 @@ function setAudioVolumes(sfxVol, bgmVol) {
 }
 
 /**
- * Toggle SFX on/off
+ * Toggle SFX slider visibility and hide BGM slider
  */
-function toggleSfx() {
-    AUDIO_CONFIG.sfxEnabled = !AUDIO_CONFIG.sfxEnabled;
-    const btn = document.getElementById('toggleSfx');
-    if (btn) {
-        btn.setAttribute('data-enabled', AUDIO_CONFIG.sfxEnabled);
+function toggleSfxSlider() {
+    const sfxContainer = document.getElementById('sfxSliderContainer');
+    const bgmContainer = document.getElementById('bgmSliderContainer');
+    if (sfxContainer) {
+        const isVisible = sfxContainer.style.display !== 'none';
+        sfxContainer.style.display = isVisible ? 'none' : 'flex';
+        if (bgmContainer && sfxContainer.style.display !== 'none') {
+            bgmContainer.style.display = 'none';
+        }
     }
 }
 
 /**
- * Toggle BGM on/off
+ * Toggle BGM slider visibility and hide SFX slider
  */
-function toggleBgm() {
-    AUDIO_CONFIG.bgmEnabled = !AUDIO_CONFIG.bgmEnabled;
-    const btn = document.getElementById('toggleBgm');
-    if (btn) {
-        btn.setAttribute('data-enabled', AUDIO_CONFIG.bgmEnabled);
-    }
-    
-    // Stop or resume BGM
-    const bgm = document.getElementById(currentBgmId);
-    if (bgm) {
-        if (AUDIO_CONFIG.bgmEnabled) {
-            bgm.play().catch(err => console.log('BGM resume failed:', err));
-        } else {
-            bgm.pause();
+function toggleBgmSlider() {
+    const sfxContainer = document.getElementById('sfxSliderContainer');
+    const bgmContainer = document.getElementById('bgmSliderContainer');
+    if (bgmContainer) {
+        const isVisible = bgmContainer.style.display !== 'none';
+        bgmContainer.style.display = isVisible ? 'none' : 'flex';
+        if (sfxContainer && bgmContainer.style.display !== 'none') {
+            sfxContainer.style.display = 'none';
         }
     }
+}
+
+/**
+ * Update SFX volume from slider (0-100 maps to 0-0.5)
+ */
+function updateSfxVolume(value) {
+    const percent = parseInt(value);
+    const actualVolume = (percent / 100) * 0.5;
+    setAudioVolumes(actualVolume, undefined);
+    const label = document.getElementById('sfxVolumeLabel');
+    if (label) label.textContent = percent + '%';
+}
+
+/**
+ * Update BGM volume from slider (0-100 maps to 0-0.5)
+ */
+function updateBgmVolume(value) {
+    const percent = parseInt(value);
+    const actualVolume = (percent / 100) * 0.5;
+    setAudioVolumes(undefined, actualVolume);
+    const label = document.getElementById('bgmVolumeLabel');
+    if (label) label.textContent = percent + '%';
 }
 
 // ==================== INTERACTIVE ELEMENT SFX SYSTEM ====================
@@ -226,18 +246,26 @@ function isInteractiveElement(element) {
 
 // ==================== INTRO SCREEN ====================
 const startButton = document.getElementById('startButton');
-const toggleSfxBtn = document.getElementById('toggleSfx');
-const toggleBgmBtn = document.getElementById('toggleBgm');
+const sfxVolumeBtn = document.getElementById('sfxVolumeBtn');
+const bgmVolumeBtn = document.getElementById('bgmVolumeBtn');
+const sfxVolumeSlider = document.getElementById('sfxVolumeSlider');
+const bgmVolumeSlider = document.getElementById('bgmVolumeSlider');
 const introScreen = document.getElementById('introScreen');
 const bgVideo = document.querySelector('.background-video');
 
-// Initialize toggle buttons with state (safe check)
-if (toggleSfxBtn) toggleSfxBtn.setAttribute('data-enabled', AUDIO_CONFIG.sfxEnabled);
-if (toggleBgmBtn) toggleBgmBtn.setAttribute('data-enabled', AUDIO_CONFIG.bgmEnabled);
+// Initialize sliders with default value (50%)
+if (sfxVolumeSlider) {
+    sfxVolumeSlider.value = 50;
+    sfxVolumeSlider.addEventListener('input', (e) => updateSfxVolume(e.target.value));
+}
+if (bgmVolumeSlider) {
+    bgmVolumeSlider.value = 50;
+    bgmVolumeSlider.addEventListener('input', (e) => updateBgmVolume(e.target.value));
+}
 
-// Toggle button listeners
-if (toggleSfxBtn) toggleSfxBtn.addEventListener('click', toggleSfx);
-if (toggleBgmBtn) toggleBgmBtn.addEventListener('click', toggleBgm);
+// Volume button listeners
+if (sfxVolumeBtn) sfxVolumeBtn.addEventListener('click', toggleSfxSlider);
+if (bgmVolumeBtn) bgmVolumeBtn.addEventListener('click', toggleBgmSlider);
 
 // Start background music on page load (will fail due to autoplay restrictions)
 switchBgm('bgmDefault');
@@ -277,9 +305,9 @@ function togglePanel(panelId, btnId) {
 	const isOpen = !!(panel && panel.classList.contains('open'));
 	const resultsBox = document.getElementById('resultsBox');
 	const singleResult = document.getElementById('singleResult');
-	const rollPanel = document.getElementById('rollOptionsPanel');
+	const rollPanelContainer = document.getElementById('rollOptionsPanelContainer');
 	const settingsPanel = document.getElementById('settingsPanel');
-	if (rollPanel) rollPanel.classList.remove('open');
+	if (rollPanelContainer) rollPanelContainer.classList.remove('open');
 	if (settingsPanel) settingsPanel.classList.remove('open');
 	const rollBtn = document.getElementById('rollOptionsBtn');
 	const settingsBtn = document.getElementById('settingsBtn');
@@ -311,8 +339,115 @@ function togglePanel(panelId, btnId) {
 document.addEventListener('DOMContentLoaded', () => {
 	const rollOptionsBtn = document.getElementById('rollOptionsBtn');
 	const settingsBtn = document.getElementById('settingsBtn');
-	if (rollOptionsBtn) rollOptionsBtn.addEventListener('click', () => togglePanel('rollOptionsPanel', 'rollOptionsBtn'));
+	if (rollOptionsBtn) rollOptionsBtn.addEventListener('click', () => togglePanel('rollOptionsPanelContainer', 'rollOptionsBtn'));
 	if (settingsBtn) settingsBtn.addEventListener('click', () => togglePanel('settingsPanel', 'settingsBtn'));
+	
+	// Wire preset dropdown toggles
+	const rollPresetsBtn = document.getElementById('rollPresetsBtn');
+	const rollPresetsDropdown = document.getElementById('rollPresetsDropdown');
+	const luckPresetsBtn = document.getElementById('luckPresetsBtn');
+	const luckPresetsDropdown = document.getElementById('luckPresetsDropdown');
+	
+	if (rollPresetsBtn && rollPresetsDropdown) {
+		rollPresetsBtn.addEventListener('click', () => {
+			const isOpen = rollPresetsDropdown.classList.contains('open');
+			rollPresetsDropdown.classList.toggle('open', !isOpen);
+			rollPresetsBtn.classList.toggle('active', !isOpen);
+			// Close other dropdown
+			if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
+			if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
+		});
+	}
+	
+	if (luckPresetsBtn && luckPresetsDropdown) {
+		luckPresetsBtn.addEventListener('click', () => {
+			const isOpen = luckPresetsDropdown.classList.contains('open');
+			luckPresetsDropdown.classList.toggle('open', !isOpen);
+			luckPresetsBtn.classList.toggle('active', !isOpen);
+			// Close other dropdown
+			if (rollPresetsDropdown) rollPresetsDropdown.classList.remove('open');
+			if (rollPresetsBtn) rollPresetsBtn.classList.remove('active');
+		});
+	}
+	
+	// Wire roll preset buttons
+	document.querySelectorAll('.preset-btn[data-rolls]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const rollsInput = document.getElementById('rollsInput');
+			if (rollsInput) {
+				rollsInput.value = btn.dataset.rolls;
+				rollsInput.dispatchEvent(new Event('input', { bubbles: true }));
+			}
+			// Close dropdown
+			if (rollPresetsDropdown) rollPresetsDropdown.classList.remove('open');
+			if (rollPresetsBtn) rollPresetsBtn.classList.remove('active');
+			playSound('clickSound');
+		});
+	});
+	
+	// Wire luck preset buttons
+	document.querySelectorAll('.preset-btn[data-luck]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const luckInput = document.getElementById('luckInput');
+			const oblivionToggle = document.getElementById('oblivionToggle');
+			const duneToggle = document.getElementById('duneToggle');
+			if (luckInput) {
+				luckInput.value = btn.dataset.luck;
+				luckInput.dispatchEvent(new Event('input', { bubbles: true }));
+			}
+			// If this preset has data-oblivion, enable oblivion and disable dune
+			if (btn.dataset.oblivion === 'true') {
+				if (oblivionToggle) oblivionToggle.checked = true;
+				if (duneToggle) duneToggle.checked = false;
+				updateSpecialToggleStates();
+			}
+			// If this preset has data-dune, enable dune and disable oblivion
+			if (btn.dataset.dune === 'true') {
+				if (duneToggle) duneToggle.checked = true;
+				if (oblivionToggle) oblivionToggle.checked = false;
+				updateSpecialToggleStates();
+			}
+			// Close dropdown
+			if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
+			if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
+			playSound('clickSound');
+		});
+	});
+	
+	// Wire quick biome buttons
+	document.querySelectorAll('.quick-biome-btn[data-biome]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const biomeSelect = document.getElementById('biomeSelect');
+			if (biomeSelect) {
+				biomeSelect.value = btn.dataset.biome;
+				biomeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+			}
+			playSound('clickSound');
+		});
+	});
+	
+	// Wire special aura toggle mutual exclusivity
+	const oblivionToggle = document.getElementById('oblivionToggle');
+	const duneToggle = document.getElementById('duneToggle');
+	
+	function updateSpecialToggleStates() {
+		const oblivionChecked = oblivionToggle && oblivionToggle.checked;
+		const duneChecked = duneToggle && duneToggle.checked;
+		
+		if (oblivionToggle) {
+			oblivionToggle.disabled = duneChecked;
+		}
+		if (duneToggle) {
+			duneToggle.disabled = oblivionChecked;
+		}
+	}
+	
+	if (oblivionToggle) {
+		oblivionToggle.addEventListener('change', updateSpecialToggleStates);
+	}
+	if (duneToggle) {
+		duneToggle.addEventListener('change', updateSpecialToggleStates);
+	}
 });
 
 /**

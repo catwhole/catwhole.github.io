@@ -20,10 +20,45 @@ function getSettingsState() {
 }
 
 // Helper for future-proof warnings - only shows if warnings enabled
+// Returns a Promise that resolves to true (yes) or false (no)
 function showWarning(message) {
 	getSettingsState();
-	if (!settingsWarningsEnabled) return true; // Skip warning, proceed
-	return window.confirm(message);
+	if (!settingsWarningsEnabled) return Promise.resolve(true); // Skip warning, proceed
+	
+	return new Promise((resolve) => {
+		const modal = document.getElementById('warningModal');
+		const messageEl = document.getElementById('warningMessage');
+		const yesBtn = document.getElementById('warningYes');
+		const noBtn = document.getElementById('warningNo');
+		
+		if (!modal || !messageEl || !yesBtn || !noBtn) {
+			// Fallback to native confirm if modal elements not found
+			resolve(window.confirm(message));
+			return;
+		}
+		
+		messageEl.textContent = message;
+		modal.classList.remove('hidden');
+		
+		const cleanup = () => {
+			modal.classList.add('hidden');
+			yesBtn.removeEventListener('click', handleYes);
+			noBtn.removeEventListener('click', handleNo);
+		};
+		
+		const handleYes = () => {
+			cleanup();
+			resolve(true);
+		};
+		
+		const handleNo = () => {
+			cleanup();
+			resolve(false);
+		};
+		
+		yesBtn.addEventListener('click', handleYes);
+		noBtn.addEventListener('click', handleNo);
+	});
 }
 
 // Seed/hash function (xmur3) -> produces 32-bit seeds from a string/number
@@ -114,15 +149,18 @@ function rng(min, max) {
 
 // Roll logic
 // auraList: array of aura objects (see user's auras.json structure)
-// options: { luck: number (default 1), biome: string|null }
+// options: { luck: number (default 1), biome: string|null, allowOblivion: bool, allowDune: bool }
 function buildCandidates(auraList, options = {}) {
 	const luck = options.luck == null ? 1 : Math.max(0.0000001, Number(options.luck));
 	const biome = options.biome == null ? null : String(options.biome);
+	const allowOblivion = options.allowOblivion === true;
+	const allowDune = options.allowDune === true;
 
-	if (!Array.isArray(auraList) || auraList.length === 0) return { finals: [], entries: [], len: 0 };
+	if (!Array.isArray(auraList) || auraList.length === 0) return { finals: [], entries: [], len: 0, specialFinals: [], specialEntries: [], specialLen: 0 };
 
 	const list = auraList;
 	const candidates = [];
+	const specialCandidates = []; // Special auras checked first
 	
 	// Define rare biomes that don't inherit biomeExclusive auras
 	const rareBiomes = new Set(['cyberspace', 'dreamspace', 'glitch']);
@@ -131,6 +169,20 @@ function buildCandidates(auraList, options = {}) {
 		const aura = list[i];
 		const base = Number(aura.rarity || 0);
 		if (!isFinite(base) || base <= 0) continue;
+
+		// Handle special auras (Oblivion/Memory, Neferkhaf) - only include if checkbox is checked
+		// Special auras skip all biome logic and are checked FIRST
+		if (aura.specialAura) {
+			if (aura.specialAura === 'oblivion' && !allowOblivion) continue;
+			if (aura.specialAura === 'dune' && !allowDune) continue;
+			// Special auras are included regardless of biome - skip all biome checks
+			const finalR = Math.max(2, Math.floor(base));
+			const displayRarity = finalR;
+			const name = aura.name || 'Unknown';
+			const resultKey = name + '|' + displayRarity + '|special';
+			specialCandidates.push({ aura, finalR, displayRarity, nativeApplied: false, exclusiveApplied: false, isLimboAura: false, isSpecialAura: true, order: i, resultKey });
+			continue;
+		}
 
 		// Check if aura is a "null" aura (has null amplification)
 		const isNullAura = aura.biomeAmplified && typeof aura.biomeAmplified === 'object' && aura.biomeAmplified['null'] != null;
@@ -212,10 +264,14 @@ function buildCandidates(auraList, options = {}) {
 
 		displayRarity = Math.max(2, Math.floor(displayRarity));
 		
-		// Illusionary is unaffected by luck - always 1 in 10,000,000
+		// Special auras with staticChance are unaffected by luck
 		const auraBaseName = (aura.name || '').split(' - ')[0];
-		if (auraBaseName === 'Illusionary') {
-			finalR = 10000000; // Always 1 in 10 million
+		if (aura.staticChance) {
+			// Static chance auras use their base rarity directly, unaffected by luck
+			finalR = base;
+		} else if (auraBaseName === 'Illusionary') {
+			// Illusionary is unaffected by luck - always 1 in 10,000,000
+			finalR = 10000000;
 		} else {
 			finalR = Math.floor(finalR / luck);
 		}
@@ -227,7 +283,9 @@ function buildCandidates(auraList, options = {}) {
 		candidates.push({ aura, finalR, displayRarity, nativeApplied, exclusiveApplied, isLimboAura, order: i, resultKey });
 	}
 
-	if (candidates.length === 0) return { finals: [], entries: [], len: 0 };
+	if (candidates.length === 0 && specialCandidates.length === 0) {
+		return { finals: [], entries: [], len: 0, specialFinals: [], specialEntries: [], specialLen: 0 };
+	}
 
 	// Sort by display rarity (rarest first) - this is after biome amplification but before luck
 	// This ensures the rolling order puts rarer auras at the top
@@ -240,16 +298,31 @@ function buildCandidates(auraList, options = {}) {
 		entries[i] = candidates[i];
 		finals[i] = candidates[i].finalR;
 	}
-	return { finals, entries, len };
+
+	// Prepare special auras (checked first, before regular auras)
+	const specialLen = specialCandidates.length;
+	const specialFinals = new Uint32Array(specialLen);
+	const specialEntries = new Array(specialLen);
+	for (let i = 0; i < specialLen; i++) {
+		specialEntries[i] = specialCandidates[i];
+		specialFinals[i] = specialCandidates[i].finalR;
+	}
+
+	return { finals, entries, len, specialFinals, specialEntries, specialLen };
 }
 
 function rollFromCandidates(candidateSet) {
-	if (!candidateSet || candidateSet.len === 0) return null;
-	const finals = candidateSet.finals;
-	const entries = candidateSet.entries;
-	const len = candidateSet.len;
+	if (!candidateSet || (candidateSet.len === 0 && candidateSet.specialLen === 0)) return null;
+	const { finals, entries, len, specialFinals, specialEntries, specialLen } = candidateSet;
+	
 	// Try once per candidate in sequence; if all fail, repeat the sequence until success
+	// Special auras are checked FIRST, before regular auras
 	while (true) {
+		// Check special auras first
+		for (let i = 0; i < specialLen; i++) {
+			if (rng(1, specialFinals[i]) === 1) return specialEntries[i];
+		}
+		// Then check regular auras
 		for (let i = 0; i < len; i++) {
 			if (rng(1, finals[i]) === 1) return entries[i];
 		}
@@ -307,10 +380,14 @@ function readOptionsFromUI() {
 	const rollsInput = document.getElementById('rollsInput');
 	const luckInput = document.getElementById('luckInput');
 	const biomeSelect = document.getElementById('biomeSelect');
+	const oblivionToggle = document.getElementById('oblivionToggle');
+	const duneToggle = document.getElementById('duneToggle');
 	const count = Math.max(1, Math.floor(Number(rollsInput && rollsInput.value) || 1));
 	const luck = Math.max(0.0000001, Number(luckInput && luckInput.value) || 1);
 	const biome = biomeSelect && biomeSelect.value ? biomeSelect.value : null;
-	return { count, luck, biome };
+	const allowOblivion = oblivionToggle ? oblivionToggle.checked : false;
+	const allowDune = duneToggle ? duneToggle.checked : false;
+	return { count, luck, biome, allowOblivion, allowDune };
 }
 
 function updateBuffDisplay() {
@@ -393,8 +470,8 @@ function buildDisplayLine(entry, count) {
 }
 
 // Special aura names that have unique rarity classes
-const CHALLENGED_AURAS = ['Glitch', 'Borealis', 'Leviathan'];
-const CHALLENGED_PLUS_AURAS = ['Dreammetric', 'Oppression', 'Illusionary', 'Monarch'];
+const CHALLENGED_AURAS = ['Glitch', 'Borealis', 'Leviathan', 'Memory', 'Neferkhaf'];
+const CHALLENGED_PLUS_AURAS = ['Dreammetric', 'Oppression', 'Illusionary', 'Monarch', 'Oblivion'];
 
 function getBaseAuraName(fullName) {
 	// Extract just the aura name (before the " - " rarity part)
@@ -461,7 +538,7 @@ function renderResults(counts) {
 	}
 	
 	// Add stats row at the top
-	const { count, luck, biome } = readOptionsFromUI();
+	const { count, luck, biome, allowOblivion, allowDune } = readOptionsFromUI();
 	const biomeLabels = {
 		normal: 'Normal', day: 'Day', night: 'Night', rainy: 'Rainy', windy: 'Windy',
 		snowy: 'Snowy', sandstorm: 'Sandstorm', hell: 'Hell', starfall: 'Starfall',
@@ -470,10 +547,18 @@ function renderResults(counts) {
 	};
 	const statsRow = document.createElement('div');
 	statsRow.id = 'resultsStatsRow';
-	statsRow.innerHTML = `Luck: ${luck} | Rolls: ${count.toLocaleString()} | Biome: ${biome ? (biomeLabels[biome] || biome) : 'None'}`;
+	let statsText = `Luck: ${luck} | Rolls: ${count.toLocaleString()} | Biome: ${biome ? (biomeLabels[biome] || biome) : 'None'}`;
+	if (allowOblivion) statsText += ' | Oblivion/Memory: ON';
+	if (allowDune) statsText += ' | Neferkhaf: ON';
+	statsRow.innerHTML = statsText;
 	frag.appendChild(statsRow);
 	
 	entries.sort((a, b) => {
+		// Special auras always come first
+		const aSpecial = a.entry.isSpecialAura ? 1 : 0;
+		const bSpecial = b.entry.isSpecialAura ? 1 : 0;
+		if (bSpecial !== aSpecial) return bSpecial - aSpecial;
+		
 		const ar = a.entry.nativeApplied ? a.entry.displayRarity : Number(a.entry.aura && a.entry.aura.rarity) || 1;
 		const br = b.entry.nativeApplied ? b.entry.displayRarity : Number(b.entry.aura && b.entry.aura.rarity) || 1;
 		if (br !== ar) return br - ar; // rare to common
@@ -584,30 +669,45 @@ async function runRolls() {
 	const btn = document.getElementById('rollButton');
 	if (btn) btn.disabled = true;
 	if (typeof playSound === 'function') playSound('rollSound');
-	const rollPanel = document.getElementById('rollOptionsPanel');
-	const settingsPanel = document.getElementById('settingsPanel');
-	if (rollPanel) rollPanel.classList.remove('open');
-	if (settingsPanel) settingsPanel.classList.remove('open');
-	const rollBtn = document.getElementById('rollOptionsBtn');
-	const settingsBtn = document.getElementById('settingsBtn');
-	if (rollBtn) rollBtn.setAttribute('data-enabled', 'false');
-	if (settingsBtn) settingsBtn.setAttribute('data-enabled', 'false');
 
-	const { count, luck, biome } = readOptionsFromUI();
-	if (count > 999999) {
-		const ok = showWarning('You set a lot of rolls. It might take some time and your browser could lag. Are you sure?');
+	const { count, luck, biome, allowOblivion, allowDune } = readOptionsFromUI();
+	if (count > 499999999) {
+		const ok = await showWarning('Well, if you\'re sure about this many rolls... I\'m warning you though, this could take up to an hour.');
+		if (!ok) {
+			if (btn) btn.disabled = false;
+			return;
+		}
+	} else if (count > 99999999) {
+		const ok = await showWarning('You have selected a VERY high roll count. This will DEFINITELY take a lot of time. Are you sure?');
+		if (!ok) {
+			if (btn) btn.disabled = false;
+			return;
+		}
+	} else if (count > 999999) {
+		const ok = await showWarning('You set a lot of rolls. It might take some time and your browser could lag. Are you sure?');
 		if (!ok) {
 			if (btn) btn.disabled = false;
 			return;
 		}
 	}
+	
+	// Close menus and disable buttons only after warnings are confirmed
+	const rollPanelContainer = document.getElementById('rollOptionsPanelContainer');
+	const settingsPanel = document.getElementById('settingsPanel');
+	if (rollPanelContainer) rollPanelContainer.classList.remove('open');
+	if (settingsPanel) settingsPanel.classList.remove('open');
+	const rollBtn = document.getElementById('rollOptionsBtn');
+	const settingsBtn = document.getElementById('settingsBtn');
+	if (rollBtn) rollBtn.setAttribute('data-enabled', 'false');
+	if (settingsBtn) settingsBtn.setAttribute('data-enabled', 'false');
+	
 	updateBuffDisplay();
 	const total = count;
 	const single = document.getElementById('singleResult');
 	if (single) single.style.display = 'none';
 	hideResultsAndSingle();
 	const start = performance.now();
-	const candidateSet = buildCandidates(AURAS, { luck, biome });
+	const candidateSet = buildCandidates(AURAS, { luck, biome, allowOblivion, allowDune });
 	if (candidateSet.len === 0) {
 		updateProgress(0, total, start);
 		if (btn) btn.disabled = false;
@@ -638,10 +738,9 @@ async function runRolls() {
 	}
 
 	// For bulk rolls, use optimized path with Uint32Array for counts
-	const finals = candidateSet.finals;
-	const entries = candidateSet.entries;
-	const len = candidateSet.len;
-	const countArr = new Uint32Array(len);
+	const { finals, entries, len, specialFinals, specialEntries, specialLen } = candidateSet;
+	const totalEntries = len + specialLen;
+	const countArr = new Uint32Array(totalEntries); // First specialLen indices are for special auras
 
 	// Get RNG state directly for inlining (avoids ALL function call overhead)
 	const rngState = PRNG.getState();
@@ -657,9 +756,29 @@ async function runRolls() {
 		const end = Math.min(total, done + chunkSize);
 		// FULLY INLINED hot loop - no function calls at all
 		for (let r = done; r < end; r++) {
-			// Roll one aura (top-to-bottom)
+			// Roll one aura - check special auras FIRST, then regular auras
 			let idx = -1;
 			while (idx < 0) {
+				// Check special auras first
+				for (let i = 0; i < specialLen; i++) {
+					// Inline sfc32
+					sa >>>= 0; sb >>>= 0; sc >>>= 0; sd >>>= 0;
+					let t = (sa + sb) | 0;
+					sa = sb ^ (sb >>> 9);
+					sb = (sc + (sc << 3)) | 0;
+					sc = (sc << 21) | (sc >>> 11);
+					sd = (sd + 1) | 0;
+					t = (t + sd) | 0;
+					sc = (sc + t) | 0;
+					const rnd = t >>> 0;
+					// Check if hit
+					if ((rnd % specialFinals[i]) === 0) {
+						idx = i; // Index 0 to specialLen-1 for special auras
+						break;
+					}
+				}
+				if (idx >= 0) break;
+				// Then check regular auras
 				for (let i = 0; i < len; i++) {
 					// Inline sfc32
 					sa >>>= 0; sb >>>= 0; sc >>>= 0; sd >>>= 0;
@@ -673,7 +792,7 @@ async function runRolls() {
 					const rnd = t >>> 0;
 					// Check if hit
 					if ((rnd % finals[i]) === 0) {
-						idx = i;
+						idx = specialLen + i; // Offset by specialLen for regular auras
 						break;
 					}
 				}
@@ -694,9 +813,16 @@ async function runRolls() {
 
 	// Convert Uint32Array to Map for rendering
 	const counts = new Map();
-	for (let i = 0; i < len; i++) {
+	// Special auras first
+	for (let i = 0; i < specialLen; i++) {
 		if (countArr[i] > 0) {
-			counts.set(entries[i].resultKey, { entry: entries[i], count: countArr[i] });
+			counts.set(specialEntries[i].resultKey, { entry: specialEntries[i], count: countArr[i] });
+		}
+	}
+	// Then regular auras
+	for (let i = 0; i < len; i++) {
+		if (countArr[specialLen + i] > 0) {
+			counts.set(entries[i].resultKey, { entry: entries[i], count: countArr[specialLen + i] });
 		}
 	}
 
@@ -770,8 +896,18 @@ function toggleAutoRoll() {
 		// Check flashes warning
 		getSettingsState();
 		if (settingsFlashesEnabled) {
-			const ok = showWarning('You have flashes enabled. Rolling several Transcendent auras in a row could be quite annoying. Are you sure?');
-			if (!ok) return;
+			showWarning('You have flashes enabled. Rolling several Transcendent auras in a row could be quite annoying. Are you sure?')
+				.then(ok => {
+					if (!ok) return;
+					
+					autoRollEnabled = true;
+					if (autoRollBtn) {
+						autoRollBtn.textContent = 'Auto Roll: ON';
+						autoRollBtn.setAttribute('data-enabled', 'true');
+					}
+					startAutoRoll();
+				});
+			return;
 		}
 		
 		autoRollEnabled = true;

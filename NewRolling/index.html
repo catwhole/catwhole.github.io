@@ -20,8 +20,16 @@
             <p class="intro-subtitle">By @catwhore</p>
             <button class="btn btn-primary start-button" id="startButton">Start Simulating!</button>
             <div class="toggle-controls" id="toggleControls">
-                <button class="btn btn-toggle" id="toggleSfx">Toggle Sounds</button>
-                <button class="btn btn-toggle" id="toggleBgm">Toggle Music</button>
+                <button class="btn btn-toggle" id="sfxVolumeBtn">Sound Volume</button>
+                <button class="btn btn-toggle" id="bgmVolumeBtn">Music Volume</button>
+                <div class="volume-slider-container" id="sfxSliderContainer" style="display: none;">
+                    <input type="range" id="sfxVolumeSlider" class="volume-slider" min="0" max="100" value="50">
+                    <span class="volume-label" id="sfxVolumeLabel">50%</span>
+                </div>
+                <div class="volume-slider-container" id="bgmSliderContainer" style="display: none;">
+                    <input type="range" id="bgmVolumeSlider" class="volume-slider" min="0" max="100" value="50">
+                    <span class="volume-label" id="bgmVolumeLabel">50%</span>
+                </div>
             </div>
         </div>
     </div>
@@ -77,38 +85,108 @@
 
         <div id="bottomRightControls" class="toggle-controls"></div>
 
-        <div id="rollOptionsPanel" class="menu-panel">
-            <h3>Roll Options</h3>
-            <label for="rollsInput">Rolls</label>
-            <input id="rollsInput" class="input-field" type="number" min="1" value="1">
+        <div id="rollOptionsPanelContainer" class="menu-panel-container">
+            <div id="quickOptionsPanel" class="menu-panel-side">
+                <h3>Quick Options</h3>
+                
+                <div class="preset-section">
+                    <div class="preset-header">
+                        <span>Roll Presets</span>
+                        <button class="btn btn-preset-toggle" id="rollPresetsBtn">Show ▼</button>
+                    </div>
+                    <div class="preset-list" id="rollPresetsDropdown">
+                        <button class="preset-btn" data-rolls="100">100 rolls</button>
+                        <button class="preset-btn" data-rolls="1000">1,000 rolls</button>
+                        <button class="preset-btn" data-rolls="10000">10,000 rolls</button>
+                        <button class="preset-btn" data-rolls="100000">100,000 rolls</button>
+                        <button class="preset-btn rolls-red" data-rolls="1000000">1,000,000 rolls</button>
+                        <button class="preset-btn rolls-redder" data-rolls="10000000">10,000,000 rolls</button>
+                        <button class="preset-btn rolls-very-red" data-rolls="100000000">100,000,000 rolls</button>
+                    </div>
+                </div>
 
-            <label for="luckInput">Luck</label>
-            <input id="luckInput" class="input-field" type="number" min="1" step="1" value="1">
+                <div class="preset-section">
+                    <div class="preset-header">
+                        <span>Luck Presets</span>
+                        <button class="btn btn-preset-toggle" id="luckPresetsBtn">Show ▼</button>
+                    </div>
+                    <div class="preset-list" id="luckPresetsDropdown">
+                        <button class="preset-btn" data-luck="10000" data-dune="true">Potion of the Dune - 10,000</button>
+                        <button class="preset-btn" data-luck="50000">Potion of Bound - 50,000</button>
+                        <button class="preset-btn" data-luck="150000">Heavenly Potion - 150,000</button>
+                        <button class="preset-btn" data-luck="200000">Heavenly + Bound - 200,000</button>
+                        <button class="preset-btn" data-luck="400000">Godlike Potion - 400,000</button>
+                        <button class="preset-btn" data-luck="600000">Godlike + Heavenly + Bound - 600,000</button>
+                        <button class="preset-btn" data-luck="600000" data-oblivion="true">Oblivion Potion - 600,000</button>
+                        <button class="preset-btn" data-luck="700000">Pump King's Blood - 700,000</button>
+                    </div>
+                </div>
 
-            <label for="biomeSelect">Biome</label>
-            <select id="biomeSelect" class="select-field">
-                <option value="">None</option>
-                <option value="day">Day</option>
-                <option value="night">Night</option>
-                <option value="rainy">Rainy</option>
-                <option value="windy">Windy</option>
-                <option value="snowy">Snowy</option>
-                <option value="sandstorm">Sandstorm</option>
-                <option value="hell">Hell</option>
-                <option value="starfall">Starfall</option>
-                <option value="heaven">Heaven</option>
-                <option value="corruption">Corruption</option>
-                <option value="null">NULL</option>
-                <option value="dreamspace">Dreamspace</option>
-                <option value="glitch">Glitch</option>
-                <option value="cyberspace">Cyberspace</option>
-                <option value="limbo">LIMBO</option>
-            </select>
+                <div class="quick-biome-section">
+                    <span class="quick-biome-label">Quick Biome</span>
+                    <div class="quick-biome-buttons">
+                        <button class="preset-btn quick-biome-btn" data-biome="glitch">Glitch</button>
+                        <button class="preset-btn quick-biome-btn" data-biome="cyberspace">Cyberspace</button>
+                        <button class="preset-btn quick-biome-btn" data-biome="dreamspace">Dreamspace</button>
+                        <button class="preset-btn quick-biome-btn" data-biome="limbo">LIMBO</button>
+                        <button class="preset-btn quick-biome-btn" data-biome="">None</button>
+                    </div>
+                </div>
+            </div>
 
-            <div class="roll-speed-section">
-                <label for="rollSpeedInput">Roll Speed</label>
-                <input id="rollSpeedInput" class="input-field" type="number" min="1" max="15" value="1">
-                <span class="hint-text">Rolls per second (max 15)</span>
+            <div id="rollOptionsPanel" class="menu-panel-main">
+                <h3>Roll Options</h3>
+                <label for="rollsInput">Rolls</label>
+                <input id="rollsInput" class="input-field" type="number" min="1" value="1">
+
+                <label for="luckInput">Luck</label>
+                <input id="luckInput" class="input-field" type="number" min="1" step="1" value="1">
+
+                <label for="biomeSelect">Biome</label>
+                <select id="biomeSelect" class="select-field">
+                    <option value="">None</option>
+                    <option value="day">Day</option>
+                    <option value="night">Night</option>
+                    <option value="rainy">Rainy</option>
+                    <option value="windy">Windy</option>
+                    <option value="snowy">Snowy</option>
+                    <option value="sandstorm">Sandstorm</option>
+                    <option value="hell">Hell</option>
+                    <option value="starfall">Starfall</option>
+                    <option value="heaven">Heaven</option>
+                    <option value="corruption">Corruption</option>
+                    <option value="null">NULL</option>
+                    <option value="dreamspace">Dreamspace</option>
+                    <option value="glitch">Glitch</option>
+                    <option value="cyberspace">Cyberspace</option>
+                    <option value="limbo">LIMBO</option>
+                </select>
+
+                <div class="roll-speed-section">
+                    <label for="rollSpeedInput">Roll Speed</label>
+                    <input id="rollSpeedInput" class="input-field" type="number" min="1" max="15" value="1">
+                    <span class="hint-text">Rolls per second (max 15)</span>
+                </div>
+            </div>
+
+            <div id="specialOptionsPanel" class="menu-panel-side">
+                <h3>Special Options</h3>
+                <div class="special-auras-section">
+                    <div class="option-row">
+                        <label for="oblivionToggle">Allow Oblivion/Memory</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="oblivionToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="option-row">
+                        <label for="duneToggle">Allow Neferkhaf</label>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="duneToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -163,6 +241,19 @@
                 <button class="btn btn-toggle" id="settingsBtn">Settings</button>
             </div>
             <button class="btn btn-toggle" id="autoRollBtn">Auto Roll: OFF</button>
+        </div>
+    </div>
+
+    <!-- Custom Warning Modal -->
+    <div id="warningModal" class="warning-modal hidden">
+        <div class="warning-backdrop"></div>
+        <div class="warning-container">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-message" id="warningMessage"></div>
+            <div class="warning-buttons">
+                <button class="btn btn-primary" id="warningYes">Yes</button>
+                <button class="btn btn-toggle" id="warningNo">No</button>
+            </div>
         </div>
     </div>
 

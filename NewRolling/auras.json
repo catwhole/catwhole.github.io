@@ -1,4 +1,7 @@
 [
+  { "name": "Memory", "rarity": 100, "specialAura": "oblivion", "staticChance": true },
+  { "name": "Oblivion", "rarity": 2000, "specialAura": "oblivion", "staticChance": true },
+  { "name": "Neferkhaf", "rarity": 2000, "specialAura": "dune", "staticChance": true },
   { "name": "Monarch - 3,000,000,000", "rarity": 3000000000, "biomeExclusive": "corruption" },
   { "name": "Equinox - 2,500,000,000", "rarity": 2500000000 },
   { "name": "BREAKTHROUGH - 1,999,999,999", "rarity": 1999999999, "biomeExclude": "null" },
