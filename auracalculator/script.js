@@ -416,7 +416,11 @@ var knowledge = parseFloat(document.querySelector('input[name="knowledge"]:check
 // Update speed potion value from 0.25 to 0.1
 let speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
 let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
-let bank = document.getElementById("bank").checked ? 0.07 : 0;
+let bankElem = document.getElementById("bank");
+let bank = 0;
+if (bankElem) {
+    bank = parseFloat(bankElem.value) || 0;
+}
 let rudolph = document.getElementById("rudolph").checked ? 0.2 : 0;
 
 // Add Forbidden potions

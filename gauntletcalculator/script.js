@@ -18,7 +18,11 @@ function calculateGauntlets() {
     var knowledgeTwo = document.getElementById("knowledgeTwo").checked ? 0.4 : 0;
     var slothOne = document.getElementById("slothOne").checked ? -0.15 : 0;
     var slothTwo = document.getElementById("slothTwo").checked ? -0.25 : 0;
-    var bank = document.getElementById("bank").checked ? 0.07 : 0;
+    var bankElem = document.getElementById("bank");
+    var bank = 0;
+    if (bankElem) {
+        bank = parseFloat(bankElem.value) || 0;
+    }
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
     var rudolph = document.getElementById("rudolph").checked ? 0.2 : 0;
 
@@ -116,7 +120,11 @@ function calculateDifference() {
 
     var speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
     var transcendant = document.getElementById("transcendant").checked ? 10 : 0;
-    var bank = document.getElementById("bank").checked ? 0.07 : 0;
+    var bankElem = document.getElementById("bank");
+    var bank = 0;
+    if (bankElem) {
+        bank = parseFloat(bankElem.value) || 0;
+    }
     var xyz = document.getElementById("xyz").checked ? 2 : 1;
 
     var trsDecimal = gauntletSpeed / 100;
