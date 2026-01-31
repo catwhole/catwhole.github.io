@@ -1281,6 +1281,66 @@ body.glitch-mode .warning-container {
                 0 0 20px rgba(0, 255, 170, 0.3);
 }
 
+/* CYBERSPACE Mode - Solid Cyan UI */
+body.cyberspace-mode {
+    --btn-primary-bg: rgba(0, 204, 255, 0.12);
+    --btn-primary-bg-hover: rgba(0, 204, 255, 0.25);
+    --btn-primary-border: #00ccff;
+    --btn-primary-border-hover: #33ddff;
+    --btn-primary-glow: rgba(0, 204, 255, 0.35);
+    --text-accent: #00ccff;
+}
+
+body.cyberspace-mode .btn-toggle[data-enabled="true"] {
+    border-color: #00ccff;
+    color: #00ccff;
+}
+
+body.cyberspace-mode .menu-panel h3,
+body.cyberspace-mode .menu-panel-main h3,
+body.cyberspace-mode .menu-panel-side h3 {
+    color: #00ccff;
+}
+
+body.cyberspace-mode .preset-btn:hover {
+    background: rgba(0, 204, 255, 0.15);
+    border-color: #00ccff;
+}
+
+body.cyberspace-mode .input-field:hover,
+body.cyberspace-mode .select-field:hover {
+    background: rgba(0, 204, 255, 0.14);
+    border-color: rgba(0, 204, 255, 0.45);
+}
+
+body.cyberspace-mode .input-field:focus,
+body.cyberspace-mode .select-field:focus {
+    border-color: #00ccff;
+    box-shadow: 0 0 8px rgba(0, 204, 255, 0.4);
+}
+
+body.cyberspace-mode .toggle-switch input:checked + .toggle-slider {
+    background: rgba(0, 204, 255, 0.25);
+    border-color: #00ccff;
+}
+
+body.cyberspace-mode .toggle-switch input:checked + .toggle-slider::before {
+    background: #00ccff;
+}
+
+body.cyberspace-mode .btn-preset-toggle.active {
+    background: rgba(0, 204, 255, 0.15);
+    border-color: #00ccff;
+    color: #00ccff;
+}
+
+body.cyberspace-mode .warning-container {
+    background: rgba(10, 20, 30, 0.95);
+    border: 2px solid #00ccff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(0, 204, 255, 0.3);
+}
+
 body.glitch-mode #autoRollBtn[data-enabled="true"] {
     background: rgba(0, 255, 170, 0.25);
     border-color: #00ffaa;

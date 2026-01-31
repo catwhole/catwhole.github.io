@@ -453,6 +453,11 @@ const BIOME_CONFIG = {
 		video: 'Media/dreamspace.mp4',
 		modeClass: 'dreamspace-mode'
 	},
+	'cyberspace': {
+		bgm: 'bgmCyberspace',
+		video: 'Media/cyberspace.mp4',
+		modeClass: 'cyberspace-mode'
+	},
 	// Default for all other biomes
 	'default': {
 		bgm: 'bgmMain',
@@ -471,7 +476,10 @@ function handleBiomeChange(biome) {
 	const isLimbo = biome === 'limbo';
 	
 	// Remove all mode classes
-	document.body.classList.remove('limbo-mode', 'dreamspace-mode', 'glitch-mode');
+	// Remove all mode classes registered in BIOME_CONFIG
+	Object.values(BIOME_CONFIG).forEach(cfg => {
+		if (cfg && cfg.modeClass) document.body.classList.remove(cfg.modeClass);
+	});
 	
 	// Add specific mode class if defined
 	if (config.modeClass) {
