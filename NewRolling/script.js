@@ -144,6 +144,49 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
 }
 
 /**
+ * Switch background video with fade transition
+ * @param {string} videoSrc - Path to the new video file (e.g. "Media/limbo.mp4")
+ * @param {number} fadeDuration - Fade duration in milliseconds (default 1000ms)
+ */
+function switchBackgroundVideo(videoSrc, fadeDuration = 1000) {
+    const bgVideo = document.querySelector('.background-video');
+    if (!bgVideo) return;
+    
+    // If already playing this video, do nothing
+    const currentSrc = bgVideo.querySelector('source').src;
+    const newFullSrc = new URL(videoSrc, window.location.href).href;
+    if (currentSrc === newFullSrc) return;
+    
+    // Get current brightness value, defaulting to 0.3 if not set
+    let currentBrightness = 0.3;
+    const filterMatch = bgVideo.style.filter.match(/brightness\(([\d.]+)\)/);
+    if (filterMatch) {
+        currentBrightness = parseFloat(filterMatch[1]);
+    }
+    
+    bgVideo.style.transition = `filter ${fadeDuration}ms ease-out`;
+    bgVideo.style.filter = 'brightness(0)';
+    
+    setTimeout(() => {
+        // Change video source
+        const source = bgVideo.querySelector('source');
+        if (source) {
+            source.src = videoSrc;
+            bgVideo.load();
+            
+            // Wait for video to be ready, then fade in from black
+            bgVideo.addEventListener('loadeddata', function onLoaded() {
+                bgVideo.removeEventListener('loadeddata', onLoaded);
+                bgVideo.style.filter = `brightness(${currentBrightness})`;
+            });
+            
+            // Start playing
+            bgVideo.play().catch(err => console.log('Video play failed:', err));
+        }
+    }, fadeDuration);
+}
+
+/**
  * Update global audio volumes
  * @param {number} sfxVol - SFX volume (0-1)
  * @param {number} bgmVol - BGM volume (0-1)
@@ -165,11 +208,20 @@ function setAudioVolumes(sfxVol, bgmVol) {
 function toggleSfxSlider() {
     const sfxContainer = document.getElementById('sfxSliderContainer');
     const bgmContainer = document.getElementById('bgmSliderContainer');
+    const sfxBtn = document.getElementById('sfxVolumeBtn');
+    const bgmBtn = document.getElementById('bgmVolumeBtn');
     if (sfxContainer) {
         const isVisible = sfxContainer.style.display !== 'none';
         sfxContainer.style.display = isVisible ? 'none' : 'flex';
-        if (bgmContainer && sfxContainer.style.display !== 'none') {
-            bgmContainer.style.display = 'none';
+        if (isVisible) {
+            // Closing - remove data-enabled to restore default state
+            if (sfxBtn) sfxBtn.removeAttribute('data-enabled');
+            if (bgmBtn) bgmBtn.removeAttribute('data-enabled');
+        } else {
+            // Opening - highlight this button, dim the other
+            if (sfxBtn) sfxBtn.setAttribute('data-enabled', 'true');
+            if (bgmBtn) bgmBtn.setAttribute('data-enabled', 'false');
+            if (bgmContainer) bgmContainer.style.display = 'none';
         }
     }
 }
@@ -180,11 +232,20 @@ function toggleSfxSlider() {
 function toggleBgmSlider() {
     const sfxContainer = document.getElementById('sfxSliderContainer');
     const bgmContainer = document.getElementById('bgmSliderContainer');
+    const sfxBtn = document.getElementById('sfxVolumeBtn');
+    const bgmBtn = document.getElementById('bgmVolumeBtn');
     if (bgmContainer) {
         const isVisible = bgmContainer.style.display !== 'none';
         bgmContainer.style.display = isVisible ? 'none' : 'flex';
-        if (sfxContainer && bgmContainer.style.display !== 'none') {
-            sfxContainer.style.display = 'none';
+        if (isVisible) {
+            // Closing - remove data-enabled to restore default state
+            if (sfxBtn) sfxBtn.removeAttribute('data-enabled');
+            if (bgmBtn) bgmBtn.removeAttribute('data-enabled');
+        } else {
+            // Opening - highlight this button, dim the other
+            if (bgmBtn) bgmBtn.setAttribute('data-enabled', 'true');
+            if (sfxBtn) sfxBtn.setAttribute('data-enabled', 'false');
+            if (sfxContainer) sfxContainer.style.display = 'none';
         }
     }
 }
@@ -209,6 +270,28 @@ function updateBgmVolume(value) {
     setAudioVolumes(undefined, actualVolume);
     const label = document.getElementById('bgmVolumeLabel');
     if (label) label.textContent = percent + '%';
+}
+
+/**
+ * Mute SFX by setting slider to 0
+ */
+function muteSfx() {
+    const slider = document.getElementById('sfxVolumeSlider');
+    if (slider) {
+        slider.value = 0;
+        updateSfxVolume(0);
+    }
+}
+
+/**
+ * Mute BGM by setting slider to 0
+ */
+function muteBgm() {
+    const slider = document.getElementById('bgmVolumeSlider');
+    if (slider) {
+        slider.value = 0;
+        updateBgmVolume(0);
+    }
 }
 
 // ==================== INTERACTIVE ELEMENT SFX SYSTEM ====================
@@ -267,6 +350,12 @@ if (bgmVolumeSlider) {
 if (sfxVolumeBtn) sfxVolumeBtn.addEventListener('click', toggleSfxSlider);
 if (bgmVolumeBtn) bgmVolumeBtn.addEventListener('click', toggleBgmSlider);
 
+// Mute button listeners
+const sfxMuteBtn = document.getElementById('sfxMuteBtn');
+const bgmMuteBtn = document.getElementById('bgmMuteBtn');
+if (sfxMuteBtn) sfxMuteBtn.addEventListener('click', () => muteSfx());
+if (bgmMuteBtn) bgmMuteBtn.addEventListener('click', () => muteBgm());
+
 // Start background music on page load (will fail due to autoplay restrictions)
 switchBgm('bgmDefault');
 
@@ -311,14 +400,15 @@ function togglePanel(panelId, btnId) {
 	if (settingsPanel) settingsPanel.classList.remove('open');
 	const rollBtn = document.getElementById('rollOptionsBtn');
 	const settingsBtn = document.getElementById('settingsBtn');
-	if (rollBtn) rollBtn.setAttribute('data-enabled', 'false');
-	if (settingsBtn) settingsBtn.setAttribute('data-enabled', 'false');
 	if (!panel) return;
 	if (!isOpen) {
-		// Opening panel - remember what was showing
+		// Opening panel - remember what was showing, dim the other button
 		wasSingleResultShowing = singleResult && singleResult.style.display === 'flex';
 		panel.classList.add('open');
 		if (btn) btn.setAttribute('data-enabled', 'true');
+		// Dim the other button
+		if (btnId === 'rollOptionsBtn' && settingsBtn) settingsBtn.setAttribute('data-enabled', 'false');
+		if (btnId === 'settingsBtn' && rollBtn) rollBtn.setAttribute('data-enabled', 'false');
 		if (resultsBox) resultsBox.style.display = 'none';
 		// Use visibility to hide single result so animations keep running (no restart on restore)
 		if (singleResult && wasSingleResultShowing) {
@@ -326,12 +416,171 @@ function togglePanel(panelId, btnId) {
 			singleResult.classList.remove('flash'); // Remove flash so it doesn't replay
 		}
 	} else {
-		// Closing panel - restore what was showing
+		// Closing panel - restore default state for both buttons
+		if (rollBtn) rollBtn.removeAttribute('data-enabled');
+		if (settingsBtn) settingsBtn.removeAttribute('data-enabled');
 		if (wasSingleResultShowing && singleResult) {
 			singleResult.style.visibility = 'visible';
 		} else if (resultsBox && resultsBox.dataset.hasResults === 'true') {
 			resultsBox.style.display = 'block';
 		}
+	}
+}
+
+// ==================== LIMBO BIOME SPECIAL HANDLING ====================
+// Store original luck presets HTML to restore later
+let originalLuckPresetsHTML = null;
+
+// Biome media configuration - add new biomes here
+const BIOME_CONFIG = {
+	'limbo': {
+		bgm: 'bgmLimbo',
+		video: 'Media/limbo.mp4',
+		modeClass: 'limbo-mode'
+	},
+	'glitch': {
+		bgm: 'bgmGlitch',
+		video: 'Media/glitch.mp4',
+		modeClass: 'glitch-mode'
+	},
+	'dreamspace': {
+		bgm: 'bgmDreamspace',
+		video: 'Media/dreamspace.mp4',
+		modeClass: 'dreamspace-mode'
+	},
+	// Default for all other biomes
+	'default': {
+		bgm: 'bgmMain',
+		video: 'Media/normal day.mp4',
+		modeClass: null
+	}
+};
+
+/**
+ * Handle biome change - switch BGM, video, and UI for LIMBO
+ * @param {string} biome - Selected biome value
+ */
+function handleBiomeChange(biome) {
+	// Get config for this biome, or use default
+	const config = BIOME_CONFIG[biome] || BIOME_CONFIG['default'];
+	const isLimbo = biome === 'limbo';
+	
+	// Remove all mode classes
+	document.body.classList.remove('limbo-mode', 'dreamspace-mode', 'glitch-mode');
+	
+	// Add specific mode class if defined
+	if (config.modeClass) {
+		document.body.classList.add(config.modeClass);
+	}
+	
+	// Switch BGM and video only if actually changing
+	if (currentBgmId !== config.bgm) {
+		switchBgm(config.bgm, 1000, 0);
+		switchBackgroundVideo(config.video, 1000);
+	}
+	
+	// Handle luck presets (only for LIMBO currently)
+	handleLimboLuckPresets(isLimbo);
+	
+	// Handle special aura toggles (only for LIMBO currently)
+	handleLimboSpecialToggles(isLimbo);
+}
+
+/**
+ * Replace luck presets with Void Heart option for LIMBO, or restore original presets
+ * @param {boolean} isLimbo - Whether LIMBO biome is selected
+ */
+function handleLimboLuckPresets(isLimbo) {
+	const luckPresetsDropdown = document.getElementById('luckPresetsDropdown');
+	if (!luckPresetsDropdown) return;
+	
+	if (isLimbo) {
+		// Save original HTML if not already saved
+		if (!originalLuckPresetsHTML) {
+			originalLuckPresetsHTML = luckPresetsDropdown.innerHTML;
+		}
+		
+		// Replace with single Void Heart option
+		luckPresetsDropdown.innerHTML = '<button class="preset-btn" data-luck="300000">Void Heart - 300,000</button>';
+		
+		// Re-wire the button
+		const voidHeartBtn = luckPresetsDropdown.querySelector('.preset-btn[data-luck]');
+		if (voidHeartBtn) {
+			voidHeartBtn.addEventListener('click', () => {
+				const luckInput = document.getElementById('luckInput');
+				if (luckInput) {
+					luckInput.value = '300000';
+					luckInput.dispatchEvent(new Event('input', { bubbles: true }));
+				}
+				// Close dropdown
+				const luckPresetsBtn = document.getElementById('luckPresetsBtn');
+				if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
+				if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
+				playSound('clickSound');
+			});
+		}
+	} else {
+		// Restore original presets
+		if (originalLuckPresetsHTML) {
+			luckPresetsDropdown.innerHTML = originalLuckPresetsHTML;
+			
+			// Re-wire all luck preset buttons
+			document.querySelectorAll('.preset-btn[data-luck]').forEach(btn => {
+				btn.addEventListener('click', () => {
+					const luckInput = document.getElementById('luckInput');
+					const oblivionToggle = document.getElementById('oblivionToggle');
+					const duneToggle = document.getElementById('duneToggle');
+					if (luckInput) {
+						luckInput.value = btn.dataset.luck;
+						luckInput.dispatchEvent(new Event('input', { bubbles: true }));
+					}
+					// If this preset has data-oblivion, enable oblivion and disable dune
+					if (btn.dataset.oblivion === 'true') {
+						if (oblivionToggle) oblivionToggle.checked = true;
+						if (duneToggle) duneToggle.checked = false;
+						updateSpecialToggleStates();
+					}
+					// If this preset has data-dune, enable dune and disable oblivion
+					if (btn.dataset.dune === 'true') {
+						if (duneToggle) duneToggle.checked = true;
+						if (oblivionToggle) oblivionToggle.checked = false;
+						updateSpecialToggleStates();
+					}
+					// Close dropdown
+					const luckPresetsBtn = document.getElementById('luckPresetsBtn');
+					if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
+					if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
+					playSound('clickSound');
+				});
+			});
+		}
+	}
+}
+
+/**
+ * Disable/enable special aura toggles for LIMBO
+ * @param {boolean} isLimbo - Whether LIMBO biome is selected
+ */
+function handleLimboSpecialToggles(isLimbo) {
+	const oblivionToggle = document.getElementById('oblivionToggle');
+	const duneToggle = document.getElementById('duneToggle');
+	
+	if (isLimbo) {
+		// Disable and uncheck both toggles
+		if (oblivionToggle) {
+			oblivionToggle.checked = false;
+			oblivionToggle.disabled = true;
+		}
+		if (duneToggle) {
+			duneToggle.checked = false;
+			duneToggle.disabled = true;
+		}
+	} else {
+		// Re-enable toggles (but respect mutual exclusivity)
+		if (oblivionToggle) oblivionToggle.disabled = false;
+		if (duneToggle) duneToggle.disabled = false;
+		// Update states to ensure mutual exclusivity is applied
+		updateSpecialToggleStates();
 	}
 }
 
@@ -426,6 +675,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 	
+	// Wire biome select change handler for LIMBO special handling
+	const biomeSelect = document.getElementById('biomeSelect');
+	if (biomeSelect) {
+		biomeSelect.addEventListener('change', (e) => {
+			handleBiomeChange(e.target.value);
+		});
+	}
+	
 	// Wire special aura toggle mutual exclusivity
 	const oblivionToggle = document.getElementById('oblivionToggle');
 	const duneToggle = document.getElementById('duneToggle');
@@ -454,7 +711,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Close intro screen and lighten background
  */
 function closeIntro() {
-    bgVideo.style.filter = 'brightness(0.15)';
+    bgVideo.style.filter = 'brightness(0.3)';
     introScreen.style.animation = 'fadeOut 0.6s ease-out forwards';
     
     // Check if intro music was actually playing

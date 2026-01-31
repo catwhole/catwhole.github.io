@@ -39,6 +39,16 @@ html, body {
     font-weight: 700;
 }
 
+.video-background-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: -2;
+}
+
 .background-video {
     position: fixed;
     top: 50%;
@@ -124,9 +134,18 @@ html, body {
 .intro-subtitle {
     font-family: var(--font-text);
     font-size: 1.3rem;
-    margin: 0 0 40px 0;
+    margin: 0 0 10px 0;
     color: var(--text-secondary);
     letter-spacing: 1px;
+}
+
+.intro-version {
+    font-family: var(--font-text);
+    font-size: 0.9rem;
+    margin: 0 0 30px 0;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    opacity: 0.7;
 }
 
 /* Button Base */
@@ -197,7 +216,7 @@ html, body {
     border-color: var(--text-accent);
 }
 
-.btn-toggle[data-enabled="false"] {
+.btn-toggle[data-enabled="false"]:not(#autoRollBtn) {
     opacity: 0.5;
     color: rgba(255, 255, 255, 0.5);
 }
@@ -283,6 +302,26 @@ html, body {
     color: var(--text-secondary);
     min-width: 35px;
     text-align: right;
+}
+
+.mute-btn {
+    padding: 4px 8px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.mute-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.mute-btn:active {
+    transform: scale(0.95);
 }
 
 /* Main Menu Layout */
@@ -1033,7 +1072,7 @@ input[type="number"] {
 .rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
 .rarity-challenged { color: #000000; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
 .rarity-challengedplus { color: #ffffff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -2px -2px 0 #d3d3d3, 2px -2px 0 #d3d3d3, -2px 2px 0 #d3d3d3, 2px 2px 0 #d3d3d3, -2px -1px 0 #d3d3d3, 2px -1px 0 #d3d3d3, -2px 1px 0 #d3d3d3, 2px 1px 0 #d3d3d3, -1px -2px 0 #d3d3d3, 1px -2px 0 #d3d3d3, -1px 2px 0 #d3d3d3, 1px 2px 0 #d3d3d3; }
-.rarity-limbo { color: #1a1a1a; text-shadow: 1px 1px 2px #666; }
+.rarity-limbo { color: #1a1a1a; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 8px #fff, 0 0 12px #fff; }
 
 /* Single roll rarity overrides (higher specificity) */
 #singleResult.rarity-basic { color: #d3d3d3; text-shadow: 1px 1px 2px #000; }
@@ -1046,7 +1085,7 @@ input[type="number"] {
 #singleResult.rarity-transcendent { color: #afeeee; text-shadow: 1px 1px 2px #000; }
 #singleResult.rarity-challenged { color: #000000; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff; }
 #singleResult.rarity-challengedplus { color: #ffffff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -2px -2px 0 #d3d3d3, 2px -2px 0 #d3d3d3, -2px 2px 0 #d3d3d3, 2px 2px 0 #d3d3d3, -2px -1px 0 #d3d3d3, 2px -1px 0 #d3d3d3, -2px 1px 0 #d3d3d3, 2px 1px 0 #d3d3d3, -1px -2px 0 #d3d3d3, 1px -2px 0 #d3d3d3, -1px 2px 0 #d3d3d3, 1px 2px 0 #d3d3d3; }
-#singleResult.rarity-limbo { color: #1a1a1a; text-shadow: 1px 1px 2px #666; }
+#singleResult.rarity-limbo { color: #1a1a1a; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 8px #fff, 0 0 12px #fff; }
 
 /* Limbo overrides for animated rarities - reset background-clip and use solid limbo color */
 #singleResult .singleResultText.rarity-limbo.anim-10m,
@@ -1056,7 +1095,205 @@ input[type="number"] {
     background-clip: unset;
     -webkit-background-clip: unset;
     color: #1a1a1a;
-    text-shadow: 1px 1px 2px #666;
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 8px #fff, 0 0 12px #fff;
+}
+
+/* LIMBO Mode - Black and White UI */
+body.limbo-mode {
+    --btn-primary-bg: rgba(255, 255, 255, 0.08);
+    --btn-primary-bg-hover: rgba(255, 255, 255, 0.15);
+    --btn-primary-border: #ffffff;
+    --btn-primary-border-hover: #ffffff;
+    --btn-primary-glow: rgba(255, 255, 255, 0.3);
+    --text-accent: #ffffff;
+}
+
+body.limbo-mode .btn-toggle[data-enabled="true"] {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+body.limbo-mode .menu-panel h3,
+body.limbo-mode .menu-panel-main h3,
+body.limbo-mode .menu-panel-side h3 {
+    color: #ffffff;
+}
+
+body.limbo-mode .preset-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+}
+
+body.limbo-mode .input-field:hover,
+body.limbo-mode .select-field:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+body.limbo-mode .input-field:focus,
+body.limbo-mode .select-field:focus {
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+body.limbo-mode .toggle-switch input:checked + .toggle-slider {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
+}
+
+body.limbo-mode .toggle-switch input:checked + .toggle-slider::before {
+    background: #ffffff;
+}
+
+body.limbo-mode .btn-preset-toggle.active {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+body.limbo-mode .warning-container {
+    background: rgba(30, 30, 30, 0.95);
+    border: 2px solid #ffffff;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* DREAMSPACE Mode - Pink UI */
+body.dreamspace-mode {
+    --btn-primary-bg: rgba(255, 105, 180, 0.12);
+    --btn-primary-bg-hover: rgba(255, 105, 180, 0.25);
+    --btn-primary-border: #ff69b4;
+    --btn-primary-border-hover: #ff85c8;
+    --btn-primary-glow: rgba(255, 105, 180, 0.4);
+    --text-accent: #ff69b4;
+}
+
+body.dreamspace-mode .btn-toggle[data-enabled="true"] {
+    border-color: #ff69b4;
+    color: #ff69b4;
+}
+
+body.dreamspace-mode .menu-panel h3,
+body.dreamspace-mode .menu-panel-main h3,
+body.dreamspace-mode .menu-panel-side h3 {
+    color: #ff69b4;
+}
+
+body.dreamspace-mode .preset-btn:hover {
+    background: rgba(255, 105, 180, 0.15);
+    border-color: #ff69b4;
+}
+
+body.dreamspace-mode .input-field:hover,
+body.dreamspace-mode .select-field:hover {
+    background: rgba(255, 105, 180, 0.14);
+    border-color: rgba(255, 105, 180, 0.45);
+}
+
+body.dreamspace-mode .input-field:focus,
+body.dreamspace-mode .select-field:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 8px rgba(255, 105, 180, 0.4);
+}
+
+body.dreamspace-mode .toggle-switch input:checked + .toggle-slider {
+    background: rgba(255, 105, 180, 0.25);
+    border-color: #ff69b4;
+}
+
+body.dreamspace-mode .toggle-switch input:checked + .toggle-slider::before {
+    background: #ff69b4;
+}
+
+body.dreamspace-mode .btn-preset-toggle.active {
+    background: rgba(255, 105, 180, 0.15);
+    border-color: #ff69b4;
+    color: #ff69b4;
+}
+
+body.dreamspace-mode .warning-container {
+    background: rgba(40, 20, 35, 0.95);
+    border: 2px solid #ff69b4;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(255, 105, 180, 0.3);
+}
+
+/* GLITCH Mode - Cyan/Green Gradient UI */
+body.glitch-mode {
+    --btn-primary-bg: rgba(0, 255, 170, 0.12);
+    --btn-primary-bg-hover: rgba(0, 255, 170, 0.25);
+    --btn-primary-border: #00ffaa;
+    --btn-primary-border-hover: #00ffcc;
+    --btn-primary-glow: rgba(0, 255, 200, 0.4);
+    --text-accent: #00ffaa;
+}
+
+body.glitch-mode .btn-toggle[data-enabled="true"] {
+    border-color: #00ffaa;
+    color: #00ffaa;
+}
+
+body.glitch-mode .menu-panel h3,
+body.glitch-mode .menu-panel-main h3,
+body.glitch-mode .menu-panel-side h3 {
+    color: #00ffaa;
+}
+
+body.glitch-mode .preset-btn:hover {
+    background: rgba(0, 255, 170, 0.15);
+    border-color: #00ffaa;
+}
+
+body.glitch-mode .input-field:hover,
+body.glitch-mode .select-field:hover {
+    background: rgba(0, 255, 170, 0.14);
+    border-color: rgba(0, 255, 170, 0.45);
+}
+
+body.glitch-mode .input-field:focus,
+body.glitch-mode .select-field:focus {
+    border-color: #00ffaa;
+    box-shadow: 0 0 8px rgba(0, 255, 200, 0.4);
+}
+
+body.glitch-mode .toggle-switch input:checked + .toggle-slider {
+    background: rgba(0, 255, 170, 0.25);
+    border-color: #00ffaa;
+}
+
+body.glitch-mode .toggle-switch input:checked + .toggle-slider::before {
+    background: #00ffaa;
+}
+
+body.glitch-mode .btn-preset-toggle.active {
+    background: rgba(0, 255, 170, 0.15);
+    border-color: #00ffaa;
+    color: #00ffaa;
+}
+
+body.glitch-mode .warning-container {
+    background: rgba(10, 30, 25, 0.95);
+    border: 2px solid #00ffaa;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(0, 255, 170, 0.3);
+}
+
+body.glitch-mode #autoRollBtn[data-enabled="true"] {
+    background: rgba(0, 255, 170, 0.25);
+    border-color: #00ffaa;
+    color: #00ffaa;
+}
+
+body.dreamspace-mode #autoRollBtn[data-enabled="true"] {
+    background: rgba(255, 105, 180, 0.25);
+    border-color: #ff69b4;
+    color: #ff69b4;
+}
+
+body.limbo-mode #autoRollBtn[data-enabled="true"] {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #ffffff;
+    color: #ffffff;
 }
 
 /* Challenged overrides for single result - ensure these always apply */
@@ -1184,6 +1421,21 @@ input[type="number"] {
     max-width: 150px;
     padding: 12px 24px;
     font-size: 1rem;
+}
+
+.warning-disable-option {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.warning-disable-text {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
 }
 
 @media screen and (max-width: 600px) {

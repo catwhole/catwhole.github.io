@@ -58,6 +58,19 @@ function showWarning(message) {
 		
 		yesBtn.addEventListener('click', handleYes);
 		noBtn.addEventListener('click', handleNo);
+		
+		// Link the disable checkbox to the settings toggle
+		const disableCheckbox = document.getElementById('warningDisableCheckbox');
+		if (disableCheckbox) {
+			disableCheckbox.checked = false; // Reset each time modal opens
+			disableCheckbox.addEventListener('change', () => {
+				const warningsToggle = document.getElementById('warningsToggle');
+				if (warningsToggle) {
+					warningsToggle.checked = !disableCheckbox.checked;
+					getSettingsState(); // Update the state
+				}
+			});
+		}
 	});
 }
 
@@ -651,7 +664,15 @@ function playSingleRollSfx(result) {
 	const displayRarity = result.nativeApplied ? result.displayRarity : Number(aura.rarity || result.finalR || 1);
 	const rarity = Math.max(1, Math.floor(displayRarity));
 	if (typeof playRaritySfx !== 'function') return;
-	if (rarity >= 99999999) return playRaritySfx('sfx100m');
+	
+	// Check if we're in LIMBO biome for 100m+ auras
+	const biomeSelect = document.getElementById('biomeSelect');
+	const isLimbo = biomeSelect && biomeSelect.value === 'limbo';
+	
+	if (rarity >= 99999999) {
+		// Play LIMBO-specific sound if in LIMBO biome, otherwise normal sound
+		return playRaritySfx(isLimbo ? 'sfx100mlimbo' : 'sfx100m');
+	}
 	if (rarity >= 10000000) return playRaritySfx('sfx10m');
 	if (rarity >= 99999) return playRaritySfx('sfx100k');
 	if (rarity >= 10000) return playRaritySfx('sfx10k');
