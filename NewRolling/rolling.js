@@ -123,6 +123,10 @@ function buildCandidates(auraList, options = {}) {
 
 	const list = auraList;
 	const candidates = [];
+	
+	// Define rare biomes that don't inherit biomeExclusive auras
+	const rareBiomes = new Set(['cyberspace', 'dreamspace', 'glitch']);
+	
 	for (let i = 0; i < list.length; i++) {
 		const aura = list[i];
 		const base = Number(aura.rarity || 0);
@@ -142,7 +146,18 @@ function buildCandidates(auraList, options = {}) {
 		// Biome exclude/exclusive checks (skip for limbo since handled above)
 		if (biome !== 'limbo') {
 			if (aura.biomeExclude && biome && String(aura.biomeExclude) === biome) continue;
-			if (aura.biomeExclusive && biome && String(aura.biomeExclusive) !== biome) continue;
+			// biomeExclusive check: allow in glitch even if exclusive to another biome,
+			// but NOT for rare biomes (cyberspace/dreamspace) or limbo exclusives
+			if (aura.biomeExclusive && biome) {
+				const exclusiveBiome = String(aura.biomeExclusive);
+				const isRareBiomeExclusive = rareBiomes.has(exclusiveBiome);
+				if (biome === 'glitch' && !isRareBiomeExclusive && exclusiveBiome !== 'limbo') {
+					// Allow in glitch for non-rare, non-limbo exclusives
+				} else if (exclusiveBiome !== biome) {
+					// Not in the exclusive biome and either (not glitch OR is rare/limbo exclusive)
+					continue;
+				}
+			}
 			if (aura.biomeExclusive && !biome) continue; // exclusive but no biome selected
 		} else {
 			// In limbo, still exclude auras that explicitly exclude limbo
