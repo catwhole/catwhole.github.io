@@ -259,6 +259,11 @@ function updateSfxVolume(value) {
     setAudioVolumes(actualVolume, undefined);
     const label = document.getElementById('sfxVolumeLabel');
     if (label) label.textContent = percent + '%';
+    
+    // Also update currently playing rarity SFX
+    if (currentRaritySfxEl) {
+        currentRaritySfxEl.volume = actualVolume;
+    }
 }
 
 /**
