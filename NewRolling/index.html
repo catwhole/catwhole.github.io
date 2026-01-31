@@ -5,41 +5,168 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap" rel="stylesheet">
-    <title>New Rolling</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Playfair+Display:wght@400;700&family=Courier+Prime&family=Bebas+Neue&family=Cinzel&display=swap" rel="stylesheet">
+    <title>Sol's RNG Rolling Simulator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <video class="background-video" autoplay muted loop playsinline>
-        <source src="normal day.mp4" type="video/mp4">
+        <source src="Media/normal day.mp4" type="video/mp4">
     </video>
-    <div class="container">
-        <h1 class="title">Sol's RNG Rolling Simulator</h1>
 
-        <section class="main-content">
-        </section>
-
-        <section class="bottom-controls">
-            <button class="control-btn" data-action="settings">Settings</button>
-
-            <div class="controls-center">
-                <button class="control-btn" data-action="roll-options">Roll Options</button>
-
-                <button class="roll-btn" data-action="roll">
-                    <div class="cooldown-line"></div>
-                    <span>Roll</span>
-                </button>
-
-                <button class="control-btn" data-action="biomes">Biomes</button>
+    <div class="intro-screen" id="introScreen">
+        <div class="intro-container">
+            <h1 class="intro-title">Sol's RNG Rolling Simulator</h1>
+            <p class="intro-subtitle">By @catwhore</p>
+            <button class="btn btn-primary start-button" id="startButton">Start Simulating!</button>
+            <div class="toggle-controls" id="toggleControls">
+                <button class="btn btn-toggle" id="toggleSfx">Toggle Sounds</button>
+                <button class="btn btn-toggle" id="toggleBgm">Toggle Music</button>
             </div>
-
-            <button class="control-btn" data-action="credits">Credits</button>
-        </section>
-
+        </div>
     </div>
-    <script src="functions.js"></script>
+
+    <!-- Audio elements for button sounds -->
+    <audio id="hoverSound" preload="auto">
+        <source src="Sounds/sfx-hover.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="clickSound" preload="auto">
+        <source src="Sounds/sfx-click.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="rollSound" preload="auto">
+        <source src="Sounds/sfx-roll.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="sfx1k" preload="auto">
+        <source src="Sounds/sfx-1k.ogg" type="audio/ogg">
+    </audio>
+    <audio id="sfx10k" preload="auto">
+        <source src="Sounds/sfx-10k.ogg" type="audio/ogg">
+    </audio>
+    <audio id="sfx100k" preload="auto">
+        <source src="Sounds/sfx-100k.ogg" type="audio/ogg">
+    </audio>
+    <audio id="sfx10m" preload="auto">
+        <source src="Sounds/sfx-10m.ogg" type="audio/ogg">
+    </audio>
+    <audio id="sfx100m" preload="auto">
+        <source src="Sounds/sfx-100m.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- Background music tracks -->
+    <audio id="bgmDefault" data-bgm autoplay loop preload="auto">
+        <source src="Sounds/bgm-intro.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmMain" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-main.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="mainMenu" class="hidden">
+        <div id="mainMeta">
+            <div id="versionTopLeft">v1.0.0</div>
+            <div id="authorTopLeft">By @catwhore</div>
+        </div>
+        <div id="resultsBox"></div>
+        <div id="singleResult"></div>
+
+        <div id="buffsPanel">
+            <div>Luck: <span id="buffLuck">1</span></div>
+            <div>Rolls: <span id="buffRolls">1</span></div>
+            <div>Biome: <span id="buffBiome">None</span></div>
+            <div>Roll Speed: <span id="buffRollSpeed">5</span>/s</div>
+        </div>
+
+        <div id="bottomRightControls" class="toggle-controls"></div>
+
+        <div id="rollOptionsPanel" class="menu-panel">
+            <h3>Roll Options</h3>
+            <label for="rollsInput">Rolls</label>
+            <input id="rollsInput" class="input-field" type="number" min="1" value="1">
+
+            <label for="luckInput">Luck</label>
+            <input id="luckInput" class="input-field" type="number" min="1" step="1" value="1">
+
+            <label for="biomeSelect">Biome</label>
+            <select id="biomeSelect" class="select-field">
+                <option value="">None</option>
+                <option value="day">Day</option>
+                <option value="night">Night</option>
+                <option value="rainy">Rainy</option>
+                <option value="windy">Windy</option>
+                <option value="snowy">Snowy</option>
+                <option value="sandstorm">Sandstorm</option>
+                <option value="hell">Hell</option>
+                <option value="starfall">Starfall</option>
+                <option value="heaven">Heaven</option>
+                <option value="corruption">Corruption</option>
+                <option value="null">NULL</option>
+                <option value="dreamspace">Dreamspace</option>
+                <option value="glitch">Glitch</option>
+                <option value="cyberspace">Cyberspace</option>
+                <option value="limbo">LIMBO</option>
+            </select>
+
+            <div class="roll-speed-section">
+                <label for="rollSpeedInput">Roll Speed</label>
+                <input id="rollSpeedInput" class="input-field" type="number" min="1" max="15" value="1">
+                <span class="hint-text">Rolls per second (max 15)</span>
+            </div>
+        </div>
+
+        <div id="settingsPanel" class="menu-panel">
+            <h3>Settings</h3>
+            <div class="option-row">
+                <label for="flashesToggle">Flashes</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="flashesToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="option-row">
+                <label for="animationsToggle">Animations</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="animationsToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="option-row">
+                <label for="cutscenesToggle">Cutscenes <span class="tba-label">(TBA)</span></label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="cutscenesToggle" checked disabled>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="option-row">
+                <label for="warningsToggle">Warnings</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="warningsToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="settings-section">
+                <label for="autoStopRarityInput">Stop Auto Roll on rarity above:</label>
+                <input id="autoStopRarityInput" class="input-field" type="number" min="1" value="" placeholder="e.g. 1000000">
+                <span class="hint-text">Leave empty to never stop</span>
+            </div>
+        </div>
+
+        <div id="rollArea">
+            <div id="progressBar">
+                <div id="progressBarFill"></div>
+            </div>
+            <div id="progressInfo">
+                <span id="progressText">0%</span>
+                <span id="timeText">0.0s</span>
+            </div>
+            <div id="rollButtons">
+                <button class="btn btn-toggle" id="rollOptionsBtn">Roll Options</button>
+                <button class="btn btn-primary" id="rollButton">Roll</button>
+                <button class="btn btn-toggle" id="settingsBtn">Settings</button>
+            </div>
+            <button class="btn btn-toggle" id="autoRollBtn">Auto Roll: OFF</button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="rolling.js"></script>
 </body>
 </html>

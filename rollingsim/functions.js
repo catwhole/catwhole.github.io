@@ -316,8 +316,8 @@ function playAuraVideo(videoId) {
 function getRarityClass(aura, biome) {
     if (!aura) return 'rarity-basic';
     
-    // Oppression, Dreammetric, and Illusionary get challenged+ rarity
-    if (aura.name && (aura.name.startsWith("Oppression") || aura.name.startsWith("Dreammetric") || aura.name.startsWith("Illusionary"))) {
+    // Oppression, Dreammetric, Illusionary, and Monarch get challenged+ rarity
+    if (aura.name && (aura.name.startsWith("Oppression") || aura.name.startsWith("Dreammetric") || aura.name.startsWith("Illusionary") || aura.name.startsWith("Monarch"))) {
         return 'rarity-challengedplus';
     }
     
