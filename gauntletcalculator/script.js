@@ -37,23 +37,25 @@ function calculateGauntlets() {
     var finalJackpotValue = alJackpot * (trsJackpot);
 
     // Gravitational Gauntlet calculation
-    var alGrav = (((luck) * 9) + ((luck) * 6)) / 10;
+    var alGrav = ((luck * 9) + (luck * 6)) / 10;
     var finalGravValue = alGrav * trs;
 
     // Flesh Gauntlet calculation
     var alFlesh = (luck * 1.3);
     var finalFleshValue = alFlesh * trs;
 
-    //Dark Shader calculation
-    var alShader = ((((luck) * 2) * 4) + ((luck) * 16) + ((((luck) * 2) * 2.5) * 2) + (((luck) * 2.5) * 8)) / 30;
+    // Darkshader calculation
+    // 4 regular bonus roll + 16 regular rolls + 2 rolls with bonus roll with 2.5x + 8 rolls with just 2.5x, divided by 30 total rolls
+    var alShader = (((2 * luck) * 4) + (luck * 16) + ((2.5 * 2 * luck) * 2) + ((2.5 * luck) * 8)) / 30;
     var finalShaderValue = alShader * trs;
 
-    //Pole Light Core calculation 
-    var alPole = ((luck + (5 * xyz * vip)) * 6 + (luck + (5 * xyz * vip)) * 27)/(25 + ((((1)/(trs + 10)) * 5)/(((1)/(trs))))); 
+    // Pole Light Core calculation 
+    var alPole = ((luck + (5 * xyz * vip)) * 6 + (luck + (5 * xyz * vip)) * 27)/(25 + (trs / 3)); 
     var finalPoleValue = alPole * trs;
 
-    //Unfathomable Ruins calculation
-    var alRuins = ((luck * 1000) + (luck * 100 * 10)) / 1010;
+    // Unfathomable Ruins calculation
+    // 1000 rolls with regular luck + 10 rolls with 100 bonus luck, divided by 1010 total rolls
+    var alRuins = ((luck * 1000) + (luck * 1000)) / 1010;
     var finalRuinsValue = alRuins * trs;
 
     let bestGauntlet = "";
@@ -136,7 +138,7 @@ function calculateDifference() {
     var C = xyz * vip;
     
     // 1. Darkshader vs Pole Light Core
-    var dsVsPole = (55 * C * (trs + 10)) / ((7 * trs) + 40);
+    var dsVsPole = (275 * C) / (trs + 20);
     
     // 2. Jackpot vs Gravitational
     var jackVsGrav = (0.847 * C * trsJackpot) / ((1.5 * trs) - (1.1 * trsJackpot));
@@ -145,7 +147,7 @@ function calculateDifference() {
     var fleshVsJack = (0.847 * C * trsJackpot) / ((1.3 * trs) - (1.1 * trsJackpot));
 
     // 4. Pole vs Ruins
-    var poleVsRuins = (16665 * C * (trs + 10)) / ((2667 * trs) + 16670);
+    var poleVsRuins = (49995 * C) / ((200 * trs) + 5001);
 
     // Build result text
     var resultText = 
