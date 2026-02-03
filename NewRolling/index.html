@@ -38,6 +38,18 @@
         </div>
     </div>
 
+    <!-- Compatibility Warning Modal (shows on intro) -->
+    <div id="compatibilityModal" class="warning-modal hidden">
+        <div class="warning-backdrop"></div>
+        <div class="warning-container">
+            <div class="warning-icon">⚠️</div>
+            <div class="warning-message" id="compatibilityMessage"></div>
+            <div class="warning-buttons">
+                <button class="btn btn-primary" id="compatibilityDismiss">I Understand</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Audio elements for button sounds -->
     <audio id="hoverSound" preload="auto">
         <source src="Sounds/sfx-hover.mp3" type="audio/mpeg">
@@ -100,11 +112,16 @@
             <div>Rolls: <span id="buffRolls">1</span></div>
             <div>Biome: <span id="buffBiome">None</span></div>
             <div>Roll Speed: <span id="buffRollSpeed">5</span>/s</div>
+            <div class="buff-item">
+                <span class="buff-label">CPU Usage:</span>
+                <span id="buffWorkers"></span>
+            </div>
         </div>
 
         <div id="bottomRightControls" class="toggle-controls"></div>
 
         <div id="rollOptionsPanelContainer" class="menu-panel-container">
+            <button class="panel-close-btn" id="panelCloseBtn">&times;</button>
             <div id="quickOptionsPanel" class="menu-panel-side">
                 <h3>Quick Options</h3>
                 
@@ -205,6 +222,27 @@
                             <span class="toggle-slider"></span>
                         </label>
                     </div>
+                </div>
+
+                <div class="vip-section">
+                    <span class="vip-label">VIP Multiplier</span>
+                    <select id="vipSelect" class="select-field vip-select">
+                        <option value="1">None</option>
+                        <option value="1.2">VIP (1.2x)</option>
+                        <option value="1.3">VIP and VIP+ (1.3x)</option>
+                    </select>
+                </div>
+
+                <div class="daves-hope-section" id="davesHopeSection" style="display: none;">
+                    <span class="daves-hope-label">Dave's Hope</span>
+                    <select id="davesHopeSelect" class="select-field daves-hope-select">
+                        <option value="1">None</option>
+                        <option value="1.2">Level 1 (1.2x)</option>
+                        <option value="1.4">Level 2 (1.4x)</option>
+                        <option value="1.6">Level 3 (1.6x)</option>
+                        <option value="1.8">Level 4 (1.8x)</option>
+                        <option value="2">Level 5 (2x)</option>
+                    </select>
                 </div>
             </div>
         </div>

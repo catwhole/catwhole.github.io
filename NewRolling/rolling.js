@@ -8,6 +8,123 @@ let settingsWarningsEnabled = true;
 let autoRollEnabled = false;
 let autoRollInterval = null;
 
+// Web Worker state for parallelized bulk rolling
+let useWebWorkers = true; // Enable by default when available
+const WORKER_MIN_ROLLS = 250000; // Only use workers for 250k+ rolls
+const workerCount = typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency || 4) : 4;
+
+// Check if Web Workers are supported
+function webWorkersSupported() {
+	return typeof Worker !== 'undefined';
+}
+
+// Create workers on demand and run bulk rolls in parallel
+async function runRollsWithWorkers(candidateSet, total, start) {
+	const { finals, entries, len, specialFinals, specialEntries, specialLen } = candidateSet;
+	const totalEntries = len + specialLen;
+	
+	// Determine how many workers to use (cap at workerCount)
+	const numWorkers = Math.min(workerCount, Math.ceil(total / 100000));
+	
+	// Split work across workers
+	const rollsPerWorker = Math.floor(total / numWorkers);
+	const remainder = total % numWorkers;
+	
+	// Track progress from each worker
+	const workerProgress = new Array(numWorkers).fill(0);
+	const workerTotals = new Array(numWorkers);
+	
+	// Create workers and start them
+	const workers = [];
+	const promises = [];
+	const baseSeed = Date.now().toString() + Math.random().toString();
+	
+	for (let i = 0; i < numWorkers; i++) {
+		const worker = new Worker('roller-worker.js');
+		workers.push(worker);
+		
+		// Each worker gets a unique seed based on index
+		const workerSeed = baseSeed + '_worker_' + i;
+		
+		// Calculate rolls for this worker (distribute remainder to first workers)
+		const workerRolls = rollsPerWorker + (i < remainder ? 1 : 0);
+		workerTotals[i] = workerRolls;
+		
+		// Create copies of arrays to transfer
+		const finalsBuffer = finals.buffer.slice(0);
+		const specialFinalsBuffer = specialFinals.buffer.slice(0);
+		
+		// Create promise for this worker
+		const promise = new Promise((resolve, reject) => {
+			worker.onmessage = (e) => {
+				if (e.data.type === 'progress') {
+					// Update progress for this worker
+					workerProgress[e.data.workerIndex] = e.data.done;
+					const totalDone = workerProgress.reduce((a, b) => a + b, 0);
+					updateProgress(totalDone, total, start);
+				} else if (e.data.type === 'done') {
+					// Mark this worker as complete
+					workerProgress[i] = workerTotals[i];
+					resolve(new Uint32Array(e.data.countArr));
+				}
+			};
+			worker.onerror = (e) => {
+				reject(e);
+			};
+		});
+		promises.push(promise);
+		
+		// Send work to worker (transfer buffers for zero-copy)
+		worker.postMessage({
+			rollCount: workerRolls,
+			finals: finalsBuffer,
+			specialFinals: specialFinalsBuffer,
+			len: len,
+			specialLen: specialLen,
+			seedStr: workerSeed,
+			workerIndex: i
+		}, [finalsBuffer, specialFinalsBuffer]);
+	}
+	
+	// Show progress bar immediately at 0%
+	updateProgress(0, total, start);
+	
+	try {
+		// Wait for all workers to complete
+		const results = await Promise.all(promises);
+		
+		// Aggregate results
+		const countArr = new Uint32Array(totalEntries);
+		for (const workerCounts of results) {
+			for (let i = 0; i < totalEntries; i++) {
+				countArr[i] += workerCounts[i];
+			}
+		}
+		
+		updateProgress(total, total, start);
+		
+		// Convert to Map for rendering
+		const counts = new Map();
+		for (let i = 0; i < specialLen; i++) {
+			if (countArr[i] > 0) {
+				counts.set(specialEntries[i].resultKey, { entry: specialEntries[i], count: countArr[i] });
+			}
+		}
+		for (let i = 0; i < len; i++) {
+			if (countArr[specialLen + i] > 0) {
+				counts.set(entries[i].resultKey, { entry: entries[i], count: countArr[specialLen + i] });
+			}
+		}
+		
+		return counts;
+	} finally {
+		// Clean up workers
+		for (const worker of workers) {
+			worker.terminate();
+		}
+	}
+}
+
 function getSettingsState() {
 	const flashesToggle = document.getElementById('flashesToggle');
 	const animationsToggle = document.getElementById('animationsToggle');
@@ -178,6 +295,9 @@ function buildCandidates(auraList, options = {}) {
 	// Define rare biomes that don't inherit biomeExclusive auras
 	const rareBiomes = new Set(['cyberspace', 'dreamspace', 'glitch']);
 	
+	// Check if we're in Limbo biome to determine rarity cap behavior
+	const isLimboBiome = biome === 'limbo';
+	
 	for (let i = 0; i < list.length; i++) {
 		const aura = list[i];
 		const base = Number(aura.rarity || 0);
@@ -288,8 +408,13 @@ function buildCandidates(auraList, options = {}) {
 		} else {
 			finalR = Math.floor(finalR / luck);
 		}
-		// Cap at 1 in 2 rarity as requested -> minimum rarity value should be 2
-		finalR = Math.max(2, finalR);
+		// Cap at 1 in 2 rarity - but NOT in Limbo biome
+		if (!isLimboBiome) {
+			finalR = Math.max(2, finalR);
+		} else {
+			// In Limbo, allow finalR to go down to 1 (no cap)
+			finalR = Math.max(1, finalR);
+		}
 
 		const name = aura.name || 'Unknown';
 		const resultKey = name + '|' + (nativeApplied ? displayRarity : 'base') + '|' + (exclusiveApplied ? 'ex' : '') + '|' + (isLimboAura ? 'limbo' : '');
@@ -431,6 +556,19 @@ function updateBuffDisplay() {
 	if (rollsEl) rollsEl.textContent = (Number(count)).toLocaleString('en-US');
 	if (biomeEl) biomeEl.textContent = biome ? (biomeLabels[biome] || biome) : 'None';
 	if (rollSpeedEl) rollSpeedEl.textContent = String(getRollSpeed());
+	
+	// Show worker info as CPU utilization percentage
+	const workersEl = document.getElementById('buffWorkers');
+	if (workersEl) {
+		if (webWorkersSupported() && useWebWorkers && count >= WORKER_MIN_ROLLS) {
+			const numWorkers = Math.min(workerCount, Math.ceil(count / 100000));
+			const cpuPercent = Math.round((numWorkers / workerCount) * 100);
+			workersEl.textContent = cpuPercent + '%';
+		} else {
+			// Single-threaded uses 1 core out of available
+			workersEl.textContent = 'Minimal';
+		}
+	}
 }
 
 function updateProgress(done, total, startTime) {
@@ -439,9 +577,12 @@ function updateProgress(done, total, startTime) {
 	const progressBarFill = document.getElementById('progressBarFill');
 	const progressBar = document.getElementById('progressBar');
 	const progressInfo = document.getElementById('progressInfo');
-	const shouldShow = total > 100000 && done < total;
-	if (progressBar) progressBar.style.display = shouldShow ? 'block' : 'none';
-	if (progressInfo) progressInfo.style.display = shouldShow ? 'flex' : 'none';
+	// Show progress bar when total > 100k and not yet complete (done < total), OR when done === 0 (just started)
+	const shouldShow = total > 100000 && done <= total && done < total;
+	// Special case: also show at 0% (just started)
+	const showBar = shouldShow || (total > 100000 && done === 0);
+	if (progressBar) progressBar.style.display = showBar ? 'block' : 'none';
+	if (progressInfo) progressInfo.style.display = showBar ? 'flex' : 'none';
 	if (progressText) {
 		const pct = total > 0 ? Math.floor((done / total) * 100) : 0;
 		progressText.textContent = pct + '%';
@@ -693,19 +834,19 @@ async function runRolls() {
 
 	const { count, luck, biome, allowOblivion, allowDune } = readOptionsFromUI();
 	if (count > 499999999) {
-		const ok = await showWarning('Well, if you\'re sure about this many rolls... I\'m warning you though, this could take up to an hour.');
+		const ok = await showWarning('I\'m warning you, this will take lots of time AND slow your PC down significantly (CPU usage).');
 		if (!ok) {
 			if (btn) btn.disabled = false;
 			return;
 		}
 	} else if (count > 99999999) {
-		const ok = await showWarning('You have selected a VERY high roll count. This will DEFINITELY take a lot of time. Are you sure?');
+		const ok = await showWarning('You have selected a very high roll count. This will affect PC performance (CPU) while running. Are you sure?');
 		if (!ok) {
 			if (btn) btn.disabled = false;
 			return;
 		}
-	} else if (count > 999999) {
-		const ok = await showWarning('You set a lot of rolls. It might take some time and your browser could lag. Are you sure?');
+	} else if (count > 9999999) {
+		const ok = await showWarning('You set a lot of rolls. Your browser might lag. Are you sure?');
 		if (!ok) {
 			if (btn) btn.disabled = false;
 			return;
@@ -756,6 +897,19 @@ async function runRolls() {
 		
 		if (btn) btn.disabled = false;
 		return;
+	}
+
+	// Use Web Workers for large bulk rolls (1M+)
+	if (useWebWorkers && webWorkersSupported() && total >= WORKER_MIN_ROLLS) {
+		try {
+			const counts = await runRollsWithWorkers(candidateSet, total, start);
+			renderResults(counts);
+			if (btn) btn.disabled = false;
+			return;
+		} catch (err) {
+			console.warn('Web Workers failed, falling back to single-threaded:', err);
+			// Fall through to single-threaded implementation
+		}
 	}
 
 	// For bulk rolls, use optimized path with Uint32Array for counts

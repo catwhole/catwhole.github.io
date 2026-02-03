@@ -1,7 +1,6 @@
 # TODO List
 
 ## High Priority
-- mobile support
 
 ## Low Priority
 - cutscenes

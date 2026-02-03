@@ -15,6 +15,82 @@ let currentRaritySfxEl = null;
 // Track active BGM
 let currentBgmId = 'bgmDefault';
 
+// Track base luck value (before VIP multiplier)
+let baseLuckValue = 1;
+
+// ==================== COMPATIBILITY CHECK ====================
+/**
+ * Check browser and screen compatibility and show warning if needed
+ */
+function checkCompatibility() {
+    const issues = [];
+    
+    // Check for WebKit/Blink support (Chrome, Safari, Edge, Opera)
+    const isWebKit = 'WebkitAppearance' in document.documentElement.style;
+    const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+    const isEdge = /Edg/.test(navigator.userAgent);
+    const isOpera = /OPR/.test(navigator.userAgent);
+    const isFirefox = /Firefox/.test(navigator.userAgent);
+    
+    // Check if browser is NOT a webkit-based browser
+    if (!isWebKit && !isChrome && !isSafari && !isEdge && !isOpera) {
+        if (isFirefox) {
+            issues.push('You are using <strong>Firefox</strong>, which may not fully support all visual effects on this site.');
+        } else {
+            issues.push('Your browser may not support all features. For the best experience, use <strong>Chrome</strong>, <strong>Edge</strong>, <strong>Safari</strong>, or <strong>Opera</strong>.');
+        }
+    }
+    
+    // Check for mobile devices
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const aspectRatio = width / height;
+    
+    // Mobile device detection
+    if (isMobile || (isTouchDevice && width <= 1024)) {
+        issues.push('You are using a <strong>mobile device</strong>. This site is optimized for desktop browsers.');
+    }
+    
+    // Extreme aspect ratios (ultra-wide or ultra-tall) - only for non-mobile
+    if (!isMobile && aspectRatio > 3) {
+        issues.push('Your screen has an <strong>ultra-wide aspect ratio</strong>. Layout may not display optimally.');
+    } else if (!isMobile && aspectRatio < 0.4) {
+        issues.push('Your screen has an <strong>ultra-tall aspect ratio</strong>. Layout may not display optimally.');
+    }
+    
+    // Show warning if there are any issues
+    if (issues.length > 0) {
+        const modal = document.getElementById('compatibilityModal');
+        const message = document.getElementById('compatibilityMessage');
+        const dismissBtn = document.getElementById('compatibilityDismiss');
+        
+        if (modal && message && dismissBtn) {
+            let messageHTML = '<strong>Compatibility Notice</strong><br><br>';
+            messageHTML += 'The following issues were detected:<br><br>';
+            messageHTML += '<ul style="text-align: left; margin: 0 auto; max-width: 350px;">';
+            issues.forEach(issue => {
+                messageHTML += '<li style="margin-bottom: 8px;">' + issue + '</li>';
+            });
+            messageHTML += '</ul><br>';
+            messageHTML += 'The site may not function or display as intended.';
+            
+            message.innerHTML = messageHTML;
+            modal.classList.remove('hidden');
+            
+            dismissBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+                playSound('clickSound');
+            });
+        }
+    }
+}
+
+// Run compatibility check when DOM is ready
+document.addEventListener('DOMContentLoaded', checkCompatibility);
+
 /**
  * Play sound effect by element ID
  * @param {string} soundId - HTML audio element id
@@ -505,9 +581,14 @@ function handleBiomeChange(biome) {
  */
 function handleLimboLuckPresets(isLimbo) {
 	const luckPresetsDropdown = document.getElementById('luckPresetsDropdown');
+	const davesHopeSection = document.getElementById('davesHopeSection');
+	const davesHopeSelect = document.getElementById('davesHopeSelect');
 	if (!luckPresetsDropdown) return;
 	
 	if (isLimbo) {
+		// Show Dave's Hope section
+		if (davesHopeSection) davesHopeSection.style.display = 'block';
+		
 		// Save original HTML if not already saved
 		if (!originalLuckPresetsHTML) {
 			originalLuckPresetsHTML = luckPresetsDropdown.innerHTML;
@@ -521,8 +602,13 @@ function handleLimboLuckPresets(isLimbo) {
 		if (voidHeartBtn) {
 			voidHeartBtn.addEventListener('click', () => {
 				const luckInput = document.getElementById('luckInput');
+				const vipSelect = document.getElementById('vipSelect');
+				const davesHopeSelect = document.getElementById('davesHopeSelect');
 				if (luckInput) {
-					luckInput.value = '300000';
+					baseLuckValue = 300000;
+					const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
+					const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
+					luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
 					luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 				}
 				// Close dropdown
@@ -533,6 +619,19 @@ function handleLimboLuckPresets(isLimbo) {
 			});
 		}
 	} else {
+		// Hide Dave's Hope section and reset its value
+		if (davesHopeSection) davesHopeSection.style.display = 'none';
+		if (davesHopeSelect) davesHopeSelect.value = '1';
+		
+		// Recalculate luck without Dave's Hope multiplier
+		const luckInput = document.getElementById('luckInput');
+		const vipSelect = document.getElementById('vipSelect');
+		if (luckInput) {
+			const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
+			luckInput.value = Math.floor(baseLuckValue * vipMultiplier);
+			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
+		}
+		
 		// Restore original presets
 		if (originalLuckPresetsHTML) {
 			luckPresetsDropdown.innerHTML = originalLuckPresetsHTML;
@@ -543,8 +642,13 @@ function handleLimboLuckPresets(isLimbo) {
 					const luckInput = document.getElementById('luckInput');
 					const oblivionToggle = document.getElementById('oblivionToggle');
 					const duneToggle = document.getElementById('duneToggle');
+					const vipSelect = document.getElementById('vipSelect');
+					const davesHopeSelect = document.getElementById('davesHopeSelect');
 					if (luckInput) {
-						luckInput.value = btn.dataset.luck;
+						baseLuckValue = parseInt(btn.dataset.luck);
+						const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
+						const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
+						luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
 						luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 					}
 					// If this preset has data-oblivion, enable oblivion and disable dune
@@ -601,8 +705,18 @@ function handleLimboSpecialToggles(isLimbo) {
 document.addEventListener('DOMContentLoaded', () => {
 	const rollOptionsBtn = document.getElementById('rollOptionsBtn');
 	const settingsBtn = document.getElementById('settingsBtn');
+	const panelCloseBtn = document.getElementById('panelCloseBtn');
+	
 	if (rollOptionsBtn) rollOptionsBtn.addEventListener('click', () => togglePanel('rollOptionsPanelContainer', 'rollOptionsBtn'));
 	if (settingsBtn) settingsBtn.addEventListener('click', () => togglePanel('settingsPanel', 'settingsBtn'));
+	
+	// Wire panel close button (for mobile)
+	if (panelCloseBtn) {
+		panelCloseBtn.addEventListener('click', () => {
+			togglePanel('rollOptionsPanelContainer', 'rollOptionsBtn');
+			playSound('clickSound');
+		});
+	}
 	
 	// Wire preset dropdown toggles
 	const rollPresetsBtn = document.getElementById('rollPresetsBtn');
@@ -653,8 +767,13 @@ document.addEventListener('DOMContentLoaded', () => {
 			const luckInput = document.getElementById('luckInput');
 			const oblivionToggle = document.getElementById('oblivionToggle');
 			const duneToggle = document.getElementById('duneToggle');
+			const vipSelect = document.getElementById('vipSelect');
+			const davesHopeSelect = document.getElementById('davesHopeSelect');
 			if (luckInput) {
-				luckInput.value = btn.dataset.luck;
+				baseLuckValue = parseInt(btn.dataset.luck);
+				const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
+				const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
+				luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
 				luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 			}
 			// If this preset has data-oblivion, enable oblivion and disable dune
@@ -717,6 +836,51 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 	if (duneToggle) {
 		duneToggle.addEventListener('change', updateSpecialToggleStates);
+	}
+	
+	// Wire VIP select change handler
+	const vipSelect = document.getElementById('vipSelect');
+	const luckInput = document.getElementById('luckInput');
+	const davesHopeSelect = document.getElementById('davesHopeSelect');
+	
+	if (vipSelect && luckInput) {
+		vipSelect.addEventListener('change', () => {
+			const vipMultiplier = parseFloat(vipSelect.value);
+			const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
+			luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
+			playSound('clickSound');
+		});
+		
+		// Track manual changes to luck input to update base luck value
+		luckInput.addEventListener('input', () => {
+			const currentVipMultiplier = parseFloat(vipSelect.value);
+			const currentDavesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
+			// Only update baseLuckValue if both multipliers are 1x, otherwise user is typing over modified value
+			if (currentVipMultiplier === 1 && currentDavesHopeMultiplier === 1) {
+				baseLuckValue = parseInt(luckInput.value) || 1;
+			}
+		});
+		
+		// Track manual changes when user directly edits the field (for non-preset inputs)
+		luckInput.addEventListener('change', () => {
+			const currentVipMultiplier = parseFloat(vipSelect.value);
+			const currentDavesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
+			// When user manually changes luck, store the base value (divide by current multipliers)
+			const currentValue = parseInt(luckInput.value) || 1;
+			baseLuckValue = Math.floor(currentValue / (currentVipMultiplier * currentDavesHopeMultiplier));
+		});
+	}
+	
+	// Wire Dave's Hope select change handler
+	if (davesHopeSelect && luckInput) {
+		davesHopeSelect.addEventListener('change', () => {
+			const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
+			const davesHopeMultiplier = parseFloat(davesHopeSelect.value);
+			luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
+			playSound('clickSound');
+		});
 	}
 });
 
