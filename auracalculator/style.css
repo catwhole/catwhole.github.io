@@ -1,17 +1,14 @@
-:root {
-    /* Colors */
+﻿:root {
     --bg-color: #434343;
     --text-color: #efefef;
     --accent-color: #aaebe1;
     --glass-bg: rgba(255, 255, 255, 0.075);
     --input-bg: rgba(136, 136, 136, 0.274);
     
-    /* Borders */
     --border-light: rgba(255, 255, 255, 0.3);
     --input-border: skyblue;
     --number-border: rgb(88, 163, 92);
     
-    /* Shadows */
     --main-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     --text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
     --input-shadow: rgba(0, 0, 0, 0.4) 0 0 15px;

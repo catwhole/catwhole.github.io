@@ -1,4 +1,4 @@
-function calculateGauntlets() {
+﻿function calculateGauntlets() {
     var luck = parseFloat(document.getElementById("luck").value);
     var gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
     var elementSpeed = parseFloat(document.getElementById("elementSpeed").value);
@@ -31,30 +31,21 @@ function calculateGauntlets() {
     var trs = 1 + trsDecimal + speedPotion + knowledgeOne + knowledgeTwo + slothOne + slothTwo + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion + rudolph;
     var trsJackpot = trs + 0.07;
 
-
-    // Jackpot Gauntlet calculation
     var alJackpot = (((luck + (0.77 * xyz * vip)) * 9) + ((luck + (0.77 * xyz * vip)) * 2)) / 10;
     var finalJackpotValue = alJackpot * (trsJackpot);
 
-    // Gravitational Gauntlet calculation
     var alGrav = ((luck * 9) + (luck * 6)) / 10;
     var finalGravValue = alGrav * trs;
 
-    // Flesh Gauntlet calculation
     var alFlesh = (luck * 1.3);
     var finalFleshValue = alFlesh * trs;
 
-    // Darkshader calculation
-    // 4 regular bonus roll + 16 regular rolls + 2 rolls with bonus roll with 2.5x + 8 rolls with just 2.5x, divided by 30 total rolls
     var alShader = (((2 * luck) * 4) + (luck * 16) + ((2.5 * 2 * luck) * 2) + ((2.5 * luck) * 8)) / 30;
     var finalShaderValue = alShader * trs;
 
-    // Pole Light Core calculation 
     var alPole = ((luck + (5 * xyz * vip)) * 6 + (luck + (5 * xyz * vip)) * 27)/(25 + (trs / 3)); 
     var finalPoleValue = alPole * trs;
 
-    // Unfathomable Ruins calculation
-    // 1000 rolls with regular luck + 10 rolls with 100 bonus luck, divided by 1010 total rolls
     var alRuins = ((luck * 1000) + (luck * 1000)) / 1010;
     var finalRuinsValue = alRuins * trs;
 
@@ -132,24 +123,18 @@ function calculateDifference() {
     var trsDecimal = gauntletSpeed / 100;
     var realElementSpeed = elementSpeed / 100;
     var trs = 1 + trsDecimal + speedPotion + knowledge + seasonalPotion + bank + hastePotion + transcendant + realElementSpeed + ragePotion + godlyPotion;
-    var trsJackpot = trs + 0.07; // Jackpot has extra 0.07
+    var trsJackpot = trs + 0.07;
 
-    // Common constant
     var C = xyz * vip;
     
-    // 1. Darkshader vs Pole Light Core
     var dsVsPole = (275 * C) / (trs + 20);
     
-    // 2. Jackpot vs Gravitational
     var jackVsGrav = (0.847 * C * trsJackpot) / ((1.5 * trs) - (1.1 * trsJackpot));
     
-    // 3. Flesh vs Jackpot
     var fleshVsJack = (0.847 * C * trsJackpot) / ((1.3 * trs) - (1.1 * trsJackpot));
 
-    // 4. Pole vs Ruins
     var poleVsRuins = (49995 * C) / ((200 * trs) + 5001);
 
-    // Build result text
     var resultText = 
     `<h2 style="color: #2dd4bf; text-align: center">Gauntlet Comparison</h2>
     <p>The information is based on your provided values.</p>
@@ -163,9 +148,9 @@ function calculateDifference() {
     </div>
     <div class="results-section">
         <h3 style="color: #2dd4bf">Other</h3>
-        <div class="result-line"">✓ Gravitational is <span class="highlight">always</span> better than Flesh</div>
-        <div class="result-line">✓ Darkshader is <span class="highlight">always</span> better than Gravitational</div>
-        <div class="result-line">✓ Ruins is <span class="highlight">always</span> better than Darkshader</div>
+        <div class="result-line"">âœ“ Gravitational is <span class="highlight">always</span> better than Flesh</div>
+        <div class="result-line">âœ“ Darkshader is <span class="highlight">always</span> better than Gravitational</div>
+        <div class="result-line">âœ“ Ruins is <span class="highlight">always</span> better than Darkshader</div>
     </div>
     <div class="results-section">
         <h3 style="color: #2dd4bf">Information Used</h3>
@@ -230,7 +215,6 @@ function toggleMusic() {
 document.addEventListener('DOMContentLoaded', function() {
     const bgMusic = document.getElementById('bgMusic');
     
-    // Set initial volume and play state
     bgMusic.volume = 0.09;
     bgMusic.play().catch(function(error) {
         console.log("Audio play failed:", error);

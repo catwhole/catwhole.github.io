@@ -1,6 +1,4 @@
-// roller-worker.js - Web Worker for parallelized bulk rolling
-
-// =====================================================
+﻿// =====================================================
 // RNG Functions
 // =====================================================
 
@@ -17,7 +15,6 @@ function xmur3(str) {
 	};
 }
 
-// Initialize RNG state from a seed string
 function initRngState(seedStr) {
 	const h = xmur3(seedStr);
 	return { a: h(), b: h(), c: h(), d: h() };
@@ -38,19 +35,15 @@ self.onmessage = function(e) {
 		workerIndex
 	} = e.data;
 
-	// Initialize RNG state from seed
 	const state = initRngState(seedStr);
 	let sa = state.a, sb = state.b, sc = state.c, sd = state.d;
 
-	// Create count array (special auras first, then regular)
 	const totalEntries = len + specialLen;
 	const countArr = new Uint32Array(totalEntries);
 
-	// Convert transferred arrays back to Uint32Array views
 	const finalsArr = new Uint32Array(finals);
 	const specialFinalsArr = new Uint32Array(specialFinals);
 
-	// Progress reporting - every 250k rolls for responsive updates with minimal overhead
 	const progressInterval = 250000;
 	let nextProgressAt = progressInterval;
 
@@ -58,7 +51,6 @@ self.onmessage = function(e) {
 	// Hot Loop - Fully Inlined sfc32 RNG
 	// =====================================================
 	for (let r = 0; r < rollCount; r++) {
-		// Report progress periodically (minimal overhead check)
 		if (r >= nextProgressAt) {
 			self.postMessage({ type: 'progress', done: r, workerIndex: workerIndex });
 			nextProgressAt += progressInterval;
@@ -66,9 +58,7 @@ self.onmessage = function(e) {
 		
 		let idx = -1;
 		while (idx < 0) {
-			// Check special auras first
 			for (let i = 0; i < specialLen; i++) {
-				// Inline sfc32
 				sa >>>= 0; sb >>>= 0; sc >>>= 0; sd >>>= 0;
 				let t = (sa + sb) | 0;
 				sa = sb ^ (sb >>> 9);
@@ -78,16 +68,13 @@ self.onmessage = function(e) {
 				t = (t + sd) | 0;
 				sc = (sc + t) | 0;
 				const rnd = t >>> 0;
-				// Check if hit
 				if ((rnd % specialFinalsArr[i]) === 0) {
 					idx = i;
 					break;
 				}
 			}
 			if (idx >= 0) break;
-			// Then check regular auras
 			for (let i = 0; i < len; i++) {
-				// Inline sfc32
 				sa >>>= 0; sb >>>= 0; sc >>>= 0; sd >>>= 0;
 				let t = (sa + sb) | 0;
 				sa = sb ^ (sb >>> 9);
@@ -97,7 +84,6 @@ self.onmessage = function(e) {
 				t = (t + sd) | 0;
 				sc = (sc + t) | 0;
 				const rnd = t >>> 0;
-				// Check if hit
 				if ((rnd % finalsArr[i]) === 0) {
 					idx = specialLen + i;
 					break;
@@ -107,6 +93,5 @@ self.onmessage = function(e) {
 		countArr[idx]++;
 	}
 
-	// Transfer the count array back (zero-copy)
 	self.postMessage({ type: 'done', countArr: countArr.buffer }, [countArr.buffer]);
 };

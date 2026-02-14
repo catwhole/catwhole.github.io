@@ -1,31 +1,23 @@
-// ==================== AUDIO SYSTEM ====================
+﻿// ==================== AUDIO SYSTEM ====================
 const AUDIO_CONFIG = {
-    sfxVolume: 0.25,     // SFX volume (0-1) - 50% default, max 0.5 for safety
-    bgmVolume: 0.25,     // Background music volume (0-1) - 50% default, max 0.5 for safety
-    sfxEnabled: true,    // SFX toggle state
-    bgmEnabled: true,    // BGM toggle state
+    sfxVolume: 0.1,
+    bgmVolume: 0.1,
+    sfxEnabled: true,
+    bgmEnabled: true,
 };
 
-// Track active fade intervals
 let activeFadeIntervals = [];
 
-// Track active rarity SFX element
 let currentRaritySfxEl = null;
 
-// Track active BGM
 let currentBgmId = 'bgmDefault';
 
-// Track base luck value (before VIP multiplier)
 let baseLuckValue = 1;
 
 // ==================== COMPATIBILITY CHECK ====================
-/**
- * Check browser and screen compatibility and show warning if needed
- */
 function checkCompatibility() {
     const issues = [];
     
-    // Check for WebKit/Blink support (Chrome, Safari, Edge, Opera)
     const isWebKit = 'WebkitAppearance' in document.documentElement.style;
     const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
     const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
@@ -33,7 +25,6 @@ function checkCompatibility() {
     const isOpera = /OPR/.test(navigator.userAgent);
     const isFirefox = /Firefox/.test(navigator.userAgent);
     
-    // Check if browser is NOT a webkit-based browser
     if (!isWebKit && !isChrome && !isSafari && !isEdge && !isOpera) {
         if (isFirefox) {
             issues.push('You are using <strong>Firefox</strong>, which may not fully support all visual effects on this site.');
@@ -42,26 +33,22 @@ function checkCompatibility() {
         }
     }
     
-    // Check for mobile devices
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     const width = window.innerWidth;
     const height = window.innerHeight;
     const aspectRatio = width / height;
     
-    // Mobile device detection
     if (isMobile || (isTouchDevice && width <= 1024)) {
         issues.push('You are using a <strong>mobile device</strong>. This site is optimized for desktop browsers.');
     }
     
-    // Extreme aspect ratios (ultra-wide or ultra-tall) - only for non-mobile
     if (!isMobile && aspectRatio > 3) {
         issues.push('Your screen has an <strong>ultra-wide aspect ratio</strong>. Layout may not display optimally.');
     } else if (!isMobile && aspectRatio < 0.4) {
         issues.push('Your screen has an <strong>ultra-tall aspect ratio</strong>. Layout may not display optimally.');
     }
     
-    // Show warning if there are any issues
     if (issues.length > 0) {
         const modal = document.getElementById('compatibilityModal');
         const message = document.getElementById('compatibilityMessage');
@@ -88,13 +75,8 @@ function checkCompatibility() {
     }
 }
 
-// Run compatibility check when DOM is ready
 document.addEventListener('DOMContentLoaded', checkCompatibility);
 
-/**
- * Play sound effect by element ID
- * @param {string} soundId - HTML audio element id
- */
 function playSound(soundId) {
     if (!AUDIO_CONFIG.sfxEnabled) return;
     
@@ -121,16 +103,9 @@ function playRaritySfx(soundId) {
     }
 }
 
-/**
- * Switch background music with fade transition
- * @param {string} trackId - HTML audio element id for background music
- * @param {number} fadeDuration - Fade duration in milliseconds (default 1000ms)
- * @param {number} silenceDelay - Delay between fade out and fade in in milliseconds (default 0ms)
- */
 function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
     currentBgmId = trackId;
     if (!AUDIO_CONFIG.bgmEnabled) {
-        // Stop all BGM if disabled
         const allBgm = document.querySelectorAll('[data-bgm]');
         allBgm.forEach(track => {
             track.pause();
@@ -142,20 +117,17 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
     const track = document.getElementById(trackId);
     if (!track) return;
     
-    // Clear any active fade intervals
     activeFadeIntervals.forEach(interval => clearInterval(interval));
     activeFadeIntervals = [];
     
-    // Get all currently playing BGM tracks
     const allBgm = document.querySelectorAll('[data-bgm]');
-    const fadeStep = 50; // Update every 50ms
+    const fadeStep = 50;
     const steps = Math.max(1, fadeDuration / fadeStep);
     
-    // Fade out all existing tracks
     let fadeOutStep = 0;
     const fadeOutInterval = setInterval(() => {
         fadeOutStep++;
-        const progress = Math.min(1, fadeOutStep / steps); // Clamp between 0-1
+        const progress = Math.min(1, fadeOutStep / steps);
         
         allBgm.forEach(bgmTrack => {
             if (bgmTrack.id !== trackId) {
@@ -166,7 +138,6 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
         if (fadeOutStep >= steps) {
             clearInterval(fadeOutInterval);
             activeFadeIntervals = activeFadeIntervals.filter(i => i !== fadeOutInterval);
-            // Stop old tracks
             allBgm.forEach(bgmTrack => {
                 if (bgmTrack.id !== trackId) {
                     bgmTrack.pause();
@@ -175,7 +146,6 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
                 }
             });
             
-            // Start new track after silence delay
             setTimeout(() => {
                 playNewTrack();
             }, silenceDelay);
@@ -184,9 +154,7 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
     
     activeFadeIntervals.push(fadeOutInterval);
     
-    // Function to play and fade in new track
     function playNewTrack() {
-        // Start new track with fade in
         track.currentTime = 0;
         track.volume = 0;
         track.loop = true;
@@ -197,7 +165,7 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
                 let fadeInStep = 0;
                 const fadeInInterval = setInterval(() => {
                     fadeInStep++;
-                    const progress = Math.min(1, fadeInStep / steps); // Clamp between 0-1
+                    const progress = Math.min(1, fadeInStep / steps);
                     track.volume = AUDIO_CONFIG.bgmVolume * progress;
                     
                     if (fadeInStep >= steps) {
@@ -209,7 +177,6 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
                 
                 activeFadeIntervals.push(fadeInInterval);
             }).catch(err => {
-                // Autoplay failed - reset track to playable state for user interaction
                 console.log('BGM autoplay blocked:', trackId, err);
                 track.volume = AUDIO_CONFIG.bgmVolume;
                 track.currentTime = 0;
@@ -219,68 +186,61 @@ function switchBgm(trackId, fadeDuration = 1000, silenceDelay = 0) {
     }
 }
 
-/**
- * Switch background video with fade transition
- * @param {string} videoSrc - Path to the new video file (e.g. "Media/limbo.mp4")
- * @param {number} fadeDuration - Fade duration in milliseconds (default 1000ms)
- */
+let _bgVideoSwitchTimeout = null;
+let _bgVideoLoadedHandler = null;
+let _bgVideoTargetBrightness = 0.3;
+
 function switchBackgroundVideo(videoSrc, fadeDuration = 1000) {
     const bgVideo = document.querySelector('.background-video');
     if (!bgVideo) return;
     
-    // If already playing this video, do nothing
     const currentSrc = bgVideo.querySelector('source').src;
     const newFullSrc = new URL(videoSrc, window.location.href).href;
     if (currentSrc === newFullSrc) return;
     
-    // Get current brightness value, defaulting to 0.3 if not set
-    let currentBrightness = 0.3;
-    const filterMatch = bgVideo.style.filter.match(/brightness\(([\d.]+)\)/);
-    if (filterMatch) {
-        currentBrightness = parseFloat(filterMatch[1]);
+    if (_bgVideoSwitchTimeout) {
+        clearTimeout(_bgVideoSwitchTimeout);
+        _bgVideoSwitchTimeout = null;
     }
+    if (_bgVideoLoadedHandler) {
+        bgVideo.removeEventListener('loadeddata', _bgVideoLoadedHandler);
+        _bgVideoLoadedHandler = null;
+    }
+    
+    const targetBrightness = _bgVideoTargetBrightness;
     
     bgVideo.style.transition = `filter ${fadeDuration}ms ease-out`;
     bgVideo.style.filter = 'brightness(0)';
     
-    setTimeout(() => {
-        // Change video source
+    _bgVideoSwitchTimeout = setTimeout(() => {
+        _bgVideoSwitchTimeout = null;
         const source = bgVideo.querySelector('source');
         if (source) {
             source.src = videoSrc;
             bgVideo.load();
             
-            // Wait for video to be ready, then fade in from black
-            bgVideo.addEventListener('loadeddata', function onLoaded() {
-                bgVideo.removeEventListener('loadeddata', onLoaded);
-                bgVideo.style.filter = `brightness(${currentBrightness})`;
-            });
+            _bgVideoLoadedHandler = function onLoaded() {
+                bgVideo.removeEventListener('loadeddata', _bgVideoLoadedHandler);
+                _bgVideoLoadedHandler = null;
+                bgVideo.style.filter = `brightness(${targetBrightness})`;
+            };
+            bgVideo.addEventListener('loadeddata', _bgVideoLoadedHandler);
             
-            // Start playing
             bgVideo.play().catch(err => console.log('Video play failed:', err));
         }
     }, fadeDuration);
 }
 
-/**
- * Update global audio volumes
- * @param {number} sfxVol - SFX volume (0-1)
- * @param {number} bgmVol - BGM volume (0-1)
- */
 function setAudioVolumes(sfxVol, bgmVol) {
     if (sfxVol !== undefined) AUDIO_CONFIG.sfxVolume = Math.max(0, Math.min(1, sfxVol));
     if (bgmVol !== undefined) AUDIO_CONFIG.bgmVolume = Math.max(0, Math.min(1, bgmVol));
     
-    // Update all currently playing audio
     const allBgm = document.querySelectorAll('[data-bgm]');
     allBgm.forEach(track => {
         track.volume = AUDIO_CONFIG.bgmVolume;
     });
 }
 
-/**
- * Toggle SFX slider visibility and hide BGM slider
- */
 function toggleSfxSlider() {
     const sfxContainer = document.getElementById('sfxSliderContainer');
     const bgmContainer = document.getElementById('bgmSliderContainer');
@@ -290,11 +250,9 @@ function toggleSfxSlider() {
         const isVisible = sfxContainer.style.display !== 'none';
         sfxContainer.style.display = isVisible ? 'none' : 'flex';
         if (isVisible) {
-            // Closing - remove data-enabled to restore default state
             if (sfxBtn) sfxBtn.removeAttribute('data-enabled');
             if (bgmBtn) bgmBtn.removeAttribute('data-enabled');
         } else {
-            // Opening - highlight this button, dim the other
             if (sfxBtn) sfxBtn.setAttribute('data-enabled', 'true');
             if (bgmBtn) bgmBtn.setAttribute('data-enabled', 'false');
             if (bgmContainer) bgmContainer.style.display = 'none';
@@ -302,9 +260,6 @@ function toggleSfxSlider() {
     }
 }
 
-/**
- * Toggle BGM slider visibility and hide SFX slider
- */
 function toggleBgmSlider() {
     const sfxContainer = document.getElementById('sfxSliderContainer');
     const bgmContainer = document.getElementById('bgmSliderContainer');
@@ -314,11 +269,9 @@ function toggleBgmSlider() {
         const isVisible = bgmContainer.style.display !== 'none';
         bgmContainer.style.display = isVisible ? 'none' : 'flex';
         if (isVisible) {
-            // Closing - remove data-enabled to restore default state
             if (sfxBtn) sfxBtn.removeAttribute('data-enabled');
             if (bgmBtn) bgmBtn.removeAttribute('data-enabled');
         } else {
-            // Opening - highlight this button, dim the other
             if (bgmBtn) bgmBtn.setAttribute('data-enabled', 'true');
             if (sfxBtn) sfxBtn.setAttribute('data-enabled', 'false');
             if (sfxContainer) sfxContainer.style.display = 'none';
@@ -326,9 +279,6 @@ function toggleBgmSlider() {
     }
 }
 
-/**
- * Update SFX volume from slider (0-100 maps to 0-0.5)
- */
 function updateSfxVolume(value) {
     const percent = parseInt(value);
     const actualVolume = (percent / 100) * 0.5;
@@ -336,15 +286,11 @@ function updateSfxVolume(value) {
     const label = document.getElementById('sfxVolumeLabel');
     if (label) label.textContent = percent + '%';
     
-    // Also update currently playing rarity SFX
     if (currentRaritySfxEl) {
         currentRaritySfxEl.volume = actualVolume;
     }
 }
 
-/**
- * Update BGM volume from slider (0-100 maps to 0-0.5)
- */
 function updateBgmVolume(value) {
     const percent = parseInt(value);
     const actualVolume = (percent / 100) * 0.5;
@@ -353,9 +299,6 @@ function updateBgmVolume(value) {
     if (label) label.textContent = percent + '%';
 }
 
-/**
- * Mute SFX by setting slider to 0
- */
 function muteSfx() {
     const slider = document.getElementById('sfxVolumeSlider');
     if (slider) {
@@ -364,9 +307,6 @@ function muteSfx() {
     }
 }
 
-/**
- * Mute BGM by setting slider to 0
- */
 function muteBgm() {
     const slider = document.getElementById('bgmVolumeSlider');
     if (slider) {
@@ -376,20 +316,14 @@ function muteBgm() {
 }
 
 // ==================== INTERACTIVE ELEMENT SFX SYSTEM ====================
-/**
- * Universal SFX for interactive elements
- * Applies to: buttons, checkboxes, radio buttons, text inputs, selects
- */
 
-// Hover sound - apply to all interactive elements
 document.addEventListener('mouseenter', (e) => {
     const target = e.target;
     if (isInteractiveElement(target)) {
         playSound('hoverSound');
     }
-}, true); // Use capture phase to catch all elements
+}, true);
 
-// Click sound - apply to all interactive elements
 document.addEventListener('click', (e) => {
     const target = e.target;
     if (target && target.closest && target.closest('#rollButton')) return;
@@ -398,11 +332,6 @@ document.addEventListener('click', (e) => {
     }
 }, true);
 
-/**
- * Check if element should trigger SFX
- * @param {Element} element
- * @returns {boolean}
- */
 function isInteractiveElement(element) {
     if (!element || typeof element.matches !== 'function') return false;
     return element.matches('button, input, select, textarea');
@@ -417,37 +346,31 @@ const bgmVolumeSlider = document.getElementById('bgmVolumeSlider');
 const introScreen = document.getElementById('introScreen');
 const bgVideo = document.querySelector('.background-video');
 
-// Initialize sliders with default value (50%)
 if (sfxVolumeSlider) {
-    sfxVolumeSlider.value = 50;
+    sfxVolumeSlider.value = 20;
     sfxVolumeSlider.addEventListener('input', (e) => updateSfxVolume(e.target.value));
 }
 if (bgmVolumeSlider) {
-    bgmVolumeSlider.value = 50;
+    bgmVolumeSlider.value = 20;
     bgmVolumeSlider.addEventListener('input', (e) => updateBgmVolume(e.target.value));
 }
 
-// Volume button listeners
 if (sfxVolumeBtn) sfxVolumeBtn.addEventListener('click', toggleSfxSlider);
 if (bgmVolumeBtn) bgmVolumeBtn.addEventListener('click', toggleBgmSlider);
 
-// Mute button listeners
 const sfxMuteBtn = document.getElementById('sfxMuteBtn');
 const bgmMuteBtn = document.getElementById('bgmMuteBtn');
 if (sfxMuteBtn) sfxMuteBtn.addEventListener('click', () => muteSfx());
 if (bgmMuteBtn) bgmMuteBtn.addEventListener('click', () => muteBgm());
 
-// Start background music on page load (will fail due to autoplay restrictions)
 switchBgm('bgmDefault');
 
-// Fallback: Start BGM on first user interaction if autoplay was blocked
 let bgmStarted = false;
 
 function startBgmOnInteraction() {
     if (bgmStarted) return;
     bgmStarted = true;
     
-    // Try to play the current BGM track
     const bgm = document.getElementById(currentBgmId) || document.getElementById('bgmDefault');
     if (bgm && AUDIO_CONFIG.bgmEnabled && bgm.paused) {
         bgm.play().catch(err => console.log('BGM play on interaction failed:', err));
@@ -457,16 +380,13 @@ function startBgmOnInteraction() {
 document.addEventListener('click', startBgmOnInteraction, { once: true });
 document.addEventListener('touchstart', startBgmOnInteraction, { once: true });
 
-// Hover feedback
 startButton.addEventListener('mouseenter', () => {
     playSound('hoverSound');
 });
 
-// Start interaction
 startButton.addEventListener('click', closeIntro);
 
 // ==================== PANEL TOGGLE ====================
-// Track if single result was showing before panel opened
 let wasSingleResultShowing = false;
 
 function togglePanel(panelId, btnId) {
@@ -483,21 +403,17 @@ function togglePanel(panelId, btnId) {
 	const settingsBtn = document.getElementById('settingsBtn');
 	if (!panel) return;
 	if (!isOpen) {
-		// Opening panel - remember what was showing, dim the other button
 		wasSingleResultShowing = singleResult && singleResult.style.display === 'flex';
 		panel.classList.add('open');
 		if (btn) btn.setAttribute('data-enabled', 'true');
-		// Dim the other button
 		if (btnId === 'rollOptionsBtn' && settingsBtn) settingsBtn.setAttribute('data-enabled', 'false');
 		if (btnId === 'settingsBtn' && rollBtn) rollBtn.setAttribute('data-enabled', 'false');
 		if (resultsBox) resultsBox.style.display = 'none';
-		// Use visibility to hide single result so animations keep running (no restart on restore)
 		if (singleResult && wasSingleResultShowing) {
 			singleResult.style.visibility = 'hidden';
-			singleResult.classList.remove('flash'); // Remove flash so it doesn't replay
+			singleResult.classList.remove('flash');
 		}
 	} else {
-		// Closing panel - restore default state for both buttons
 		if (rollBtn) rollBtn.removeAttribute('data-enabled');
 		if (settingsBtn) settingsBtn.removeAttribute('data-enabled');
 		if (wasSingleResultShowing && singleResult) {
@@ -509,10 +425,8 @@ function togglePanel(panelId, btnId) {
 }
 
 // ==================== LIMBO BIOME SPECIAL HANDLING ====================
-// Store original luck presets HTML to restore later
 let originalLuckPresetsHTML = null;
 
-// Biome media configuration - add new biomes here
 const BIOME_CONFIG = {
 	'limbo': {
 		bgm: 'bgmLimbo',
@@ -534,7 +448,61 @@ const BIOME_CONFIG = {
 		video: 'Media/cyberspace.mp4',
 		modeClass: 'cyberspace-mode'
 	},
-	// Default for all other biomes
+	'corruption': {
+		bgm: 'bgmCorruption',
+		video: 'Media/corruption.mp4',
+		modeClass: null
+	},
+	'day': {
+		bgm: 'bgmDay',
+		video: 'Media/day.mp4',
+		modeClass: null
+	},
+	'heaven': {
+		bgm: 'bgmHeaven',
+		video: 'Media/heaven.mp4',
+		modeClass: null
+	},
+	'hell': {
+		bgm: 'bgmHell',
+		video: 'Media/hell.mp4',
+		modeClass: null
+	},
+	'night': {
+		bgm: 'bgmNight',
+		video: 'Media/night.mp4',
+		modeClass: null
+	},
+	'null': {
+		bgm: 'bgmNull',
+		video: 'Media/null.mp4',
+		modeClass: null
+	},
+	'rainy': {
+		bgm: 'bgmRainy',
+		video: 'Media/rainy.mp4',
+		modeClass: null
+	},
+	'sandstorm': {
+		bgm: 'bgmSandstorm',
+		video: 'Media/sandstorm.mp4',
+		modeClass: null
+	},
+	'snowy': {
+		bgm: 'bgmSnowy',
+		video: 'Media/snowy.mp4',
+		modeClass: null
+	},
+	'starfall': {
+		bgm: 'bgmStarfall',
+		video: 'Media/starfall.mp4',
+		modeClass: null
+	},
+	'windy': {
+		bgm: 'bgmWindy',
+		video: 'Media/windy.mp4',
+		modeClass: null
+	},
 	'default': {
 		bgm: 'bgmMain',
 		video: 'Media/normal day.mp4',
@@ -542,43 +510,28 @@ const BIOME_CONFIG = {
 	}
 };
 
-/**
- * Handle biome change - switch BGM, video, and UI for LIMBO
- * @param {string} biome - Selected biome value
- */
 function handleBiomeChange(biome) {
-	// Get config for this biome, or use default
 	const config = BIOME_CONFIG[biome] || BIOME_CONFIG['default'];
 	const isLimbo = biome === 'limbo';
 	
-	// Remove all mode classes
-	// Remove all mode classes registered in BIOME_CONFIG
 	Object.values(BIOME_CONFIG).forEach(cfg => {
 		if (cfg && cfg.modeClass) document.body.classList.remove(cfg.modeClass);
 	});
 	
-	// Add specific mode class if defined
 	if (config.modeClass) {
 		document.body.classList.add(config.modeClass);
 	}
 	
-	// Switch BGM and video only if actually changing
 	if (currentBgmId !== config.bgm) {
 		switchBgm(config.bgm, 1000, 0);
 		switchBackgroundVideo(config.video, 1000);
 	}
 	
-	// Handle luck presets (only for LIMBO currently)
 	handleLimboLuckPresets(isLimbo);
 	
-	// Handle special aura toggles (only for LIMBO currently)
 	handleLimboSpecialToggles(isLimbo);
 }
 
-/**
- * Replace luck presets with Void Heart option for LIMBO, or restore original presets
- * @param {boolean} isLimbo - Whether LIMBO biome is selected
- */
 function handleLimboLuckPresets(isLimbo) {
 	const luckPresetsDropdown = document.getElementById('luckPresetsDropdown');
 	const davesHopeSection = document.getElementById('davesHopeSection');
@@ -586,18 +539,14 @@ function handleLimboLuckPresets(isLimbo) {
 	if (!luckPresetsDropdown) return;
 	
 	if (isLimbo) {
-		// Show Dave's Hope section
 		if (davesHopeSection) davesHopeSection.style.display = 'block';
 		
-		// Save original HTML if not already saved
 		if (!originalLuckPresetsHTML) {
 			originalLuckPresetsHTML = luckPresetsDropdown.innerHTML;
 		}
 		
-		// Replace with single Void Heart option
 		luckPresetsDropdown.innerHTML = '<button class="preset-btn" data-luck="300000">Void Heart - 300,000</button>';
 		
-		// Re-wire the button
 		const voidHeartBtn = luckPresetsDropdown.querySelector('.preset-btn[data-luck]');
 		if (voidHeartBtn) {
 			voidHeartBtn.addEventListener('click', () => {
@@ -611,7 +560,6 @@ function handleLimboLuckPresets(isLimbo) {
 					luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
 					luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 				}
-				// Close dropdown
 				const luckPresetsBtn = document.getElementById('luckPresetsBtn');
 				if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
 				if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
@@ -619,11 +567,9 @@ function handleLimboLuckPresets(isLimbo) {
 			});
 		}
 	} else {
-		// Hide Dave's Hope section and reset its value
 		if (davesHopeSection) davesHopeSection.style.display = 'none';
 		if (davesHopeSelect) davesHopeSelect.value = '1';
 		
-		// Recalculate luck without Dave's Hope multiplier
 		const luckInput = document.getElementById('luckInput');
 		const vipSelect = document.getElementById('vipSelect');
 		if (luckInput) {
@@ -632,11 +578,9 @@ function handleLimboLuckPresets(isLimbo) {
 			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 		}
 		
-		// Restore original presets
 		if (originalLuckPresetsHTML) {
 			luckPresetsDropdown.innerHTML = originalLuckPresetsHTML;
 			
-			// Re-wire all luck preset buttons
 			document.querySelectorAll('.preset-btn[data-luck]').forEach(btn => {
 				btn.addEventListener('click', () => {
 					const luckInput = document.getElementById('luckInput');
@@ -651,19 +595,16 @@ function handleLimboLuckPresets(isLimbo) {
 						luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
 						luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 					}
-					// If this preset has data-oblivion, enable oblivion and disable dune
 					if (btn.dataset.oblivion === 'true') {
 						if (oblivionToggle) oblivionToggle.checked = true;
 						if (duneToggle) duneToggle.checked = false;
 						updateSpecialToggleStates();
 					}
-					// If this preset has data-dune, enable dune and disable oblivion
 					if (btn.dataset.dune === 'true') {
 						if (duneToggle) duneToggle.checked = true;
 						if (oblivionToggle) oblivionToggle.checked = false;
 						updateSpecialToggleStates();
 					}
-					// Close dropdown
 					const luckPresetsBtn = document.getElementById('luckPresetsBtn');
 					if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
 					if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
@@ -674,16 +615,11 @@ function handleLimboLuckPresets(isLimbo) {
 	}
 }
 
-/**
- * Disable/enable special aura toggles for LIMBO
- * @param {boolean} isLimbo - Whether LIMBO biome is selected
- */
 function handleLimboSpecialToggles(isLimbo) {
 	const oblivionToggle = document.getElementById('oblivionToggle');
 	const duneToggle = document.getElementById('duneToggle');
 	
 	if (isLimbo) {
-		// Disable and uncheck both toggles
 		if (oblivionToggle) {
 			oblivionToggle.checked = false;
 			oblivionToggle.disabled = true;
@@ -693,15 +629,12 @@ function handleLimboSpecialToggles(isLimbo) {
 			duneToggle.disabled = true;
 		}
 	} else {
-		// Re-enable toggles (but respect mutual exclusivity)
 		if (oblivionToggle) oblivionToggle.disabled = false;
 		if (duneToggle) duneToggle.disabled = false;
-		// Update states to ensure mutual exclusivity is applied
 		updateSpecialToggleStates();
 	}
 }
 
-// Wire panel toggle buttons
 document.addEventListener('DOMContentLoaded', () => {
 	const rollOptionsBtn = document.getElementById('rollOptionsBtn');
 	const settingsBtn = document.getElementById('settingsBtn');
@@ -710,7 +643,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (rollOptionsBtn) rollOptionsBtn.addEventListener('click', () => togglePanel('rollOptionsPanelContainer', 'rollOptionsBtn'));
 	if (settingsBtn) settingsBtn.addEventListener('click', () => togglePanel('settingsPanel', 'settingsBtn'));
 	
-	// Wire panel close button (for mobile)
 	if (panelCloseBtn) {
 		panelCloseBtn.addEventListener('click', () => {
 			togglePanel('rollOptionsPanelContainer', 'rollOptionsBtn');
@@ -718,7 +650,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 	
-	// Wire preset dropdown toggles
 	const rollPresetsBtn = document.getElementById('rollPresetsBtn');
 	const rollPresetsDropdown = document.getElementById('rollPresetsDropdown');
 	const luckPresetsBtn = document.getElementById('luckPresetsBtn');
@@ -729,7 +660,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			const isOpen = rollPresetsDropdown.classList.contains('open');
 			rollPresetsDropdown.classList.toggle('open', !isOpen);
 			rollPresetsBtn.classList.toggle('active', !isOpen);
-			// Close other dropdown
 			if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
 			if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
 		});
@@ -740,13 +670,11 @@ document.addEventListener('DOMContentLoaded', () => {
 			const isOpen = luckPresetsDropdown.classList.contains('open');
 			luckPresetsDropdown.classList.toggle('open', !isOpen);
 			luckPresetsBtn.classList.toggle('active', !isOpen);
-			// Close other dropdown
 			if (rollPresetsDropdown) rollPresetsDropdown.classList.remove('open');
 			if (rollPresetsBtn) rollPresetsBtn.classList.remove('active');
 		});
 	}
 	
-	// Wire roll preset buttons
 	document.querySelectorAll('.preset-btn[data-rolls]').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const rollsInput = document.getElementById('rollsInput');
@@ -754,14 +682,12 @@ document.addEventListener('DOMContentLoaded', () => {
 				rollsInput.value = btn.dataset.rolls;
 				rollsInput.dispatchEvent(new Event('input', { bubbles: true }));
 			}
-			// Close dropdown
 			if (rollPresetsDropdown) rollPresetsDropdown.classList.remove('open');
 			if (rollPresetsBtn) rollPresetsBtn.classList.remove('active');
 			playSound('clickSound');
 		});
 	});
 	
-	// Wire luck preset buttons
 	document.querySelectorAll('.preset-btn[data-luck]').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const luckInput = document.getElementById('luckInput');
@@ -776,26 +702,22 @@ document.addEventListener('DOMContentLoaded', () => {
 				luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
 				luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 			}
-			// If this preset has data-oblivion, enable oblivion and disable dune
 			if (btn.dataset.oblivion === 'true') {
 				if (oblivionToggle) oblivionToggle.checked = true;
 				if (duneToggle) duneToggle.checked = false;
 				updateSpecialToggleStates();
 			}
-			// If this preset has data-dune, enable dune and disable oblivion
 			if (btn.dataset.dune === 'true') {
 				if (duneToggle) duneToggle.checked = true;
 				if (oblivionToggle) oblivionToggle.checked = false;
 				updateSpecialToggleStates();
 			}
-			// Close dropdown
 			if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
 			if (luckPresetsBtn) luckPresetsBtn.classList.remove('active');
 			playSound('clickSound');
 		});
 	});
 	
-	// Wire quick biome buttons
 	document.querySelectorAll('.quick-biome-btn[data-biome]').forEach(btn => {
 		btn.addEventListener('click', () => {
 			const biomeSelect = document.getElementById('biomeSelect');
@@ -807,7 +729,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 	
-	// Wire biome select change handler for LIMBO special handling
 	const biomeSelect = document.getElementById('biomeSelect');
 	if (biomeSelect) {
 		biomeSelect.addEventListener('change', (e) => {
@@ -815,7 +736,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 	
-	// Wire special aura toggle mutual exclusivity
 	const oblivionToggle = document.getElementById('oblivionToggle');
 	const duneToggle = document.getElementById('duneToggle');
 	
@@ -838,7 +758,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		duneToggle.addEventListener('change', updateSpecialToggleStates);
 	}
 	
-	// Wire VIP select change handler
 	const vipSelect = document.getElementById('vipSelect');
 	const luckInput = document.getElementById('luckInput');
 	const davesHopeSelect = document.getElementById('davesHopeSelect');
@@ -852,27 +771,22 @@ document.addEventListener('DOMContentLoaded', () => {
 			playSound('clickSound');
 		});
 		
-		// Track manual changes to luck input to update base luck value
 		luckInput.addEventListener('input', () => {
 			const currentVipMultiplier = parseFloat(vipSelect.value);
 			const currentDavesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
-			// Only update baseLuckValue if both multipliers are 1x, otherwise user is typing over modified value
 			if (currentVipMultiplier === 1 && currentDavesHopeMultiplier === 1) {
 				baseLuckValue = parseInt(luckInput.value) || 1;
 			}
 		});
 		
-		// Track manual changes when user directly edits the field (for non-preset inputs)
 		luckInput.addEventListener('change', () => {
 			const currentVipMultiplier = parseFloat(vipSelect.value);
 			const currentDavesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
-			// When user manually changes luck, store the base value (divide by current multipliers)
 			const currentValue = parseInt(luckInput.value) || 1;
 			baseLuckValue = Math.floor(currentValue / (currentVipMultiplier * currentDavesHopeMultiplier));
 		});
 	}
 	
-	// Wire Dave's Hope select change handler
 	if (davesHopeSelect && luckInput) {
 		davesHopeSelect.addEventListener('change', () => {
 			const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
@@ -882,21 +796,26 @@ document.addEventListener('DOMContentLoaded', () => {
 			playSound('clickSound');
 		});
 	}
+
+	const auraClassStopBtn = document.getElementById('auraClassStopBtn');
+	const auraClassStopList = document.getElementById('auraClassStopList');
+	if (auraClassStopBtn && auraClassStopList) {
+		auraClassStopBtn.addEventListener('click', () => {
+			const isOpen = auraClassStopList.classList.contains('open');
+			auraClassStopList.classList.toggle('open', !isOpen);
+			auraClassStopBtn.classList.toggle('active', !isOpen);
+		});
+	}
 });
 
-/**
- * Close intro screen and lighten background
- */
 function closeIntro() {
+    _bgVideoTargetBrightness = 0.3;
     bgVideo.style.filter = 'brightness(0.3)';
     introScreen.style.animation = 'fadeOut 0.6s ease-out forwards';
     
-    // Check if intro music was actually playing
     const bgmDefault = document.getElementById('bgmDefault');
     const introWasPlaying = bgmDefault && !bgmDefault.paused;
     
-    // Switch from intro music to main music with silence in between
-    // Use shorter fade (300ms) if intro wasn't playing, full fade (1000ms) if it was
     switchBgm('bgmMain', introWasPlaying ? 1000 : 300, 0);
     
     setTimeout(() => {

@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Playfair+Display:wght@400;700&family=Courier+Prime&family=Bebas+Neue&family=Cinzel&display=swap" rel="stylesheet">
-    <title>Sol's RNG Rolling Simulator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bebas+Neue&family=Cinzel:wght@400..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fondamento:ital@0;1&family=Inconsolata:wdth,wght@50..200,200..900&family=Kings&family=Merriweather:ital,opsz,wdth,wght@0,18..144,87..112,300..900;1,18..144,87..112,300..900&family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&family=Noto+Serif+TC:wght@200..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Press+Start+2P&family=Rajdhani:wght@300;400;500;600;700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Tangerine:wght@400;700&family=Sarpanch:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/accanthis-adf-std?styles=92458,92457,92455,92456,92462,92466,92461,92465,92459,92463,92460,92464" rel="stylesheet">    <title>Sol's RNG Rolling Simulator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="aurafonts.css">
 </head>
 <body>
     <div class="video-background-layer"></div>
@@ -25,13 +26,13 @@
                 <button class="btn btn-toggle" id="sfxVolumeBtn">Sound Volume</button>
                 <button class="btn btn-toggle" id="bgmVolumeBtn">Music Volume</button>
                 <div class="volume-slider-container" id="sfxSliderContainer" style="display: none;">
-                    <input type="range" id="sfxVolumeSlider" class="volume-slider" min="0" max="100" value="50">
-                    <span class="volume-label" id="sfxVolumeLabel">50%</span>
+                    <input type="range" id="sfxVolumeSlider" class="volume-slider" min="0" max="100" value="20">
+                    <span class="volume-label" id="sfxVolumeLabel">20%</span>
                     <button class="mute-btn" id="sfxMuteBtn" title="Mute SFX">🔇</button>
                 </div>
                 <div class="volume-slider-container" id="bgmSliderContainer" style="display: none;">
-                    <input type="range" id="bgmVolumeSlider" class="volume-slider" min="0" max="100" value="50">
-                    <span class="volume-label" id="bgmVolumeLabel">50%</span>
+                    <input type="range" id="bgmVolumeSlider" class="volume-slider" min="0" max="100" value="20">
+                    <span class="volume-label" id="bgmVolumeLabel">20%</span>
                     <button class="mute-btn" id="bgmMuteBtn" title="Mute BGM">🔇</button>
                 </div>
             </div>
@@ -97,6 +98,39 @@
     </audio>
     <audio id="bgmDreamspace" data-bgm loop preload="auto">
         <source src="Sounds/bgm-dreamspace.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmCorruption" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-corruption.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmDay" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-day.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmHeaven" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-heaven.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmHell" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-hell.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmNight" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-night.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmNull" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-null.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmRainy" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-rainy.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmSandstorm" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-sandstorm.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmSnowy" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-snowy.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmStarfall" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-starfall.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bgmWindy" data-bgm loop preload="auto">
+        <source src="Sounds/bgm-windy.mp3" type="audio/mpeg">
     </audio>
 
     <div id="mainMenu" class="hidden">
@@ -278,9 +312,24 @@
                 </label>
             </div>
             <div class="settings-section">
-                <label for="autoStopRarityInput">Stop Auto Roll on rarity above:</label>
-                <input id="autoStopRarityInput" class="input-field" type="number" min="1" value="" placeholder="e.g. 1000000">
-                <span class="hint-text">Leave empty to never stop</span>
+                <div class="preset-section">
+                    <div class="preset-header">
+                        <span>Pause on aura class</span>
+                        <button class="btn btn-preset-toggle" id="auraClassStopBtn">Show ▼</button>
+                    </div>
+                    <div class="preset-list" id="auraClassStopList">
+                        <div class="option-row"><label for="stopEpic">Epic (1,000+)</label><label class="toggle-switch"><input type="checkbox" id="stopEpic" value="rarity-epic" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopUnique">Unique (10,000+)</label><label class="toggle-switch"><input type="checkbox" id="stopUnique" value="rarity-unique" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopLegendary">Legendary (99,999+)</label><label class="toggle-switch"><input type="checkbox" id="stopLegendary" value="rarity-legendary" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopMythic">Mythic (1,000,000+)</label><label class="toggle-switch"><input type="checkbox" id="stopMythic" value="rarity-mythic" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopExalted">Exalted (10,000,000+)</label><label class="toggle-switch"><input type="checkbox" id="stopExalted" value="rarity-exalted" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopGlorious">Glorious (99,999,999+)</label><label class="toggle-switch"><input type="checkbox" id="stopGlorious" value="rarity-glorious" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopTranscendent">Transcendent (1B+)</label><label class="toggle-switch"><input type="checkbox" id="stopTranscendent" value="rarity-transcendent" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopChallenged">Challenged</label><label class="toggle-switch"><input type="checkbox" id="stopChallenged" value="rarity-challenged" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                        <div class="option-row"><label for="stopChallengedPlus">Challenged+</label><label class="toggle-switch"><input type="checkbox" id="stopChallengedPlus" value="rarity-challengedplus" class="aura-class-stop-cb"><span class="toggle-slider"></span></label></div>
+                    </div>
+                    <span class="hint-text">Auto roll: stops. Manual roll: 1s cooldown</span>
+                </div>
             </div>
         </div>
 

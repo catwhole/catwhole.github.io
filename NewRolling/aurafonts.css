@@ -1,0 +1,1089 @@
+﻿/* ==================== AURA CUSTOM FONTS & STYLES ==================== */
+
+/* ==================== COMMON AURA STYLE STRUCTURE ==================== */
+
+.aura-style-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.aura-style-wrapper,
+.aura-style-wrapper * {
+    visibility: inherit;
+}
+
+.aura-style-wrapper .aura-top {
+    display: none;
+}
+
+.aura-style-wrapper .aura-bottom {
+    display: inline-block;
+}
+
+@keyframes TranscendentFloat {
+    0%, 100% { transform: rotate(-2deg) scale(1.12); }
+    50%      { transform: rotate(2deg) scale(1.25); }
+}
+
+#singleResult .aura-style-wrapper.nyctophobia,
+#singleResult .aura-style-wrapper.oppression,
+#singleResult .aura-style-wrapper.dreammetric,
+#singleResult .aura-style-wrapper.illusionary,
+#singleResult .aura-style-wrapper.aegis,
+#singleResult .aura-style-wrapper.ascendant,
+#singleResult .aura-style-wrapper.dreamscape,
+#singleResult .aura-style-wrapper.ruins-withered,
+#singleResult .aura-style-wrapper.sovereign,
+#singleResult .aura-style-wrapper.pythios,
+#singleResult .aura-style-wrapper.prologue,
+#singleResult .aura-style-wrapper.matrix-reality,
+#singleResult .aura-style-wrapper.memory,
+#singleResult .aura-style-wrapper.neferkhaf {
+    font-size: 110%;
+}
+
+#resultsBox .aura-style-wrapper.equinox,
+#resultsBox .aura-style-wrapper.breakthrough,
+#resultsBox .aura-style-wrapper.luminosity,
+#resultsBox .aura-style-wrapper.nyctophobia,
+#resultsBox .aura-style-wrapper.oppression,
+#resultsBox .aura-style-wrapper.dreammetric,
+#resultsBox .aura-style-wrapper.oblivion,
+#resultsBox .aura-style-wrapper.illusionary,
+#resultsBox .aura-style-wrapper.monarch,
+#resultsBox .aura-style-wrapper.leviathan,
+#resultsBox .aura-style-wrapper.aegis,
+#resultsBox .aura-style-wrapper.ascendant,
+#resultsBox .aura-style-wrapper.dreamscape,
+#resultsBox .aura-style-wrapper.sovereign,
+#resultsBox .aura-style-wrapper.pythios,
+#resultsBox .aura-style-wrapper.prologue,
+#resultsBox .aura-style-wrapper.glitch,
+#resultsBox .aura-style-wrapper.borealis,
+#resultsBox .aura-style-wrapper.memory,
+#resultsBox .aura-style-wrapper.neferkhaf {
+    font-size: 100%;
+} 
+
+#resultsBox .aura-style-wrapper.equinox,
+#resultsBox .aura-style-wrapper.breakthrough,
+#resultsBox .aura-style-wrapper.luminosity,
+#resultsBox .aura-style-wrapper.pixelation,
+#resultsBox .aura-style-wrapper.nyctophobia,
+#resultsBox .aura-style-wrapper.dreamscape,
+#resultsBox .aura-style-wrapper.oppression,
+#resultsBox .aura-style-wrapper.dreammetric,
+#resultsBox .aura-style-wrapper.illusionary,
+#resultsBox .aura-style-wrapper.monarch,
+#resultsBox .aura-style-wrapper.leviathan,
+#resultsBox .aura-style-wrapper.aegis,
+#resultsBox .aura-style-wrapper.ascendant,
+#resultsBox .aura-style-wrapper.glitch,
+#resultsBox .aura-style-wrapper.borealis,
+#resultsBox .aura-style-wrapper.memory,
+#resultsBox .aura-style-wrapper.sovereign,
+#resultsBox .aura-style-wrapper.pythios,
+#resultsBox .aura-style-wrapper.prologue,
+#resultsBox .aura-style-wrapper.matrix-reality,
+#resultsBox .aura-style-wrapper.ruins-withered,
+#resultsBox .aura-style-wrapper.neferkhaf {
+    margin: 0 0 2px 0;
+} 
+
+.aura-style-wrapper.equinox.aura-animated,
+.aura-style-wrapper.breakthrough.aura-animated,
+.aura-style-wrapper.luminosity.aura-animated,
+.aura-style-wrapper.pixelation.aura-animated,
+.aura-style-wrapper.dreammetric.aura-animated,
+.aura-style-wrapper.oblivion.aura-animated,
+.aura-style-wrapper.illusionary.aura-animated,
+.aura-style-wrapper.monarch.aura-animated,
+.aura-style-wrapper.leviathan.aura-animated,
+.aura-style-wrapper.aegis.aura-animated,
+.aura-style-wrapper.ascendant.aura-animated,
+.aura-style-wrapper.dreamscape.aura-animated,
+.aura-style-wrapper.borealis.aura-animated,
+.aura-style-wrapper.sovereign.aura-animated,
+.aura-style-wrapper.pythios.aura-animated,
+.aura-style-wrapper.prologue.aura-animated,
+.aura-style-wrapper.matrix-reality.aura-animated,
+.aura-style-wrapper.memory.aura-animated,
+.aura-style-wrapper.dreamscape.aura-animated,
+.aura-style-wrapper.ruins-withered.aura-animated,
+.aura-style-wrapper.neferkhaf.aura-animated {
+    animation: TranscendentFloat 4s ease-in-out infinite;
+} 
+
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.equinox,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.breakthrough,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.luminosity,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.nyctophobia,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.dreamscape,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.oppression,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.dreammetric,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.illusionary,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.monarch,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.leviathan,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.aegis,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.ascendant,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.dreamscape,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.glitch,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.borealis,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.sovereign,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.pythios,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.prologue,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.matrix-reality,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.memory,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.ruins-withered,
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.neferkhaf {
+    font-size: clamp(1rem, 2vw, 1.4rem) !important;
+} 
+
+.aura-style-wrapper.nyctophobia .aura-bottom,
+.aura-style-wrapper.oppression .aura-bottom,
+.aura-style-wrapper.illusionary .aura-bottom {
+    color: inherit;
+}
+
+#resultsBox .aura-style-wrapper.equinox.aura-animated,
+#resultsBox .aura-style-wrapper.breakthrough.aura-animated,
+#resultsBox .aura-style-wrapper.luminosity.aura-animated,
+#resultsBox .aura-style-wrapper.pixelation.aura-animated,
+#resultsBox .aura-style-wrapper.nyctophobia.aura-animated,
+#resultsBox .aura-style-wrapper.dreamscape.aura-animated,
+#resultsBox .aura-style-wrapper.dreammetric.aura-animated,
+#resultsBox .aura-style-wrapper.oblivion.aura-animated,
+#resultsBox .aura-style-wrapper.illusionary.aura-animated,
+#resultsBox .aura-style-wrapper.monarch.aura-animated,
+#resultsBox .aura-style-wrapper.leviathan.aura-animated,
+#resultsBox .aura-style-wrapper.aegis.aura-animated,
+#resultsBox .aura-style-wrapper.ascendant.aura-animated,
+#resultsBox .aura-style-wrapper.pythios.aura-animated,
+#resultsBox .aura-style-wrapper.prologue.aura-animated,
+#resultsBox .aura-style-wrapper.matrix-reality.aura-animated,
+#resultsBox .aura-style-wrapper.glitch.aura-animated,
+#resultsBox .aura-style-wrapper.borealis.aura-animated,
+#resultsBox .aura-style-wrapper.memory.aura-animated,
+#resultsBox .aura-style-wrapper.ruins-withered.aura-animated,
+#resultsBox .aura-style-wrapper.sovereign.aura-animated,
+#resultsBox .aura-style-wrapper.neferkhaf.aura-animated {
+    animation: none;
+}  
+
+.aura-custom-styled,
+#singleResult .singleResultText.aura-custom-styled,
+#resultsBox div.aura-custom-styled {
+    color: unset !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: unset !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+    filter: none !important;
+}
+
+/* ====================================================================== */
+/* ==================== SINGLE ROLL RARITY LABEL ======================== */
+/* ====================================================================== */
+
+.aura-rarity-wrapper {
+    display: block;
+    margin-bottom: 24px;
+}
+
+/* ====================================================================== */
+/* ==================== EQUINOX ========================================= */
+/* ====================================================================== */
+
+@keyframes EquinoxTopColor {
+    0%, 100% { color: #000000; }
+    50%      { color: #ffffff; }
+}
+
+@keyframes EquinoxBottomColor {
+    0%, 100% { color: #ffffff; }
+    50%      { color: #000000; }
+}
+
+.aura-style-wrapper.equinox {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: bold;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 2px rgba(255, 255, 255, 1));
+}
+
+.aura-style-wrapper.equinox .aura-top {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    color: #000000;
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 70%, transparent 100%);
+}
+
+.aura-style-wrapper.equinox .aura-top.aura-animated {
+    animation: EquinoxTopColor 1s ease-in-out infinite;
+}
+
+.aura-style-wrapper.equinox .aura-bottom {
+    position: relative;
+    color: #ffffff;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 70%, black 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, transparent 30%, black 70%, black 100%);
+}
+
+.aura-style-wrapper.equinox .aura-bottom.aura-animated {
+    animation: EquinoxBottomColor 1s ease-in-out infinite;
+}
+
+#resultsBox .aura-style-wrapper.equinox {
+    letter-spacing: 0.15em;
+}
+
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.equinox {
+    letter-spacing: 0.15em;
+}
+
+#singleResult .aura-style-wrapper.equinox {
+    font-size: 120%;
+}
+
+
+/* ====================================================================== */
+/* ==================== BREAKTHROUGH ==================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.breakthrough {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    background: linear-gradient(150deg, transparent 15%, #00000d 25%);
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-image: linear-gradient(290deg, #666680 5%, #636c88 10%, transparent 20%, transparent 90%, rgba(132, 135, 157, 0.7) 95%) 1;
+    padding: 0.1em;
+    filter: drop-shadow(0 0 6px rgba(150, 160, 180, 0.6)) drop-shadow(0 0 12px rgba(100, 110, 140, 0.4)) drop-shadow(0 0 2px rgba(200, 210, 230, 0.8));
+}
+
+.aura-style-wrapper.breakthrough .aura-bottom {
+    background: linear-gradient(175deg, 
+        #f2fdfe 10%, 
+        #cfd5e3 19%, 
+        #0d0f1c 20%, 
+        #37344b 35%, 
+        #8c8ea0 35%, 
+        #68697c 40%, 
+        #7e84a3 45%, 
+        #5c606f 50%, 
+        #9498ab 55%, 
+        #484a5e 70%, 
+        #eef4fa 71%, 
+        #e0e6ef 75%, 
+        #e9ebfc 80%
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.3px #7b7f8d;
+}
+
+#resultsBox .aura-style-wrapper.breakthrough {
+    letter-spacing: 0.05em;
+    padding: 0.05em;
+    border-width: 1px;
+}
+
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.breakthrough {
+    letter-spacing: 0.05em;
+    padding: 0.05em;
+    border-width: 1px;
+}
+
+#singleResult .aura-style-wrapper.breakthrough {
+    font-size: 120%;
+}
+
+/* ====================================================================== */
+/* ==================== LUMINOSITY ====================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.luminosity {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: bold;
+    font-style: italic;
+    filter: drop-shadow(0 0 6px rgba(162, 179, 235, 0.7)) drop-shadow(0 0 12px rgba(176, 188, 222, 0.5));
+}
+
+.aura-style-wrapper.luminosity .aura-bottom {
+    background: linear-gradient(90deg, 
+        #a2b3eb 30%, 
+        #b6bcde 40%, 
+        #c3c9d7, 
+        #b1bdc9 65%, 
+        #abbad9, 
+        #c0ceeb
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 1px rgba(0, 0, 0, 0.6));
+}
+
+#singleResult .aura-style-wrapper.luminosity {
+    font-size: 120%;
+}
+
+/* ====================================================================== */
+/* ==================== ASCENDANT ======================================= */
+/* ====================================================================== */
+
+.aura-style-wrapper.ascendant {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-style: italic;
+    text-transform: uppercase;
+    filter: drop-shadow(0 0 6px rgba(172,110,64,0.6));
+    padding: 0 14px 0 14px;
+}
+
+.aura-style-wrapper.ascendant .aura-top {
+    display: block;
+    position: absolute;
+    background: linear-gradient(to bottom, #f5c399 20%, #fdd0a9 30%, #f2c09a 60%, #ce926d 65%, #f4b891 68%, #e8ac87 75%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 0 6px rgba(255, 235, 200, 0.18);
+    z-index: 2;
+    inset: 0;
+}
+
+.aura-style-wrapper.ascendant .aura-bottom {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 1.5px #ac6e40; /* brown outline per reference */
+    text-shadow: 0 0 8px rgba(172,110,64,0.28);
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* ====================================================================== */
+/* ==================== PIXELATION ====================================== */
+/* ====================================================================== */
+
+@keyframes PixelationRainbow {
+    0%   { color: #ff0000; }
+    14%  { color: #ff7f00; }
+    28%  { color: #ffff00; }
+    42%  { color: #00ff00; }
+    57%  { color: #0000ff; }
+    71%  { color: #4b0082; }
+    85%  { color: #9400d3; }
+    100% { color: #ff0000; }
+}
+
+@keyframes PixelationScanline {
+    0%   { background-position: 0% 0%; }
+    100% { background-position: 0% 200%; }
+}
+
+.aura-style-wrapper.pixelation {
+    font-family: 'Press Start 2P', monospace;
+    font-weight: bold;
+    font-style: italic;
+    filter: drop-shadow(2.5px 0 0 black) drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+}
+
+.aura-style-wrapper.pixelation .aura-top {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.65;
+    background: linear-gradient(180deg, transparent 35%, #100009 40%, transparent 55%);
+    background-size: 100% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.5px black;
+    z-index: 3;
+}
+
+.aura-style-wrapper.pixelation .aura-top.aura-animated {
+    animation: PixelationScanline 0.575s steps(16, end) infinite;
+}
+
+.aura-style-wrapper.pixelation .aura-bottom {
+    -webkit-text-stroke: 0.5px black;
+    filter: drop-shadow(1.5px 0 0 black);
+    z-index: 1;
+}
+
+.aura-style-wrapper.pixelation .aura-bottom.aura-animated {
+    animation: PixelationRainbow 14s linear infinite;
+}
+
+.aura-style-wrapper.pixelation .aura-bottom:not(.aura-animated) {
+    color: #ff0000;
+}
+
+#singleResult .aura-style-wrapper.pixelation {
+    font-size: 100%;
+}
+
+#resultsBox .aura-style-wrapper.pixelation {
+    font-size: 80%;
+    text-transform: uppercase;
+}
+
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.pixelation {
+    font-size: clamp(0.6rem, 1.2vw, 0.9rem) !important;
+}
+
+/* ====================================================================== */
+/* ==================== NYCTOPHOBIA ===================================== */
+/* ====================================================================== */
+
+@keyframes NyctophobiaShake {
+    0%   { transform: translate(0px, 0px) rotate(0deg); }
+    20%  { transform: translate(-0.01em, 0.01em) rotate(-1deg); }
+    40%  { transform: translate(0.01em, -0.01em) rotate(1deg); }
+    60%  { transform: translate(-0.01em, -0.01em) rotate(0deg); }
+    80%  { transform: translate(0.01em, 0.01em) rotate(1deg); }
+    100% { transform: translate(0px, 0px) rotate(0deg); }
+}
+
+.aura-style-wrapper.nyctophobia {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: #020200;
+    filter: drop-shadow(0px 0px 5px #8E8D8D) drop-shadow(0px 0px 2px #8E8D8D);
+    white-space: nowrap;
+}
+
+.aura-style-wrapper.nyctophobia.aura-animated {
+    animation: NyctophobiaShake 0.1s linear infinite;
+}
+
+#resultsBox .aura-style-wrapper.nyctophobia {
+    line-height: 1.8;
+    overflow: visible;
+}
+
+#resultsBox div:has(.aura-style-wrapper.nyctophobia) {
+    overflow: visible;
+    line-height: 1.8;
+}
+
+/* ====================================================================== */
+/* ==================== DREAMSCAPE ====================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.dreamscape {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.25em;
+    text-transform: lowercase;
+    filter: drop-shadow(0 0 6px rgba(128,128,128,0.6)); /* same spread/opacity as Ascendant */
+}
+
+/* Top layer — bright gradient fill (no stroke) */
+.aura-style-wrapper.dreamscape .aura-top {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    background: linear-gradient(72deg, #fefffb, #eff0f2 50%, #c5c6c8, #aeaeac 75%, #dedede);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(2.75px 0 1.25px #010001);
+    text-shadow: 0 0 6px rgba(220,220,220,0.18);
+    z-index: 2;
+}
+
+/* Bottom layer — stroke only (dimgrey) */
+.aura-style-wrapper.dreamscape .aura-bottom {
+    position: relative;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 1px dimgrey;
+    text-shadow: 0 0 6px rgba(128,128,128,0.22);
+    z-index: 1;
+}
+
+/* ====================================================================== */
+/* ==================== RUINS : WITHERED ================================ */
+/* ====================================================================== */
+
+.aura-style-wrapper.ruins-withered {
+    font-family: 'Accanthis ADF Std', 'Kings', 'Cinzel', serif;
+    font-weight: bold;
+    filter: drop-shadow(0 0 6px rgba(72,160,120,0.6)); 
+    display: block;
+    position: relative;
+}
+
+
+.aura-style-wrapper.ruins-withered .aura-bottom {
+    background: linear-gradient(185deg, #94f3da, #94f3da, #94f3da, #94f3da, #94f3da, #319c81, #94f3da, #94f3da, #63fade, #63fade, #94f3da, #94f3da, #319c81, #94f3da, #63fade, #94f3da);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-decoration: line-through;
+    text-decoration-color: #518c7a;
+    text-decoration-thickness: .04em;
+    -webkit-text-stroke: #153a3e 0.4px;
+}
+
+#resultsBox .aura-style-wrapper.ruins-withered {
+    font-size: 110%;
+}
+
+/* ====================================================================== */
+/* ==================== OPPRESSION ====================================== */
+/* ====================================================================== */
+
+@keyframes OppressionGradient {
+    0%   { filter: brightness(1) drop-shadow(0 0 4px rgba(255, 255, 255, 0.5)); }
+    50%  { filter: brightness(1.15) drop-shadow(0 0 6px rgba(255, 255, 255, 0.65)); }
+    100% { filter: brightness(1) drop-shadow(0 0 4px rgba(255, 255, 255, 0.5)); }
+}
+
+.aura-style-wrapper.oppression {
+    font-family: 'PT Serif', serif;
+    letter-spacing: 0.3125em;
+    white-space: nowrap;
+    color: #ffffff;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+}
+
+.aura-style-wrapper.oppression.aura-animated {
+    animation: TranscendentFloat 4s ease-in-out infinite, OppressionGradient 2s linear infinite;
+}
+
+#resultsBox .aura-style-wrapper.oppression {
+    letter-spacing: 0.15em;
+}
+
+#resultsBox .aura-style-wrapper.oppression.aura-animated {
+    animation: OppressionGradient 2s linear infinite;
+}
+
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.oppression {
+    letter-spacing: 0.15em;
+}
+
+/* ====================================================================== */
+/* ==================== DREAMMETRIC ===================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.dreammetric {
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    letter-spacing: 0.14em;
+    filter: drop-shadow(0 0 4px rgba(252, 100, 252, 0.5));
+}
+
+.aura-style-wrapper.dreammetric .aura-bottom {
+    background: linear-gradient(176deg, 
+        #fd94ff 35%, 
+        #f152f3 40%, 
+        #feb1ff 60%, 
+        #fc64fc 70%, 
+        #ea55ec 80%
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.5px transparent;
+}
+
+#resultsBox .aura-style-wrapper.dreammetric {
+    letter-spacing: 0.1em;
+}
+
+#singleResult .aura-style-wrapper.aura-rarity-wrapper.dreammetric {
+    letter-spacing: 0.1em;
+}
+
+/* ====================================================================== */
+/* ==================== OBLIVION ======================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.oblivion {
+    font-family: 'Fondamento', serif;
+    font-weight: 700;
+    font-style: italic;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 6px rgba(180, 73, 243, 0.4));
+}
+
+.aura-style-wrapper.oblivion .aura-top {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    color: transparent;
+    padding: 0 24px;
+    -webkit-text-stroke: 2px black;
+}
+
+.aura-style-wrapper.oblivion .aura-bottom {
+    position: relative;
+    background: linear-gradient(10deg, 
+        #331f86 30%, 
+        #b449f3 50%, 
+        #fd85ff, 
+        #fba2ff 65%, 
+        #f8b7fb, 
+        #fed3ff, 
+        #fce8ff
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    padding: 0 24px;
+}
+
+#singleResult .aura-style-wrapper.oblivion {
+    font-size: 160%;
+}
+
+#resultsBox .aura-style-wrapper.oblivion {
+    padding: 0px;
+}
+
+#resultsBox .aura-style-wrapper.oblivion .aura-top,
+#resultsBox .aura-style-wrapper.oblivion .aura-bottom {
+    padding: 2px;
+}
+
+/* ====================================================================== */
+/* ==================== ILLUSIONARY ===================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.illusionary {
+    font-family: 'Roboto Mono', 'Inconsolata', monospace;
+    font-style: italic;
+    text-transform: lowercase;
+    color: #eff4fc;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 4px rgba(3, 2, 210, 0.4));
+}
+
+/* ====================================================================== */
+/* ==================== MONARCH ========================================= */
+/* ====================================================================== */
+
+.aura-style-wrapper.monarch {
+    font-family: 'Kings', 'Cinzel', serif;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.35em;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 4px rgba(163, 100, 255, 0.5));
+}
+
+.aura-style-wrapper.monarch .aura-bottom {
+    background: linear-gradient(177deg, 
+        #e4a4ff 18%, 
+        #ffe0ff 20%, 
+        #7133f9 27%, 
+        #fac0ff 37%, 
+        #a364ff 47%, 
+        #fff3ff 65%, 
+        #6736e6 68%, 
+        #d3a5ff 74%
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: rgba(32, 7, 82, 0.84);
+    -webkit-text-stroke: 2px transparent;
+}
+
+#resultsBox .aura-style-wrapper.monarch {
+    text-transform: uppercase;
+}
+
+#singleResult .aura-style-wrapper.monarch {
+    font-size: 130%;
+}
+
+/* ====================================================================== */
+/* ==================== SOVEREIGN ======================================= */
+/* ====================================================================== */
+
+.aura-style-wrapper.sovereign {
+    font-family: 'Fondamento', serif;
+    font-weight: bold;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 180, 0.6));
+}
+
+.aura-style-wrapper.sovereign .aura-bottom {
+    position: relative;
+    background: linear-gradient(to bottom, #a1a368 30%, #07141f 50%, #2e64f0 60%, #5f68dd 70%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: 1.6px transparent;
+    z-index: 1;
+}
+
+.aura-style-wrapper.sovereign .aura-top {
+    display: block;
+    position: absolute;
+    width: 100%;
+    background: linear-gradient(to bottom, #fffff4 40%, #d7d6d6 45%, #fdffff 50%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    z-index: 2;
+}
+
+/* ====================================================================== */
+/* ==================== PYTHIOS ========================================= */
+/* ====================================================================== */
+
+.aura-style-wrapper.pythios {
+    font-family: 'Kings', 'Cinzel', serif;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    filter: drop-shadow(0 0 6px rgba(255, 50, 50, 0.3));
+}
+
+.aura-style-wrapper.pythios .aura-bottom {
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: #340000;
+    -webkit-text-stroke: 1.8px transparent;
+    background-image: linear-gradient(180deg, #ffb3b3 0%, #ff6b6b 30%, #800000 60%, #340000 100%);
+    text-shadow: 0 0 6px rgba(255, 0, 0, 0.12);
+    padding: 0 12px;
+}
+
+/* ====================================================================== */
+/* ==================== PROLOGUE ======================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.prologue {
+    font-family: 'Fondamento', serif;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    filter: drop-shadow(0 0 6px rgba(90, 90, 95, 0.4));
+    position: relative;
+}
+
+.aura-style-wrapper.prologue .aura-bottom {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    text-decoration: line-through;
+    text-decoration-thickness: .05em;
+    text-decoration-color: rgba(0,0,0,1);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: .07em transparent;
+    background: linear-gradient(-190deg, ghostwhite 20%, grey 40%, ghostwhite 60%, rgb(0, 0, 0) 90%);
+    filter: drop-shadow(1px 1px 1px ghostwhite);
+}
+
+.aura-style-wrapper.prologue .aura-top {
+    display: block;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background: linear-gradient(-190deg, #818181 20%, #333434 30%, #19191a 50%, #7f7f7f 52%, #101010 60%, #505051 65%, #000000 70%);
+} 
+
+/* ====================================================================== */
+/* ==================== LEVIATHAN ======================================= */
+/* ====================================================================== */
+
+.aura-style-wrapper.leviathan {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.15em;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 4px rgba(77, 208, 204, 0.5));
+}
+
+.aura-style-wrapper.leviathan .aura-bottom {
+    background: linear-gradient(178deg, 
+        #4dd0cc 30%, 
+        #153a3e 38%, 
+        #9dfdfd 40%, 
+        #9af8fb 48%, 
+        #124245 50%, 
+        #2ed4d2 52%, 
+        #23454e 65%, 
+        #62cac6 67%, 
+        #518488 80%
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.5);
+    -webkit-text-stroke: 0.1em transparent;
+}
+
+#resultsBox .aura-style-wrapper.leviathan {
+    text-transform: uppercase;
+}
+
+#singleResult .aura-style-wrapper.leviathan {
+    font-size: 130%;
+}
+
+/* ====================================================================== */
+/* ==================== MATRIX : REALITY ================================ */
+/* ---------------------------------------------------------------------- */
+
+.aura-style-wrapper.matrix-reality {
+    font-family: 'Sarpanch', sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.4));
+}
+
+.aura-style-wrapper.matrix-reality .aura-bottom {
+    position: absolute;
+    inset: 0;
+    color: #5a8ee6;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    animation: RealityTitle 15s ease-in-out 0s infinite;
+    z-index: 0;
+} 
+
+@keyframes RealityTitle {
+    0% { color: #5a8ee6; }
+    10% { color: #8597f4; }
+    20% { color: #A0AAC0; }
+    30% { color: #81A294; }
+    40% { color: #9BD0B3; }
+    50% { color: #79B2B0; }
+    60% { color: #AC99AD; }
+    70% { color: #A179BD; }
+    80% { color: #BCA0CD; }
+    90% { color: #A0AAC0; }
+    100% { color: #5a8ee6; }
+}
+
+.aura-style-wrapper.matrix-reality .aura-top {
+    display: block;
+    position: relative;
+    inset: 0;
+    width: 100%;
+    z-index: 2;
+    color: #5a8ee6;
+    animation: RealityTitle 15s ease-in-out 0s infinite;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: currentColor;
+    background-image: linear-gradient(to bottom, transparent, transparent, transparent, transparent, transparent, transparent, rgba(255,255,255,0.6), transparent, transparent, rgba(0,0,0,0.6), transparent, transparent, transparent, transparent, transparent);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#resultsBox .aura-style-wrapper.matrix-reality {
+    font-size: 110%;
+}
+
+/* ====================================================================== */
+/* ==================== GLITCH ========================================== */
+/* ====================================================================== */
+
+@keyframes Glitchtext {
+    0% { transform: scale(1, 1); }
+    8% { transform: scale(1.03, 0.98); }
+    17% { transform: scale(0.97, 1.02); }
+    23% { transform: scale(1.01, 0.99); }
+    35% { transform: scale(0.98, 1.03); }
+    42% { transform: scale(1.02, 0.97); }
+    51% { transform: scale(0.99, 1.01); }
+    64% { transform: scale(1.03, 0.98); }
+    73% { transform: scale(0.97, 1.02); }
+    81% { transform: scale(1.01, 0.99); }
+    89% { transform: scale(0.98, 1.02); }
+    100% { transform: scale(1, 1); }
+}
+
+@keyframes GlitchBorder {
+    0% { -webkit-text-stroke-color: #90ee90; }
+    14% { -webkit-text-stroke-color: #00ff00; }
+    28% { -webkit-text-stroke-color: #800080; }
+    42% { -webkit-text-stroke-color: #ffc0cb; }
+    57% { -webkit-text-stroke-color: #ff1493; }
+    71% { -webkit-text-stroke-color: #ffffff; }
+    85% { -webkit-text-stroke-color: #add8e6; }
+    100% { -webkit-text-stroke-color: #90ee90; }
+}
+
+.aura-style-wrapper.glitch {
+    display: block;
+    filter: drop-shadow(0px 2px 10px #000000bb);
+}
+
+.aura-style-wrapper.glitch .aura-bottom {
+    position: relative;
+    font-weight: bold;
+    font-size: 0.9em;
+    background: linear-gradient(to bottom, black, #4e4e4e);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: #90ee90;
+    animation: GlitchBorder 0.8s steps(1, end) infinite;
+}
+
+.aura-style-wrapper.glitch.aura-animated .aura-bottom {
+    animation: Glitchtext 1s steps(1, end) infinite, GlitchBorder 0.8s steps(1, end) infinite;
+}
+
+#singleResult .aura-style-wrapper.glitch {
+    font-size: 150%;
+}
+
+#resultsBox .aura-style-wrapper.glitch {
+    text-transform: uppercase;
+    font-size: 110%;
+}
+
+/* ====================================================================== */
+/* ==================== BOREALIS ======================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.borealis {
+    font-family: 'Tangerine', cursive;
+    font-weight: bold;
+    letter-spacing: 0.2em;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 6px rgba(236, 150, 250, 0.4));
+}
+
+#singleResult .aura-style-wrapper.borealis {
+    font-size: 120%;
+}
+
+.aura-style-wrapper.borealis .aura-bottom {
+    background: linear-gradient(to bottom, 
+        #e8b5f8 6%, 
+        #fde2ff 8%, 
+        #ec96fa 90%
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: rgba(0, 0, 0, 0.2);
+    -webkit-text-stroke: 2px transparent;
+    font-size: 130%;
+}
+
+/* ====================================================================== */
+/* ==================== AEGIS =========================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.aegis {
+    font-family: 'Audiowide', cursive;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    filter: drop-shadow(0 0 12px rgba(103, 161, 255, 0.4));
+}
+
+.aura-style-wrapper.aegis .aura-bottom {
+    background: linear-gradient(175deg, #b1f9ff 0%, #a7f2ff 35%, #9ce8ff 55%, #87cfff 85%, #70b0ff 100%);
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    -webkit-text-stroke: .1px #4391ff;
+    text-shadow: 0 0 6px rgba(67,145,255,0.25);
+}
+
+/* ====================================================================== */
+/* ==================== MEMORY ========================================== */
+/* ====================================================================== */
+
+.aura-style-wrapper.memory {
+    font-family: 'Merriweather', serif;
+    font-weight: bold;
+    font-style: italic;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 6px rgba(103, 77, 228, 0.6));
+}
+
+.aura-style-wrapper.memory .aura-bottom {
+    color: #674DE4;
+    background: linear-gradient(to bottom, 
+        #1d16a3 35%, 
+        #34369f 50%, 
+        #3a14d0 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.5px black;
+}
+
+/* ====================================================================== */
+/* ==================== NEFERKHAF ======================================= */
+/* ====================================================================== */
+
+.aura-style-wrapper.neferkhaf {
+    display: inline-block;
+    position: relative;
+    font-family: 'Kings', serif;
+    letter-spacing: 0.4em;
+    font-size: 120%;
+    font-weight: normal;
+    filter: drop-shadow(0px 2px 10px #000000bb) drop-shadow(0 0 5px rgba(215, 193, 154, 0.4));
+}
+
+.aura-style-wrapper.neferkhaf .aura-top {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    user-select: none;
+    color: transparent;
+    background: linear-gradient(to bottom, 
+        #cdc4b5 36%, 
+        #fff6ef 40%, 
+        #9a8176 44%, 
+        #f6f5ec 70%
+    );
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0.15em transparent;
+}
+
+.aura-style-wrapper.neferkhaf .aura-bottom {
+    position: relative;
+    -webkit-text-fill-color: #3f291c;
+    -webkit-text-stroke: 0.03em #3f291c;
+}

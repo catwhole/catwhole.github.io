@@ -1,4 +1,4 @@
-/* General Styles */
+﻿/* General Styles */
 body {
     overflow-y: scroll;
     font-family: 'Changa', sans-serif;
@@ -156,7 +156,7 @@ button:hover, .back-button:hover {
 }
 
 .checkbox-container input[type="checkbox"]:checked::after {
-    content: "✓";
+    content: "âœ“";
     position: absolute;
     left: 50%;
     top: 45%;

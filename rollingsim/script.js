@@ -1,4 +1,4 @@
-let results = document.getElementById('result-text');
+﻿let results = document.getElementById('result-text');
 let luck = document.getElementById('luck');
 let isRolling = false;
 
@@ -88,6 +88,7 @@ const auras = [
     { name: "Guardian - 10,000,000", chance: 10000000 },
     { name: "Illusionary - 10,000,000", chance: 10000000, exclusiveTo: ["cyberspace"], unaffectedByLuck: true },
     { name: "Sharkyn - 10,000,000", chance: 10000000, breakthrough: { rainy: 4 } },
+    { name: "Amethyst - 9,333,700", chance: 9333700 },
     { name: "Stargazer - 9,200,000", chance: 9200000, breakthrough: { starfall: 5 } },
     { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000, breakthrough: { null: 1000, limbo: 1000 }, exclusiveTo: ["limbo-null"] },
@@ -111,16 +112,20 @@ const auras = [
     { name: "Metabytes - 4,000,000", chance: 4000000, breakthrough: { cyberspace: 2 } },
     { name: "Poseidon - 4,000,000", chance: 4000000, breakthrough: { rainy: 4 } },
     { name: "Crystallized : Bejeweled - 3,600,000", chance: 3600000 },
+    { name: "Evanescent - 3,360,000", chance: 3360000, breakthrough: { rainy: 4 } },
     { name: "Shift Lock - 3,325,000", chance: 3325000, breakthrough: { null: 1000, limbo: 1000 }, exclusiveTo: ["limbo-null"] },
     { name: "Savior - 3,200,000", chance: 3200000 },
+    { name: "Apatite - 3,133,133", chance: 3133133 },
     { name: "Parasite - 3,000,000", chance: 3000000, breakthrough: { corruption: 5 } },
     { name: "Virtual - 2,500,000", chance: 2500000, breakthrough: { cyberspace: 2 } },
     { name: "Flowed - 2,121,121", chance: 2121121 , breakthrough: { null: 1000, limbo: 1000 }, exclusiveTo: ["limbo-null"] },
     { name: "Bounded : Unbound - 2,000,000", chance: 2000000 },
     { name: "Gravitational - 2,000,000", chance: 2000000 },
     { name: "Player : Respawn - 1,999,999", chance: 1999999 },
+    { name: "Archmage - 1,776,000", chance: 1776000 },
     { name: "Cosmos - 1,520,000", chance: 1520000 },
     { name: "Astral - 1,336,000", chance: 1336000, breakthrough: { starfall: 5 } },
+    { name: "Symbiosis - 1,331,201", chance: 1331201, breakthrough: { corruption: 5 } },
     { name: "Rage : Brawler - 1,280,000", chance: 1280000 },
     { name: "Undefined - 1,111,000", chance: 1111000, breakthrough: { null: 1000, limbo: 1000 }, exclusiveTo: ["limbo-null"] },
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000 },
@@ -159,11 +164,12 @@ const auras = [
     { name: "Rage : Heated - 12,800", chance: 12800 },
     { name: "Corrosive - 12,000", chance: 12000, breakthrough: { corruption: 5 } },
     { name: "Undead - 12,000", chance: 12000, breakthrough: { hell: 6 } },
-    { name: "★★★ - 10,000", chance: 10000, exclusiveTo: ["dreamspace"] },
+    { name: "â˜…â˜…â˜… - 10,000", chance: 10000, exclusiveTo: ["dreamspace"] },
     { name: "Atomic : Riboneucleic - 9876", chance: 9876 },
     { name: "Lost Soul - 9,200", chance: 9200 },
     { name: "Honey - 8,335", chance: 8335 },
     { name: "Quartz - 8,192", chance: 8192 },
+    { name: "Doodle - 7,500", chance: 7500 },
     { name: "Hazard - 7,000", chance: 7000, breakthrough: { corruption: 5 } },
     { name: "Flushed - 6,900", chance: 6900 },
     { name: "Flutter - 5,000", chance: 5000 },
@@ -181,7 +187,7 @@ const auras = [
     { name: "Atomic - 1,180", chance: 1180 },
     { name: "Precious - 1,024", chance: 1024 },
     { name: "Diaboli - 1,004", chance: 1004 },
-    { name: "★★ - 1,000", chance: 1000, exclusiveTo: ["dreamspace"] },
+    { name: "â˜…â˜… - 1,000", chance: 1000, exclusiveTo: ["dreamspace"] },
     { name: "Wind - 900", chance: 900, breakthrough: { windy: 3 } },
     { name: "Aquamarine - 900", chance: 900 },
     { name: "Sapphire - 800", chance: 800 },
@@ -193,7 +199,7 @@ const auras = [
     { name: "Ruby - 350", chance: 350 },
     { name: "Topaz - 150", chance: 150 },
     { name: "Rage - 128", chance: 128 },
-    { name: "★ - 100", chance: 100, exclusiveTo: ["dreamspace"] },
+    { name: "â˜… - 100", chance: 100, exclusiveTo: ["dreamspace"] },
     { name: "Crystallized - 64", chance: 64 },
     { name: "Divinus - 32", chance: 32, breakthrough: { heaven: 5 } },
     { name: "Rare - 16", chance: 16 },
@@ -207,7 +213,6 @@ const auras = [
 auras.forEach(aura => {
     aura.wonCount = 0;
 });
-
 
 function roll() {
     if (isRolling) return;
@@ -272,7 +277,6 @@ function roll() {
                     return aura;
                 }
                 if (biome === "glitch") {
-                    // For glitch, allow auras exclusive to other biomes, but exclude restricted ones
                     const restrictedBiomes = ["dreamspace", "limbo", "limbo-null", "cyberspace"];
                     const hasOnlyRestrictedBiomes = aura.exclusiveTo.every(bio => restrictedBiomes.includes(bio));
                     if (hasOnlyRestrictedBiomes) {
@@ -423,4 +427,3 @@ function roll() {
 
     setTimeout(processChunk, 0);
 }
-

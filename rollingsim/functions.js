@@ -1,4 +1,4 @@
-function sfc32(a, b, c, d) {
+﻿function sfc32(a, b, c, d) {
     return function() {
       a |= 0; b |= 0; c |= 0; d |= 0;
       let t = (a + b | 0) + d | 0;
@@ -316,18 +316,15 @@ function playAuraVideo(videoId) {
 function getRarityClass(aura, biome) {
     if (!aura) return 'rarity-basic';
     
-    // Oppression, Dreammetric, Illusionary, and Monarch get challenged+ rarity
     if (aura.name && (aura.name.startsWith("Oppression") || aura.name.startsWith("Dreammetric") || aura.name.startsWith("Illusionary") || aura.name.startsWith("Monarch"))) {
         return 'rarity-challengedplus';
     }
     
-    // Glitch stays challenged
     if (aura.name && aura.name.startsWith("Glitch")) {
         return 'rarity-challenged';
     }
     
-    // Fault and star auras use normal chance-based rarity (skip exclusiveTo check)
-    if (aura.name && (aura.name.startsWith("Fault") || aura.name.startsWith("★"))) {
+    if (aura.name && (aura.name.startsWith("Fault") || aura.name.startsWith("â˜…"))) {
         const chance = aura.chance;
         if (chance >= 1000000000) return 'rarity-transcendent';
         if (chance >= 99999999) return 'rarity-glorious';
@@ -339,16 +336,12 @@ function getRarityClass(aura, biome) {
         return 'rarity-basic';
     }
     
-    // Limbo exclusives
     if (aura.exclusiveTo && (aura.exclusiveTo.includes("limbo") || aura.exclusiveTo.includes("limbo-null"))) {
         if (biome === "limbo") return 'rarity-limbo';
-        // fallback to normal rarity if not in limbo biome
     }
     
-    // Other exclusives get challenged
     if (aura.exclusiveTo && !aura.exclusiveTo.includes("limbo-null")) return 'rarity-challenged';
     
-    // Normal chance-based rarity
     const chance = aura.chance;
     if (chance >= 1000000000) return 'rarity-transcendent';
     if (chance >= 99999999) return 'rarity-glorious';
@@ -359,4 +352,3 @@ function getRarityClass(aura, biome) {
     if (chance >= 1000) return 'rarity-epic';
     return 'rarity-basic';
 }
-

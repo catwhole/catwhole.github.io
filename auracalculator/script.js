@@ -1,4 +1,4 @@
-const auras = [
+﻿const auras = [
     { name: "Monarch - 3,000,000,000", chance: 3000000000 },
     { name: "Equinox - 2,500,000,000", chance: 2500000000 },
     { name: "BREAKTHROUGH - 1,999,999,999", chance: 1999999999 },
@@ -86,6 +86,7 @@ const auras = [
     { name: "Illusionary - 10,000,000", chance: 10000000 },
     { name: "Guardian - 10,000,000", chance: 10000000 },
     { name: "Sharkyn - 10,000,000", chance: 10000000 },
+    { name: "Amethyst - 9,333,700", chance: 9333700 },
     { name: "Stargazer - 9,200,000", chance: 9200000 },
     { name: "Helios - 9,000,000", chance: 9000000 },
     { name: "Nihility - 9,000,000", chance: 9000000 },
@@ -109,16 +110,20 @@ const auras = [
     { name: "Metabytes - 4,000,000", chance: 4000000 },
     { name: "Poseidon - 4,000,000", chance: 4000000 },
     { name: "Crystallized : Bejeweled - 3,600,000", chance: 3600000 },
+    { name: "Evanescent - 3,360,000", chance: 3360000 },
     { name: "Shift Lock - 3,325,000", chance: 3325000 },
     { name: "Savior - 3,200,000", chance: 3200000 },
+    { name: "Apatite - 3,133,133", chance: 3133133 },
     { name: "Parasite - 3,000,000", chance: 3000000 },
     { name: "Virtual - 2,500,000", chance: 2500000 },
     { name: "Flowed - 2,121,121", chance: 2121121 },
     { name: "Bounded : Unbound - 2,000,000", chance: 2000000 },
     { name: "Gravitational - 2,000,000", chance: 2000000 },
     { name: "Player : Respawn - 1,999,999", chance: 1999999 },
+    { name: "Archmage - 1,776,000", chance: 1776000 },
     { name: "Cosmos - 1,520,000", chance: 1520000 },
     { name: "Astral - 1,336,000", chance: 1336000 },
+    { name: "Symbiosis - 1,331,201", chance: 1331201 },
     { name: "Rage : Brawler - 1,280,000", chance: 1280000 },
     { name: "Undefined - 1,111,000", chance: 1111000 },
     { name: "Magnetic : Reverse Polarity - 1,024,000", chance: 1024000 },
@@ -157,11 +162,12 @@ const auras = [
     { name: "Rage : Heated - 12,800", chance: 12800 },
     { name: "Corrosive - 12,000", chance: 12000 },
     { name: "Undead - 12,000", chance: 12000 },
-    { name: "★★★ - 10,000", chance: 10000 },
+    { name: "â˜…â˜…â˜… - 10,000", chance: 10000 },
     { name: "Atomic : Riboneucleic - 9876", chance: 9876 },
     { name: "Lost Soul - 9,200", chance: 9200 },
     { name: "Honey - 8,335", chance: 8335 },
     { name: "Quartz - 8,192", chance: 8192 },
+    { name: "Doodle - 7,500", chance: 7500 },
     { name: "Hazard - 7,000", chance: 7000 },
     { name: "Flushed - 6,900", chance: 6900 },
     { name: "Flutter - 5,000", chance: 5000 },
@@ -179,7 +185,7 @@ const auras = [
     { name: "Atomic - 1,180", chance: 1180 },
     { name: "Precious - 1,024", chance: 1024 },
     { name: "Diaboli - 1,004", chance: 1004 },
-    { name: "★★ - 1,000", chance: 1000 },
+    { name: "â˜…â˜… - 1,000", chance: 1000 },
     { name: "Wind - 900", chance: 900 },
     { name: "Aquamarine - 900", chance: 900 },
     { name: "Sapphire - 800", chance: 800 },
@@ -191,7 +197,7 @@ const auras = [
     { name: "Ruby - 350", chance: 350 },
     { name: "Topaz - 150", chance: 150 },
     { name: "Rage - 128", chance: 128 },
-    { name: "★ - 100", chance: 100 },
+    { name: "â˜… - 100", chance: 100 },
     { name: "Crystallized - 64", chance: 64 },
     { name: "Divinus - 32", chance: 32 },
     { name: "Rare - 16", chance: 16 },
@@ -247,11 +253,13 @@ const nativeAuras = [
     { name: "[Native] Hades - 1,111,111", chance: 1111111 },
     { name: "[Native] Galaxy - 1,000,000", chance: 1000000 },
     { name: "[Native] Poseidon - 1,000,000", chance: 1000000 },
+    { name: "[Native] Evanescent - 840,000", chance: 840000 },
     { name: "[Native] Parasite - 600,000", chance: 600000 },
     { name: "[Native] Twilight - 600,000", chance: 600000 },
     { name: "[Native] Solar : Solstice - 500,000", chance: 500000 },
     { name: "[Native] Lunar : Full Moon - 500,000", chance: 500000 },
     { name: "[Native] Astral - 267,200", chance: 267200 },
+    { name: "[Native] Symbiosis - 266,240", chance: 266240 },
     { name: "[Native] Starlight : Kunzite - 200,000", chance: 200000 },
     { name: "[Native] Hope - 97,745", chance: 97745 },
     { name: "[Native] Stormal - 30,000", chance: 30000 },
@@ -280,9 +288,7 @@ const nativeAuras = [
     { name: "[Native] Divinus - 6", chance: 6},
 ];
 
-// Add getRarityClass function after auras declaration
 function getRarityClass(chance, auraName) {
-    // Check for special aura-specific classes first
     if (auraName) {
         const baseName = auraName.split(' - ')[0];
         if (baseName === 'Glitch' || baseName === 'Leviathan' || baseName === 'Borealis') {
@@ -293,7 +299,6 @@ function getRarityClass(chance, auraName) {
         }
     }
     
-    // Default rarity based on chance
     if (chance >= 1000000000) return 'rarity-transcendent';
     if (chance >= 100000000) return 'rarity-glorious';
     if (chance >= 10000000) return 'rarity-exalted';
@@ -304,7 +309,6 @@ function getRarityClass(chance, auraName) {
     return 'rarity-basic';
 }
 
-// Populate select with original auras sorted by rarity
 const auraSelect = document.getElementById('auraSelect');
 const sortedAuras = auras.sort((a, b) => b.chance - a.chance);
 sortedAuras.forEach(aura => {
@@ -315,36 +319,30 @@ sortedAuras.forEach(aura => {
     auraSelect.appendChild(selectOption);
 });
 
-// Get selected aura details
 function getSelectedAura() {
     const input = document.getElementById('auraInput');
     const select = document.getElementById('auraSelect');
     const auraName = input.value || select.value;
 
-    // First try to find the aura in Native list
     const nativeAura = nativeAuras.find(aura => aura.name === auraName);
     if (nativeAura) return nativeAura;
 
-    // If not Native or Native aura not found, look in regular auras
     const baseAura = auras.find(aura => aura.name === auraName);
     if (baseAura) return baseAura;
 
     return null;
 }
 
-// Modify the search functionality
 document.getElementById('auraInput').addEventListener('input', function(e) {
     updateAuraList();
 });
 
-// Auto-fill input box when selecting from dropdown
 document.getElementById('auraSelect').addEventListener('change', function(e) {
     const selectedAura = e.target.value;
     document.getElementById('auraInput').value = selectedAura;
     auraSelect.style.display = 'none';
 });
 
-// Update function to only show regular auras
 function updateAuraList() {
     const searchTerm = document.getElementById('auraInput').value.toLowerCase();
     const filteredAuras = auras.filter(aura => 
@@ -366,31 +364,25 @@ function updateAuraList() {
     document.getElementById('resetSearch').style.display = 'inline-block';
 }
 
-// Reset search functionality
 function resetSearch() {
     document.getElementById('auraInput').value = '';
     document.getElementById('auraSelect').style.display = 'none';
     document.getElementById('resetSearch').style.display = 'none';
 }
 
-// Add formatPercentage helper function
 function formatPercentage(value) {
     if (value < 0.00000001) return "< 0.00000001";
     
-    // Convert to string with 8 decimal places
     const fixed = value.toFixed(8);
     
-    // If it's a whole number (all decimals are 0), return without decimals
     if (fixed.endsWith('00000000')) return Math.round(value).toString();
     
-    // Find the position of first non-zero decimal
     const decimalPart = fixed.split('.')[1];
     let firstNonZero = 0;
     while (firstNonZero < decimalPart.length && decimalPart[firstNonZero] === '0') {
         firstNonZero++;
     }
     
-    // Return with number of decimals needed (position of first non-zero + 1)
     return value.toFixed(firstNonZero + 1);
 }
 
@@ -399,21 +391,16 @@ let gauntletSpeed = parseFloat(document.getElementById("gauntletSpeed").value);
 let elementSpeed = (parseFloat(document.getElementById("elementSpeed").value)) / 100;
 if (isNaN(elementSpeed)) elementSpeed = 0;
 
-// Get value from haste potion radio buttons
 let hastePotion = parseFloat(document.querySelector('input[name="hastePotion"]:checked').value);
 
-// Get value from rage/diver potion radio buttons
 let ragePotion = parseFloat(document.querySelector('input[name="ragePotion"]:checked').value);
 
-// Get value from godly potion radio buttons
 let godlyPotion = parseFloat(document.querySelector('input[name="godlyPotion"]:checked').value);
 
-// Get value from seasonal potion radio buttons
 let seasonalPotion = parseFloat(document.querySelector('input[name="seasonalPotion"]:checked').value);
 
 var knowledge = parseFloat(document.querySelector('input[name="knowledge"]:checked').value);
 
-// Update speed potion value from 0.25 to 0.1
 let speedPotion = document.getElementById("speedPotion").checked ? 0.1 : 0;
 let transcendant = document.getElementById("transcendant").checked ? 10 : 0;
 let bankElem = document.getElementById("bank");
@@ -423,7 +410,6 @@ if (bankElem) {
 }
 let rudolph = document.getElementById("rudolph").checked ? 0.2 : 0;
 
-// Add Forbidden potions
 let forbidden1 = document.getElementById("forbidden1").checked ? 0.10 : 0;
 let forbidden2 = document.getElementById("forbidden2").checked ? 0.25 : 0;
 let forbidden3 = document.getElementById("forbidden3").checked ? 0.75 : 0;
@@ -532,14 +518,10 @@ function calculateChance() {
         }
     }
 
-
-
-
     document.getElementById('modalResult').innerHTML = resultHTML;
     document.getElementById('resultModal').style.display = 'block';
 }
 
-// Add simulation function
 function simulateRolls() {
     const selectedAura = getSelectedAura();
     const luck = parseFloat(document.getElementById('luck').value);
@@ -552,7 +534,6 @@ function simulateRolls() {
         return;
     }
     
-    // Implementation of Random function from rollingsim
     function sfc32(a, b, c, d) {
         return function() {
           a |= 0; b |= 0; c |= 0; d |= 0;
@@ -573,7 +554,6 @@ function simulateRolls() {
         return Math.floor(getRand() * (max - min + 1)) + min;
     }
     
-    // Start simulation
     document.getElementById('modalResult').innerHTML = `
         <h2 style="color: #2dd4bf; text-align: center;">Simulation Running...</h2>
         <div class="result-line">
@@ -581,11 +561,10 @@ function simulateRolls() {
         </div>`;
     document.getElementById('resultModal').style.display = 'block';
     
-    // Run simulation after a short delay to allow modal to show
     setTimeout(() => {
         let rolls = 0;
         let auraFound = false;
-        const maxRolls = 500000000; // 500 million limit
+        const maxRolls = 500000000;
         
         const adjustedChance = Math.max(1, Math.floor(selectedAura.chance / luck));
         
@@ -596,7 +575,6 @@ function simulateRolls() {
             }
         }
         
-        // Display results
         let resultHTML;
         if (auraFound) {
             resultHTML = `
@@ -636,14 +614,12 @@ function closeModal() {
     document.getElementById('resultModal').style.display = 'none';
 }
 
-
 window.addEventListener('click', function(event) {
     if (event.target == document.getElementById('resultModal')) {
         closeModal();
     }
 });
 
-// Add toggleRollSpeed function
 function toggleRollSpeed() {
     const rollSpeedOptions = document.getElementById('rollSpeedOptions');
     if (rollSpeedOptions.style.display === 'none') {
@@ -653,7 +629,6 @@ function toggleRollSpeed() {
     }
 }
 
-// Add mode toggle function
 function toggleMode() {
     const modeToggle = document.getElementById('modeToggle');
     const advancedOptions = document.getElementById('advancedOptions');
@@ -662,12 +637,10 @@ function toggleMode() {
     advancedOptions.style.display = isAdvanced ? 'none' : 'block';
     modeToggle.textContent = isAdvanced ? 'Switch to Advanced Mode' : 'Switch to Simple Mode';
     
-    // Reset roll speed options when switching to simple mode
     if (isAdvanced) {
         document.getElementById('rollSpeedOptions').style.display = 'none';
     }
 
-    // Switch background music
     const bgMusic = document.getElementById('bgMusic');
     const bgMusicSource = document.getElementById('bgMusicSource');
     bgMusicSource.src = isAdvanced ? 'elevator.mp3' : 'elevator_slowed.mp3';
@@ -678,7 +651,6 @@ function toggleMode() {
     });
 }
 
-// Modify the toggleMusic function to stop and restart the music when the button is pressed
 function toggleMusic() {
     const bgMusic = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
@@ -698,54 +670,42 @@ function toggleMusic() {
     }
 }
 
-// Store the base luck value (before multipliers) and a flag for programmatic updates
 let baseLuckValue = 0;
 let isProgrammaticUpdate = false;
 
-// Function to update luck value based on presets and multipliers
 function updateLuckValue(newBaseValue = null) {
-    // Set flag to prevent input handler from resetting multipliers during programmatic updates
     isProgrammaticUpdate = true;
     
     const luckInput = document.getElementById('luck');
-    // Get selected radio button value
     const vipMultiplier = parseFloat(document.querySelector('input[name="vipStatus"]:checked').value);
     const xyzMultiplier = document.getElementById('xyzBuff').checked ? 2 : 1;
     const davesHopeMultiplier = parseFloat(document.getElementById('davesHopeSelect')?.value || 1);
 
-    // Update base value if provided
     if (newBaseValue !== null) {
         baseLuckValue = newBaseValue;
     }
     
-    // Calculate final luck value with multipliers (no rounding, allow decimals)
     const finalValue = baseLuckValue * vipMultiplier * xyzMultiplier * davesHopeMultiplier;
     
-    // Update input field (preserve decimals)
     luckInput.value = finalValue;
 
-    // Reset flag after update
     setTimeout(() => { isProgrammaticUpdate = false; }, 0);
 }
 
-// Function to reset multipliers
 function resetMultipliers() {
     document.getElementById('vipNone').checked = true;
     document.getElementById('xyzBuff').checked = false;
     document.getElementById('davesHopeSelect').value = "1";
 }
 
-// Add event listeners when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     const bgMusic = document.getElementById('bgMusic');
     
-    // Set initial volume and play state
     bgMusic.volume = 0.05;
     bgMusic.play().catch(function(error) {
         console.log("Audio play failed:", error);
     });
     
-    // Add event listeners for luck presets
     document.querySelectorAll('.luck-preset').forEach(button => {
         button.addEventListener('click', function() {
             const luckValue = parseInt(this.getAttribute('data-luck'));
@@ -753,12 +713,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Dave's Hope dropdown event
     document.getElementById('davesHopeSelect').addEventListener('change', function() {
         updateLuckValue();
     });
     
-    // Add event listeners for multipliers
     document.querySelectorAll('input[name="vipStatus"]').forEach(radio => {
         radio.addEventListener('change', function() {
             updateLuckValue();
@@ -769,14 +727,10 @@ document.addEventListener('DOMContentLoaded', function() {
         updateLuckValue();
     });
     
-    // Track manual changes to the luck input
     const luckInput = document.getElementById('luck');
     
-    // Use the input event to detect changes to the luck input
     luckInput.addEventListener('input', function() {
-        // Only reset multipliers if the change wasn't triggered programmatically
         if (!isProgrammaticUpdate) {
-            // Keep the current value but reset multipliers
             const currentValue = parseFloat(this.value) || 0;
             baseLuckValue = currentValue;
             resetMultipliers();
@@ -787,7 +741,6 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const bgMusic = document.getElementById('bgMusic');
     
-    // Set initial volume and play state
     bgMusic.volume = 0.05;
     bgMusic.play().catch(function(error) {
         console.log("Audio play failed:", error);
@@ -803,10 +756,8 @@ function updateLimboState() {
     const speedBuffs = document.getElementById('speed-buffs');
     if (speedBuffs) {
         if (anyLimbo) {
-            // Hide the speed buffs section
             speedBuffs.style.display = 'none';
             
-            // Disable and reset all speed buff elements
             const speedPotion = document.getElementById('speedPotion');
             const bank = document.getElementById('bank');
             const transcendant = document.getElementById('transcendant');
@@ -817,13 +768,11 @@ function updateLimboState() {
             if (transcendant) { transcendant.checked = false; transcendant.disabled = true; }
             if (elementSpeed) { elementSpeed.value = ''; elementSpeed.disabled = true; }
 
-            // Reset and disable all radio groups
             const radioGroups = ['knowledge', 'seasonalPotion', 'hastePotion', 'ragePotion', 'godlyPotion'];
             radioGroups.forEach(groupName => {
                 const radios = document.querySelectorAll(`input[name="${groupName}"]`);
                 radios.forEach(radio => {
                     radio.disabled = true;
-                    // Check the "None" option for each group
                     if (radio.id === `${groupName}None` || radio.value === '0') {
                         radio.checked = true;
                     } else {
@@ -832,10 +781,8 @@ function updateLimboState() {
                 });
             });
         } else {
-            // Show the speed buffs section
             speedBuffs.style.display = 'block';
             
-            // Re-enable all speed buff elements
             const speedPotion = document.getElementById('speedPotion');
             const bank = document.getElementById('bank');
             const transcendant = document.getElementById('transcendant');
@@ -846,7 +793,6 @@ function updateLimboState() {
             if (transcendant) transcendant.disabled = false;
             if (elementSpeed) elementSpeed.disabled = false;
 
-            // Re-enable all radio groups
             const radioGroups = ['knowledge', 'seasonalPotion', 'hastePotion', 'ragePotion', 'godlyPotion'];
             radioGroups.forEach(groupName => {
                 const radios = document.querySelectorAll(`input[name="${groupName}"]`);
@@ -858,14 +804,10 @@ function updateLimboState() {
     }
 }
 
-// Add event listeners for Limbo checkboxes after DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
-    // ...existing code...
 
-    // Limbo (Forbidden) logic
     ['forbidden1', 'forbidden2', 'forbidden3'].forEach(id => {
         document.getElementById(id).addEventListener('change', updateLimboState);
     });
-    // Initialize state on load
     updateLimboState();
 });
