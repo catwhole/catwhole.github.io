@@ -67,15 +67,31 @@ function checkCompatibility() {
             message.innerHTML = messageHTML;
             modal.classList.remove('hidden');
             
+            // when compatibility modal is dismissed, show the mandatory disclaimer next
             dismissBtn.addEventListener('click', () => {
                 modal.classList.add('hidden');
                 playSound('clickSound');
-            });
+                showDisclaimerModal();
+            }, { once: true });
         }
+    } else {
+        // no compatibility issues -> show disclaimer immediately
+        showDisclaimerModal();
     }
 }
 
 document.addEventListener('DOMContentLoaded', checkCompatibility);
+
+function showDisclaimerModal() {
+    const modal = document.getElementById('disclaimerModal');
+    const dismissBtn = document.getElementById('disclaimerDismiss');
+    if (!modal || !dismissBtn) return;
+    modal.classList.remove('hidden');
+    dismissBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        playSound('clickSound');
+    }, { once: true });
+}
 
 function playSound(soundId) {
     if (!AUDIO_CONFIG.sfxEnabled) return;

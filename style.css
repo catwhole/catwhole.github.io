@@ -16,7 +16,7 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
-    text-align: center; /* Add this line to center align all elements inside the container */
+    text-align: center;
 }
 
 h1 {
@@ -31,7 +31,7 @@ h1 {
 .description {
     color: #cccccc;
     font-size: 1.2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0.3rem;
     margin-top: 5px;
     text-align: center;
 }
@@ -70,7 +70,6 @@ h2 {
 
 .links-list span.description {
     font-size: 0.9em;
-    margin-left: 8px;
     color: #666;
 }
 
@@ -83,7 +82,7 @@ h2 {
 .discord-handle {
     display: inline-flex;
     align-items: center;
-    margin-top: 1em; /* Using em for consistent spacing */
+    margin-top: 1em;
 }
 
 .button-music {
@@ -111,4 +110,147 @@ h2 {
     border: 2px solid #ca94fc;
     font-family: 'Changa', sans-serif;
     box-shadow: 0 0 8px rgba(145, 45, 212, 0.3);
+}
+
+.featured-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: linear-gradient(135deg, rgba(212,166,255,0.04), rgba(255,255,255,0.01));
+    border: 2px solid #d4a6ff;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.featured-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.55);
+}
+
+.featured-card .featured-link {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: 0.5px;    transition: color 0.14s ease, text-shadow 0.14s ease;
+}
+
+.featured-card .featured-link:hover {
+    color: #d4a6ff;
+    text-shadow: 0 6px 20px rgba(212,166,255,0.12);}
+
+.featured-card .description {
+    font-size: 0.95rem;
+    color: #dcd6e8;
+    opacity: 0.95;
+    margin-top: 6px;
+    text-align: left;
+}
+
+.featured-card .cta {
+    background: #d4a6ff;
+    color: #1a1a1a;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+    border: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.featured-card .cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(212,166,255,0.18);
+}
+
+@media (max-width: 520px) {
+    .featured-card { flex-direction: column; align-items: flex-start; }
+    .featured-card .featured-link { font-size: 1.15rem; }
+    .featured-card .cta { width: 100%; text-align: center; margin-top: 8px; }
+}
+
+.links-list li.mini-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(212,166,255,0.12);
+    background: linear-gradient(135deg, rgba(212,166,255,0.02), rgba(255,255,255,0.005));
+    margin-bottom: 0.75rem;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.links-list li.mini-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.5); }
+
+.mini-card .mini-link {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.14s ease, text-shadow 0.14s ease;
+}
+
+.mini-card .mini-link:hover {
+    color: #d4a6ff; 
+    text-shadow: 0 4px 14px rgba(212,166,255,0.10);
+}
+
+.mini-card .description {
+    display: block;
+    font-size: 0.85rem;
+    color: #d6cee8;
+    margin-top: 6px;
+    text-align: left;
+}
+
+.cta.small {
+    background: #cdb8ff;
+    color: #1a1a1a;
+    padding: 6px 9px;
+    border-radius: 6px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+@media (max-width: 520px) {
+    .links-list li.mini-card { flex-direction: column; align-items: flex-start; }
+    .cta.small { width: 100%; margin-top: 8px; }
+}
+
+.mini-card.archived {
+    border-color: #666;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    color: #9c9c9c;
+}
+
+.mini-card.archived .mini-link {
+    color: #9c9c9c;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.mini-card.archived .description {
+    color: #8f8f8f;
+    font-style: italic;
+    text-align: left;
+}
+
+.mini-card.archived .mini-link:hover { color: #9c9c9c; text-decoration: underline; transform: none; }
+
+.archived-tag {
+    background: rgba(255,255,255,0.02);
+    color: #bfbfbf;
+    border: 1px solid #6e6e6e;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
 }

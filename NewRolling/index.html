@@ -20,7 +20,7 @@
         <div class="intro-container">
             <h1 class="intro-title">Sol's RNG Rolling Simulator</h1>
             <p class="intro-subtitle">By @catwhore</p>
-            <div class="intro-version">v1.0.0 (2026/02/14)</div>
+            <div class="intro-version">pre-release v0.9.0 (2026/02/19)</div>
             <button class="btn btn-primary start-button" id="startButton">Start Simulating!</button>
             <div class="toggle-controls" id="toggleControls">
                 <button class="btn btn-toggle" id="sfxVolumeBtn">Sound Volume</button>
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <!-- Compatibility Warning Modal (shows on intro) -->
+    <!-- Compatibility Warning -->
     <div id="compatibilityModal" class="warning-modal hidden">
         <div class="warning-backdrop"></div>
         <div class="warning-container">
@@ -51,7 +51,33 @@
         </div>
     </div>
 
-    <!-- Audio elements for button sounds -->
+    <!-- Disclaimer -->
+<div id="disclaimerModal" class="warning-modal hidden">
+    <div class="warning-backdrop"></div>
+    <div class="warning-container">
+        </span><div class="warning-icon">⚠️</div>
+        <div class="warning-message" id="disclaimerMessage">
+            <span style="color:#ff3e3e;font-size:30px;"><strong>Pre-Release Disclaimer</strong></span>
+            <br><br>
+            This website is currently in a <strong>Pre-Release</strong> state. Expect bugs and incomplete features. 
+            <br><br>
+            <span style="color:#73e5a2;">Found a bug or have feedback?</span>
+            <br>
+            DM/ping me on Discord - <strong>@catwhore</strong> 
+            <br><br>
+            <span style="color:#9adefd;"><strong>Upcoming Features:</strong></span>
+            <br>
+            - Cutscenes for Globals 
+            <br>
+            - Aura Fonts/Styles for remaining Globals
+        </div>
+        <div class="warning-buttons">
+            <button class="btn btn-primary" id="disclaimerDismiss">I Understand</button>
+        </div>
+    </div>
+</div>
+
+<!-- Audio elements -->
     <audio id="hoverSound" preload="auto">
         <source src="Sounds/sfx-hover.mp3" type="audio/mpeg">
     </audio>
@@ -80,7 +106,7 @@
         <source src="Sounds/sfx-100mlimbo.ogg" type="audio/ogg">
     </audio>
 
-    <!-- Background music tracks -->
+    <!-- Background music -->
     <audio id="bgmDefault" data-bgm autoplay loop preload="auto">
         <source src="Sounds/bgm-intro.mp3" type="audio/mpeg">
     </audio>
@@ -135,7 +161,7 @@
 
     <div id="mainMenu" class="hidden">
         <div id="mainMeta">
-            <div id="versionTopLeft">v1.0.0 (2026-01-31)</div>
+            <div id="versionTopLeft">pre-release v0.9.0 (2026/02/19)</div>
             <div id="authorTopLeft">By @catwhore</div>
         </div>
         <div id="resultsBox"></div>
@@ -350,7 +376,7 @@
         </div>
     </div>
 
-    <!-- Custom Warning Modal -->
+    <!-- Warning -->
     <div id="warningModal" class="warning-modal hidden">
         <div class="warning-backdrop"></div>
         <div class="warning-container">
