@@ -453,6 +453,8 @@ function readOptionsFromUI() {
 }
 
 function updateBuffDisplay() {
+	// if a biome switch is in progress, skip UI updates to avoid mixed visuals
+	if (typeof _biomeSwitchLocked !== 'undefined' && _biomeSwitchLocked) return;
 	const { count, luck, biome } = readOptionsFromUI();
 	const luckEl = document.getElementById('buffLuck');
 	const rollsEl = document.getElementById('buffRolls');
@@ -843,7 +845,7 @@ function renderResults(counts) {
 		const baseName = getBaseAuraName(auraName);
 		const displayRarity = value.entry.nativeApplied ? value.entry.displayRarity : Number(aura.rarity || value.entry.finalR || 1);
 		
-		if (displayRarity >= 100000000 || CHALLENGED_AURAS.includes(baseName) || CHALLENGED_PLUS_AURAS.includes(baseName)) {
+		if (displayRarity >= 99999999 || CHALLENGED_AURAS.includes(baseName) || CHALLENGED_PLUS_AURAS.includes(baseName)) {
 			globalCount += value.count;
 		}
 	}
@@ -1027,9 +1029,12 @@ function hideResultsAndSingle() {
 }
 
 async function runRolls() {
+	if (typeof window !== 'undefined' && window.rollInProgress) return; // prevent re-entrancy
+	window.rollInProgress = true;
 	const btn = document.getElementById('rollButton');
 	if (btn) btn.disabled = true;
 	if (typeof playSound === 'function') playSound('rollSound');
+	try {
 
 	const { count, luck, biome, allowOblivion, allowDune } = readOptionsFromUI();
 	if (count > 499999999) {
@@ -1190,6 +1195,10 @@ async function runRolls() {
 
 	renderResults(counts);
 	if (btn) btn.disabled = false;
+	} finally {
+		// ensure rolling flag is always cleared
+		if (typeof window !== 'undefined') window.rollInProgress = false;
+	}
 }
 
 function updateAutoRollVisibility() {

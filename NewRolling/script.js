@@ -14,6 +14,15 @@ let currentBgmId = 'bgmDefault';
 
 let baseLuckValue = 1;
 
+// Prevent rapid biome switching visual desyncs — lock for 1s after a successful change
+let biomeSwitchLocked = false;
+let biomeSwitchUnlockTimer = null;
+let lastAcceptedBiome = null;
+// mirror for code in `rolling.js` that checks `_biomeSwitchLocked`
+window._biomeSwitchLocked = false;
+// rolling flag (set by `runRolls`) — prevents opening menus while a roll is running
+window.rollInProgress = false;
+
 // ==================== COMPATIBILITY CHECK ====================
 function checkCompatibility() {
     const issues = [];
@@ -409,6 +418,8 @@ function togglePanel(panelId, btnId) {
 	const panel = document.getElementById(panelId);
 	const btn = document.getElementById(btnId);
 	const isOpen = !!(panel && panel.classList.contains('open'));
+	// prevent opening panels while a roll is in progress
+	if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 	const resultsBox = document.getElementById('resultsBox');
 	const singleResult = document.getElementById('singleResult');
 	const rollPanelContainer = document.getElementById('rollOptionsPanelContainer');
@@ -527,6 +538,20 @@ const BIOME_CONFIG = {
 };
 
 function handleBiomeChange(biome) {
+	// ignore rapid repeated requests
+	if (biomeSwitchLocked) return;
+
+	// record the accepted biome and lock further switches for 1s
+	lastAcceptedBiome = biome || null;
+	biomeSwitchLocked = true;
+	window._biomeSwitchLocked = true;
+	if (biomeSwitchUnlockTimer) clearTimeout(biomeSwitchUnlockTimer);
+	biomeSwitchUnlockTimer = setTimeout(() => {
+		biomeSwitchLocked = false;
+		window._biomeSwitchLocked = false;
+		biomeSwitchUnlockTimer = null;
+	}, 1000);
+
 	const config = BIOME_CONFIG[biome] || BIOME_CONFIG['default'];
 	const isLimbo = biome === 'limbo';
 	
@@ -546,7 +571,7 @@ function handleBiomeChange(biome) {
 	handleLimboLuckPresets(isLimbo);
 	
 	handleLimboSpecialToggles(isLimbo);
-}
+} 
 
 function handleLimboLuckPresets(isLimbo) {
 	const luckPresetsDropdown = document.getElementById('luckPresetsDropdown');
@@ -631,6 +656,15 @@ function handleLimboLuckPresets(isLimbo) {
 	}
 }
 
+function updateSpecialToggleStates() {
+	const oblivionToggle = document.getElementById('oblivionToggle');
+	const duneToggle = document.getElementById('duneToggle');
+	const oblivionChecked = oblivionToggle && oblivionToggle.checked;
+	const duneChecked = duneToggle && duneToggle.checked;
+	if (oblivionToggle) oblivionToggle.disabled = duneChecked;
+	if (duneToggle) duneToggle.disabled = oblivionChecked;
+}
+
 function handleLimboSpecialToggles(isLimbo) {
 	const oblivionToggle = document.getElementById('oblivionToggle');
 	const duneToggle = document.getElementById('duneToggle');
@@ -674,6 +708,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (rollPresetsBtn && rollPresetsDropdown) {
 		rollPresetsBtn.addEventListener('click', () => {
 			const isOpen = rollPresetsDropdown.classList.contains('open');
+			// prevent opening while a roll is running
+			if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 			rollPresetsDropdown.classList.toggle('open', !isOpen);
 			rollPresetsBtn.classList.toggle('active', !isOpen);
 			if (luckPresetsDropdown) luckPresetsDropdown.classList.remove('open');
@@ -684,6 +720,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (luckPresetsBtn && luckPresetsDropdown) {
 		luckPresetsBtn.addEventListener('click', () => {
 			const isOpen = luckPresetsDropdown.classList.contains('open');
+			// prevent opening while a roll is running
+			if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 			luckPresetsDropdown.classList.toggle('open', !isOpen);
 			luckPresetsBtn.classList.toggle('active', !isOpen);
 			if (rollPresetsDropdown) rollPresetsDropdown.classList.remove('open');
@@ -693,6 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	document.querySelectorAll('.preset-btn[data-rolls]').forEach(btn => {
 		btn.addEventListener('click', () => {
+			if (typeof window !== 'undefined' && window.rollInProgress) return; // block changes while rolling
 			const rollsInput = document.getElementById('rollsInput');
 			if (rollsInput) {
 				rollsInput.value = btn.dataset.rolls;
@@ -706,6 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	document.querySelectorAll('.preset-btn[data-luck]').forEach(btn => {
 		btn.addEventListener('click', () => {
+			if (typeof window !== 'undefined' && window.rollInProgress) return; // block changes while rolling
 			const luckInput = document.getElementById('luckInput');
 			const oblivionToggle = document.getElementById('oblivionToggle');
 			const duneToggle = document.getElementById('duneToggle');
@@ -736,6 +776,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	document.querySelectorAll('.quick-biome-btn[data-biome]').forEach(btn => {
 		btn.addEventListener('click', () => {
+			if (biomeSwitchLocked || (typeof window !== 'undefined' && window.rollInProgress)) return; // ignore rapid clicks or while rolling
 			const biomeSelect = document.getElementById('biomeSelect');
 			if (biomeSelect) {
 				biomeSelect.value = btn.dataset.biome;
@@ -747,25 +788,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	const biomeSelect = document.getElementById('biomeSelect');
 	if (biomeSelect) {
+		// initialise the "last accepted" biome so UI reverts correctly while locked
+		lastAcceptedBiome = biomeSelect.value || null;
 		biomeSelect.addEventListener('change', (e) => {
-			handleBiomeChange(e.target.value);
+			const requestedBiome = e.target.value || '';
+			if (typeof window !== 'undefined' && window.rollInProgress) {
+				// prevent changing biome while a roll is running
+				e.target.value = lastAcceptedBiome || '';
+				return;
+			}
+			if (biomeSwitchLocked) {
+				// revert dropdown UI to the last accepted value while locked
+				e.target.value = lastAcceptedBiome || '';
+				return;
+			}
+			handleBiomeChange(requestedBiome);
 		});
 	}
 	
 	const oblivionToggle = document.getElementById('oblivionToggle');
 	const duneToggle = document.getElementById('duneToggle');
-	
-	function updateSpecialToggleStates() {
-		const oblivionChecked = oblivionToggle && oblivionToggle.checked;
-		const duneChecked = duneToggle && duneToggle.checked;
-		
-		if (oblivionToggle) {
-			oblivionToggle.disabled = duneChecked;
-		}
-		if (duneToggle) {
-			duneToggle.disabled = oblivionChecked;
-		}
-	}
 	
 	if (oblivionToggle) {
 		oblivionToggle.addEventListener('change', updateSpecialToggleStates);
@@ -818,10 +860,35 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (auraClassStopBtn && auraClassStopList) {
 		auraClassStopBtn.addEventListener('click', () => {
 			const isOpen = auraClassStopList.classList.contains('open');
+			// prevent opening while a roll is running
+			if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 			auraClassStopList.classList.toggle('open', !isOpen);
 			auraClassStopBtn.classList.toggle('active', !isOpen);
 		});
 	}
+
+	// Cancel auto-roll when the user interacts with menu controls (presets, panels, toggles, etc.)
+	// Exclude the autoRollBtn itself so the toggle still works as expected.
+	document.addEventListener('click', (e) => {
+		const el = e.target.closest('button, label, select, input');
+		if (!el) return;
+		if (el.id === 'autoRollBtn') return;
+
+		const isMenuControl =
+			el.closest('.menu-panel') ||
+			el.closest('.menu-panel-container') ||
+			el.closest('.toggle-controls') ||
+			el.classList.contains('preset-btn') ||
+			el.classList.contains('btn-preset-toggle') ||
+			el.classList.contains('panel-close-btn') ||
+			el.classList.contains('quick-biome-btn') ||
+			el.classList.contains('btn-toggle') ||
+			el.id === 'startButton';
+
+		if (isMenuControl && typeof stopAutoRoll === 'function') {
+			if (typeof autoRollEnabled !== 'undefined' && autoRollEnabled) stopAutoRoll();
+		}
+	});
 });
 
 function closeIntro() {
