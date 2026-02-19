@@ -64,10 +64,6 @@ h2 {
     margin-right: 4px;
 }
 
-.links-list a:hover {
-    color: #d4a6ff;
-}
-
 .links-list span.description {
     font-size: 0.9em;
     color: #666;
