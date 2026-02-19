@@ -14,14 +14,14 @@ let currentBgmId = 'bgmDefault';
 
 let baseLuckValue = 1;
 
-// Prevent rapid biome switching visual desyncs — lock for 1s after a successful change
+const MAX_ROLLS_AND_LUCK = 10000000000;
+
 let biomeSwitchLocked = false;
 let biomeSwitchUnlockTimer = null;
 let lastAcceptedBiome = null;
-// mirror for code in `rolling.js` that checks `_biomeSwitchLocked`
 window._biomeSwitchLocked = false;
-// rolling flag (set by `runRolls`) — prevents opening menus while a roll is running
 window.rollInProgress = false;
+window.abortRollRequested = false;
 
 // ==================== COMPATIBILITY CHECK ====================
 function checkCompatibility() {
@@ -75,8 +75,7 @@ function checkCompatibility() {
             
             message.innerHTML = messageHTML;
             modal.classList.remove('hidden');
-            
-            // when compatibility modal is dismissed, show the mandatory disclaimer next
+
             dismissBtn.addEventListener('click', () => {
                 modal.classList.add('hidden');
                 playSound('clickSound');
@@ -84,7 +83,6 @@ function checkCompatibility() {
             }, { once: true });
         }
     } else {
-        // no compatibility issues -> show disclaimer immediately
         showDisclaimerModal();
     }
 }
@@ -418,7 +416,6 @@ function togglePanel(panelId, btnId) {
 	const panel = document.getElementById(panelId);
 	const btn = document.getElementById(btnId);
 	const isOpen = !!(panel && panel.classList.contains('open'));
-	// prevent opening panels while a roll is in progress
 	if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 	const resultsBox = document.getElementById('resultsBox');
 	const singleResult = document.getElementById('singleResult');
@@ -538,10 +535,8 @@ const BIOME_CONFIG = {
 };
 
 function handleBiomeChange(biome) {
-	// ignore rapid repeated requests
 	if (biomeSwitchLocked) return;
 
-	// record the accepted biome and lock further switches for 1s
 	lastAcceptedBiome = biome || null;
 	biomeSwitchLocked = true;
 	window._biomeSwitchLocked = true;
@@ -598,7 +593,8 @@ function handleLimboLuckPresets(isLimbo) {
 					baseLuckValue = 300000;
 					const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
 					const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
-					luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+					const computed = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+					luckInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, computed));
 					luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 				}
 				const luckPresetsBtn = document.getElementById('luckPresetsBtn');
@@ -615,7 +611,7 @@ function handleLimboLuckPresets(isLimbo) {
 		const vipSelect = document.getElementById('vipSelect');
 		if (luckInput) {
 			const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
-			luckInput.value = Math.floor(baseLuckValue * vipMultiplier);
+			luckInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, Math.floor(baseLuckValue * vipMultiplier)));
 			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 		}
 		
@@ -633,7 +629,7 @@ function handleLimboLuckPresets(isLimbo) {
 						baseLuckValue = parseInt(btn.dataset.luck);
 						const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
 						const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
-						luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+					luckInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier)));
 						luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 					}
 					if (btn.dataset.oblivion === 'true') {
@@ -708,7 +704,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (rollPresetsBtn && rollPresetsDropdown) {
 		rollPresetsBtn.addEventListener('click', () => {
 			const isOpen = rollPresetsDropdown.classList.contains('open');
-			// prevent opening while a roll is running
 			if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 			rollPresetsDropdown.classList.toggle('open', !isOpen);
 			rollPresetsBtn.classList.toggle('active', !isOpen);
@@ -720,7 +715,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (luckPresetsBtn && luckPresetsDropdown) {
 		luckPresetsBtn.addEventListener('click', () => {
 			const isOpen = luckPresetsDropdown.classList.contains('open');
-			// prevent opening while a roll is running
 			if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 			luckPresetsDropdown.classList.toggle('open', !isOpen);
 			luckPresetsBtn.classList.toggle('active', !isOpen);
@@ -731,10 +725,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	document.querySelectorAll('.preset-btn[data-rolls]').forEach(btn => {
 		btn.addEventListener('click', () => {
-			if (typeof window !== 'undefined' && window.rollInProgress) return; // block changes while rolling
+			if (typeof window !== 'undefined' && window.rollInProgress) return;
 			const rollsInput = document.getElementById('rollsInput');
 			if (rollsInput) {
-				rollsInput.value = btn.dataset.rolls;
+				rollsInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, Number(btn.dataset.rolls)));
 				rollsInput.dispatchEvent(new Event('input', { bubbles: true }));
 			}
 			if (rollPresetsDropdown) rollPresetsDropdown.classList.remove('open');
@@ -745,7 +739,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	document.querySelectorAll('.preset-btn[data-luck]').forEach(btn => {
 		btn.addEventListener('click', () => {
-			if (typeof window !== 'undefined' && window.rollInProgress) return; // block changes while rolling
+			if (typeof window !== 'undefined' && window.rollInProgress) return;
 			const luckInput = document.getElementById('luckInput');
 			const oblivionToggle = document.getElementById('oblivionToggle');
 			const duneToggle = document.getElementById('duneToggle');
@@ -755,7 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				baseLuckValue = parseInt(btn.dataset.luck);
 				const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
 				const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
-				luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+			luckInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier)));
 				luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 			}
 			if (btn.dataset.oblivion === 'true') {
@@ -774,9 +768,18 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	});
 	
+	const stopRollBtn = document.getElementById('stopRollBtn');
+	if (stopRollBtn) {
+		stopRollBtn.addEventListener('click', () => {
+			if (typeof window !== 'undefined') window.abortRollRequested = true;
+			stopRollBtn.disabled = true;
+			playSound('clickSound');
+		});
+	}
+
 	document.querySelectorAll('.quick-biome-btn[data-biome]').forEach(btn => {
 		btn.addEventListener('click', () => {
-			if (biomeSwitchLocked || (typeof window !== 'undefined' && window.rollInProgress)) return; // ignore rapid clicks or while rolling
+			if (biomeSwitchLocked || (typeof window !== 'undefined' && window.rollInProgress)) return;
 			const biomeSelect = document.getElementById('biomeSelect');
 			if (biomeSelect) {
 				biomeSelect.value = btn.dataset.biome;
@@ -788,17 +791,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 	const biomeSelect = document.getElementById('biomeSelect');
 	if (biomeSelect) {
-		// initialise the "last accepted" biome so UI reverts correctly while locked
 		lastAcceptedBiome = biomeSelect.value || null;
 		biomeSelect.addEventListener('change', (e) => {
 			const requestedBiome = e.target.value || '';
 			if (typeof window !== 'undefined' && window.rollInProgress) {
-				// prevent changing biome while a roll is running
 				e.target.value = lastAcceptedBiome || '';
 				return;
 			}
 			if (biomeSwitchLocked) {
-				// revert dropdown UI to the last accepted value while locked
 				e.target.value = lastAcceptedBiome || '';
 				return;
 			}
@@ -824,7 +824,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		vipSelect.addEventListener('change', () => {
 			const vipMultiplier = parseFloat(vipSelect.value);
 			const davesHopeMultiplier = davesHopeSelect ? parseFloat(davesHopeSelect.value) : 1;
-			luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+			luckInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier)));
 			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 			playSound('clickSound');
 		});
@@ -849,7 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		davesHopeSelect.addEventListener('change', () => {
 			const vipMultiplier = vipSelect ? parseFloat(vipSelect.value) : 1;
 			const davesHopeMultiplier = parseFloat(davesHopeSelect.value);
-			luckInput.value = Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier);
+			luckInput.value = String(Math.min(MAX_ROLLS_AND_LUCK, Math.floor(baseLuckValue * vipMultiplier * davesHopeMultiplier)));
 			luckInput.dispatchEvent(new Event('input', { bubbles: true }));
 			playSound('clickSound');
 		});
@@ -860,15 +860,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (auraClassStopBtn && auraClassStopList) {
 		auraClassStopBtn.addEventListener('click', () => {
 			const isOpen = auraClassStopList.classList.contains('open');
-			// prevent opening while a roll is running
 			if (!isOpen && typeof window !== 'undefined' && window.rollInProgress) return;
 			auraClassStopList.classList.toggle('open', !isOpen);
 			auraClassStopBtn.classList.toggle('active', !isOpen);
 		});
 	}
 
-	// Cancel auto-roll when the user interacts with menu controls (presets, panels, toggles, etc.)
-	// Exclude the autoRollBtn itself so the toggle still works as expected.
 	document.addEventListener('click', (e) => {
 		const el = e.target.closest('button, label, select, input');
 		if (!el) return;

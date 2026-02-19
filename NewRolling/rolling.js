@@ -12,6 +12,7 @@ let useWebWorkers = true;
 const WORKER_MIN_ROLLS = 250000;
 const workerCount = typeof navigator !== 'undefined' ? (navigator.hardwareConcurrency || 4) : 4;
 
+
 function webWorkersSupported() {
 	return typeof Worker !== 'undefined';
 }
@@ -75,8 +76,28 @@ async function runRollsWithWorkers(candidateSet, total, start) {
 	updateProgress(0, total, start);
 	
 	try {
-		const results = await Promise.all(promises);
-		
+		let results;
+		const allPromise = Promise.all(promises);
+		if (typeof window !== 'undefined') {
+			let abortInterval = null;
+			const abortWatcher = new Promise((_, reject) => {
+				abortInterval = setInterval(() => {
+					if (window.abortRollRequested) {
+						clearInterval(abortInterval);
+						for (const w of workers) w.terminate();
+						reject(new Error('aborted'));
+					}
+				}, 50);
+			});
+			try {
+				results = await Promise.race([allPromise, abortWatcher]);
+			} finally {
+				if (abortInterval) clearInterval(abortInterval);
+			}
+		} else {
+			results = await allPromise;
+		}
+
 		const countArr = new Uint32Array(totalEntries);
 		for (const workerCounts of results) {
 			for (let i = 0; i < totalEntries; i++) {
@@ -444,8 +465,12 @@ function readOptionsFromUI() {
 	const biomeSelect = document.getElementById('biomeSelect');
 	const oblivionToggle = document.getElementById('oblivionToggle');
 	const duneToggle = document.getElementById('duneToggle');
-	const count = Math.max(1, Math.floor(Number(rollsInput && rollsInput.value) || 1));
-	const luck = Math.max(0.0000001, Number(luckInput && luckInput.value) || 1);
+	let count = Math.max(1, Math.floor(Number(rollsInput && rollsInput.value) || 1));
+	let luck = Math.max(0.0000001, Number(luckInput && luckInput.value) || 1);
+	count = Math.min(MAX_ROLLS_AND_LUCK, count);
+	luck = Math.min(MAX_ROLLS_AND_LUCK, luck);
+	if (rollsInput && Number(rollsInput.value) !== count) rollsInput.value = String(count);
+	if (luckInput && Number(luckInput.value) !== luck) luckInput.value = String(luck);
 	const biome = biomeSelect && biomeSelect.value ? biomeSelect.value : null;
 	const allowOblivion = oblivionToggle ? oblivionToggle.checked : false;
 	const allowDune = duneToggle ? duneToggle.checked : false;
@@ -453,7 +478,6 @@ function readOptionsFromUI() {
 }
 
 function updateBuffDisplay() {
-	// if a biome switch is in progress, skip UI updates to avoid mixed visuals
 	if (typeof _biomeSwitchLocked !== 'undefined' && _biomeSwitchLocked) return;
 	const { count, luck, biome } = readOptionsFromUI();
 	const luckEl = document.getElementById('buffLuck');
@@ -817,7 +841,7 @@ function getAuraOrderMap(list) {
 	return map;
 }
 
-function renderResults(counts) {
+function renderResults(counts, simulationTimeSec) {
 	const box = document.getElementById('resultsBox');
 	if (!box) return;
 	box.innerHTML = '';
@@ -859,6 +883,9 @@ function renderResults(counts) {
 	statsRow.appendChild(globalsSpan);
 	
 	let restOfStats = ` | Luck: ${Number(luck).toLocaleString('en-US')} | Rolls: ${count.toLocaleString('en-US')} | Biome: ${biome ? (biomeLabels[biome] || biome) : 'None'}`;
+	if (typeof simulationTimeSec === 'number' && count >= 1000000) {
+		restOfStats += ` | Simulation Time: ${simulationTimeSec.toFixed(2)}s`;
+	}
 	if (allowOblivion) restOfStats += ' | Oblivion/Memory: ON';
 	if (allowDune) restOfStats += ' | Neferkhaf: ON';
 	statsRow.appendChild(document.createTextNode(restOfStats));
@@ -1029,7 +1056,7 @@ function hideResultsAndSingle() {
 }
 
 async function runRolls() {
-	if (typeof window !== 'undefined' && window.rollInProgress) return; // prevent re-entrancy
+	if (typeof window !== 'undefined' && window.rollInProgress) return;
 	window.rollInProgress = true;
 	const btn = document.getElementById('rollButton');
 	if (btn) btn.disabled = true;
@@ -1037,22 +1064,36 @@ async function runRolls() {
 	try {
 
 	const { count, luck, biome, allowOblivion, allowDune } = readOptionsFromUI();
+	if (typeof window !== 'undefined') window.abortRollRequested = false;
+	const stopRollBtn = document.getElementById('stopRollBtn');
+	if (stopRollBtn) {
+		if (count > 9999999) {
+			stopRollBtn.style.display = 'inline-block';
+			stopRollBtn.disabled = false;
+		} else {
+			stopRollBtn.style.display = 'none';
+		}
+	}
+
 	if (count > 499999999) {
 		const ok = await showWarning('I\'m warning you, this will take lots of time AND slow your PC down significantly (CPU usage).');
 		if (!ok) {
 			if (btn) btn.disabled = false;
+			if (stopRollBtn) stopRollBtn.style.display = 'none';
 			return;
 		}
 	} else if (count > 99999999) {
 		const ok = await showWarning('You have selected a very high roll count. This will affect PC performance (CPU) while running. Are you sure?');
 		if (!ok) {
 			if (btn) btn.disabled = false;
+			if (stopRollBtn) stopRollBtn.style.display = 'none';
 			return;
 		}
 	} else if (count > 9999999) {
 		const ok = await showWarning('You set a lot of rolls. Your browser might lag. Are you sure?');
 		if (!ok) {
 			if (btn) btn.disabled = false;
+			if (stopRollBtn) stopRollBtn.style.display = 'none';
 			return;
 		}
 	}
@@ -1111,10 +1152,15 @@ async function runRolls() {
 	if (useWebWorkers && webWorkersSupported() && total >= WORKER_MIN_ROLLS) {
 		try {
 			const counts = await runRollsWithWorkers(candidateSet, total, start);
-			renderResults(counts);
+			const elapsed = (performance.now() - start) / 1000;
+			renderResults(counts, elapsed);
 			if (btn) btn.disabled = false;
 			return;
 		} catch (err) {
+			if (typeof window !== 'undefined' && window.abortRollRequested) {
+				if (btn) btn.disabled = false;
+				return;
+			}
 			console.warn('Web Workers failed, falling back to single-threaded:', err);
 		}
 	}
@@ -1130,10 +1176,12 @@ async function runRolls() {
 	const yieldEveryNChunks = 5;
 	let done = 0;
 	let chunkCount = 0;
+	let aborted = false;
 	
 	while (done < total) {
 		const end = Math.min(total, done + chunkSize);
 		for (let r = done; r < end; r++) {
+			if (typeof window !== 'undefined' && window.abortRollRequested) { aborted = true; break; }
 			let idx = -1;
 			while (idx < 0) {
 				for (let i = 0; i < specialLen; i++) {
@@ -1168,8 +1216,10 @@ async function runRolls() {
 					}
 				}
 			}
+			if (aborted) break;
 			countArr[idx]++;
 		}
+		if (aborted) break;
 		done = end;
 		chunkCount++;
 		
@@ -1179,6 +1229,20 @@ async function runRolls() {
 		}
 	}
 	PRNG.setState(sa, sb, sc, sd);
+	if (typeof window !== 'undefined' && window.abortRollRequested) {
+		updateProgress(done, total, start);
+		const counts = new Map();
+		for (let i = 0; i < specialLen; i++) {
+			if (countArr[i] > 0) counts.set(specialEntries[i].resultKey, { entry: specialEntries[i], count: countArr[i] });
+		}
+		for (let i = 0; i < len; i++) {
+			if (countArr[specialLen + i] > 0) counts.set(entries[i].resultKey, { entry: entries[i], count: countArr[specialLen + i] });
+		}
+		const elapsed = (performance.now() - start) / 1000;
+		renderResults(counts, elapsed);
+		if (btn) btn.disabled = false;
+		return;
+	}
 	updateProgress(done, total, start);
 
 	const counts = new Map();
@@ -1193,11 +1257,19 @@ async function runRolls() {
 		}
 	}
 
-	renderResults(counts);
+	const elapsed = (performance.now() - start) / 1000;
+	renderResults(counts, elapsed);
 	if (btn) btn.disabled = false;
 	} finally {
-		// ensure rolling flag is always cleared
-		if (typeof window !== 'undefined') window.rollInProgress = false;
+		if (typeof window !== 'undefined') {
+			window.rollInProgress = false;
+			window.abortRollRequested = false;
+		}
+		const stopRollBtn = document.getElementById('stopRollBtn');
+		if (stopRollBtn) {
+			stopRollBtn.style.display = 'none';
+			stopRollBtn.disabled = false;
+		}
 	}
 }
 
@@ -1205,8 +1277,12 @@ function updateAutoRollVisibility() {
 	const rollsInput = document.getElementById('rollsInput');
 	const autoRollBtn = document.getElementById('autoRollBtn');
 	const rollSpeedInput = document.getElementById('rollSpeedInput');
-	const rolls = Math.floor(Number(rollsInput && rollsInput.value) || 1);
-	
+	let rolls = Math.floor(Number(rollsInput && rollsInput.value) || 1);
+	if (rolls > MAX_ROLLS_AND_LUCK) {
+		rolls = MAX_ROLLS_AND_LUCK;
+		if (rollsInput) rollsInput.value = String(rolls);
+	}
+
 	if (autoRollBtn) {
 		autoRollBtn.style.display = rolls === 1 ? 'inline-block' : 'none';
 		if (rolls !== 1 && autoRollEnabled) {
@@ -1221,9 +1297,9 @@ function updateAutoRollVisibility() {
 function getRollSpeed() {
 	const rollSpeedInput = document.getElementById('rollSpeedInput');
 	let speed = Math.floor(Number(rollSpeedInput && rollSpeedInput.value) || 5);
-	if (speed > 15) {
-		speed = 15;
-		if (rollSpeedInput) rollSpeedInput.value = 15;
+	if (speed > 30) {
+		speed = 30;
+		if (rollSpeedInput) rollSpeedInput.value = 30;
 	}
 	if (speed < 1) {
 		speed = 1;

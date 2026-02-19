@@ -60,7 +60,6 @@ html, body {
     transition: filter 0.6s ease-out;
 }
 
-/* Animations */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -98,7 +97,6 @@ html, body {
     50% { text-shadow: 0 0 25px rgba(109, 255, 255, 0.8); }
 }
 
-/* Intro Screen */
 .intro-screen {
     position: fixed;
     top: 0;
@@ -145,7 +143,6 @@ html, body {
     opacity: 0.7;
 }
 
-/* Button Base */
 .btn {
     font-family: var(--font-text);
     padding: 14px 32px;
@@ -169,7 +166,6 @@ html, body {
     transform: translateY(0);
 }
 
-/* Button Variant: Primary */
 .btn-primary {
     background: var(--btn-primary-bg);
     color: var(--text-primary);
@@ -192,7 +188,6 @@ html, body {
     padding: 18px 50px;
 }
 
-/* Toggle Controls */
 .toggle-controls {
     position: relative;
     display: flex;
@@ -218,7 +213,6 @@ html, body {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Volume Slider Styles */
 .volume-slider-container {
     position: absolute;
     top: 0;
@@ -252,7 +246,6 @@ html, body {
     appearance: none;
 }
 
-/* Webkit (Chrome, Safari) */
 .volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -269,7 +262,6 @@ html, body {
     box-shadow: 0 0 12px rgba(109, 255, 255, 0.8);
 }
 
-/* Firefox */
 .volume-slider::-moz-range-thumb {
     width: 16px;
     height: 16px;
@@ -322,7 +314,6 @@ html, body {
     transform: scale(0.95);
 }
 
-/* Main Menu Layout */
 #mainMenu {
     position: fixed;
     inset: 0;
@@ -503,7 +494,6 @@ html, body {
     pointer-events: auto;
 }
 
-/* Panel Container for side-by-side layout */
 .menu-panel-container {
     position: absolute;
     left: 50%;
@@ -525,7 +515,6 @@ html, body {
     pointer-events: auto;
 }
 
-/* Panel Close Button (mobile only) */
 .panel-close-btn {
     display: none;
     position: absolute;
@@ -621,7 +610,6 @@ html, body {
     color: var(--text-accent);
 }
 
-/* Preset Section Styles */
 .preset-section {
     margin-bottom: 8px;
 }
@@ -654,7 +642,6 @@ html, body {
     display: flex;
 }
 
-/* Quick Biome Section */
 .quick-biome-section {
     margin-top: 8px;
     padding-top: 12px;
@@ -678,7 +665,6 @@ html, body {
     text-align: center;
 }
 
-/* VIP Section */
 .vip-section {
     margin-top: 8px;
     padding-top: 12px;
@@ -697,7 +683,6 @@ html, body {
     font-size: 0.85rem;
 }
 
-/* Dave's Hope Section (LIMBO only) */
 .daves-hope-section {
     margin-top: 8px;
     padding-top: 12px;
@@ -716,7 +701,6 @@ html, body {
     font-size: 0.85rem;
 }
 
-/* Preset Row & Dropdown Styles */
 .preset-row {
     display: flex;
     justify-content: space-between;;
@@ -787,7 +771,6 @@ html, body {
     border-color: var(--text-accent);
 }
 
-/* Roll count warning colors */
 .preset-btn.rolls-red {
     color: #ff6b6b;
 }
@@ -801,7 +784,6 @@ html, body {
     font-weight: 600;
 }
 
-/* Special Auras Section */
 .special-auras-section {
     margin-top: 0;
     padding-top: 0;
@@ -833,7 +815,6 @@ html, body {
     opacity: 0.6;
 }
 
-/* Toggle Switch */
 .toggle-switch {
     position: relative;
     display: inline-block;
@@ -901,7 +882,6 @@ html, body {
     color: #e9f6ff;
 }
 
-/* Remove number input spinners */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -925,7 +905,6 @@ input[type="number"] {
     box-shadow: 0 0 8px rgba(109, 255, 255, 0.4);
 }
 
-/* Results center */
 #resultsBox {
     position: absolute;
     top: 50%;
@@ -1142,7 +1121,6 @@ input[type="number"] {
 .rarity-challengedplus { color: #ffffff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -2px -2px 0 #d3d3d3, 2px -2px 0 #d3d3d3, -2px 2px 0 #d3d3d3, 2px 2px 0 #d3d3d3, -2px -1px 0 #d3d3d3, 2px -1px 0 #d3d3d3, -2px 1px 0 #d3d3d3, 2px 1px 0 #d3d3d3, -1px -2px 0 #d3d3d3, 1px -2px 0 #d3d3d3, -1px 2px 0 #d3d3d3, 1px 2px 0 #d3d3d3; }
 .rarity-limbo { color: #1a1a1a; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 8px #fff, 0 0 12px #fff; }
 
-/* Single roll rarity overrides (higher specificity) */
 #singleResult.rarity-basic { color: #d3d3d3; text-shadow: 1px 1px 2px #000; }
 #singleResult.rarity-epic { color: #754c73; text-shadow: 1px 1px 2px #000; }
 #singleResult.rarity-unique { color: #976627; text-shadow: 1px 1px 2px #000; }
@@ -1155,7 +1133,6 @@ input[type="number"] {
 #singleResult.rarity-challengedplus { color: #ffffff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, -1px 0 0 #000, 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -2px -2px 0 #d3d3d3, 2px -2px 0 #d3d3d3, -2px 2px 0 #d3d3d3, 2px 2px 0 #d3d3d3, -2px -1px 0 #d3d3d3, 2px -1px 0 #d3d3d3, -2px 1px 0 #d3d3d3, 2px 1px 0 #d3d3d3, -1px -2px 0 #d3d3d3, 1px -2px 0 #d3d3d3, -1px 2px 0 #d3d3d3, 1px 2px 0 #d3d3d3; }
 #singleResult.rarity-limbo { color: #1a1a1a; text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff, 0 0 8px #fff, 0 0 12px #fff; }
 
-/* Limbo overrides for animated rarities - reset background-clip and use solid limbo color */
 #singleResult .singleResultText.rarity-limbo.anim-10m,
 #singleResult .singleResultText.rarity-limbo.anim-100m,
 #singleResult .singleResultText.rarity-limbo.anim-1b {
@@ -1424,7 +1401,6 @@ body.limbo-mode #autoRollBtn[data-enabled="true"] {
     color: #ffffff;
 }
 
-/* Challenged overrides for single result - ensure these always apply */
 #singleResult .singleResultText.rarity-challenged {
     background: none;
     background-clip: unset;
@@ -2174,7 +2150,6 @@ body.limbo-mode #autoRollBtn[data-enabled="true"] {
     }
 }
 
-/* Custom Warning Modal */
 .warning-modal {
     position: fixed;
     top: 0;

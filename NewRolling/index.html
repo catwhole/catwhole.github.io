@@ -39,7 +39,6 @@
         </div>
     </div>
 
-    <!-- Compatibility Warning -->
     <div id="compatibilityModal" class="warning-modal hidden">
         <div class="warning-backdrop"></div>
         <div class="warning-container">
@@ -51,7 +50,6 @@
         </div>
     </div>
 
-    <!-- Disclaimer -->
 <div id="disclaimerModal" class="warning-modal hidden">
     <div class="warning-backdrop"></div>
     <div class="warning-container">
@@ -233,11 +231,11 @@
             <div id="rollOptionsPanel" class="menu-panel-main">
                 <h3>Roll Options</h3>
                 <label for="rollsInput">Rolls</label>
-                <input id="rollsInput" class="input-field" type="number" min="1" value="1">
+                <input id="rollsInput" class="input-field" type="number" min="1" max="10000000000" value="1">
                 <span class="hint-text">1 roll = full screen rolls, cutscenes (not added) <br> 2+ rolls = auras displayed in list</span>
 
                 <label for="luckInput">Luck</label>
-                <input id="luckInput" class="input-field" type="number" min="1" step="1" value="1">
+                <input id="luckInput" class="input-field" type="number" min="1" max="10000000000" step="1" value="1">
 
                 <label for="biomeSelect">Biome</label>
                 <select id="biomeSelect" class="select-field">
@@ -261,8 +259,8 @@
 
                 <div class="roll-speed-section">
                     <label for="rollSpeedInput">Roll Speed</label>
-                    <input id="rollSpeedInput" class="input-field" type="number" min="1" max="15" value="1">
-                    <span class="hint-text">Rolls per second (max 15)</span>
+                    <input id="rollSpeedInput" class="input-field" type="number" min="1" max="30" value="1">
+                    <span class="hint-text">Rolls per second (max 30). <br>Warp is ~14/s (due to bug, otherwise 10).</span>
                 </div>
             </div>
 
@@ -374,10 +372,10 @@
                 <button class="btn btn-toggle" id="settingsBtn">Settings</button>
             </div>
             <button class="btn btn-toggle" id="autoRollBtn">Auto Roll: OFF</button>
+            <button class="btn btn-toggle" id="stopRollBtn" style="display:none">Stop Rolling</button>
         </div>
     </div>
 
-    <!-- Warning -->
     <div id="warningModal" class="warning-modal hidden">
         <div class="warning-backdrop"></div>
         <div class="warning-container">

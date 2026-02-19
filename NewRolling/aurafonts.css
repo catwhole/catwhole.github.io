@@ -370,7 +370,7 @@
 .aura-style-wrapper.ascendant .aura-bottom {
     color: transparent !important;
     -webkit-text-fill-color: transparent !important;
-    -webkit-text-stroke: 1.5px #ac6e40; /* brown outline per reference */
+    -webkit-text-stroke: 1.5px #ac6e40;
     text-shadow: 0 0 8px rgba(172,110,64,0.28);
     z-index: 1;
     white-space: nowrap;
@@ -497,10 +497,9 @@
     font-style: italic;
     letter-spacing: 0.25em;
     text-transform: lowercase;
-    filter: drop-shadow(0 0 6px rgba(128,128,128,0.6)); /* same spread/opacity as Ascendant */
+    filter: drop-shadow(0 0 6px rgba(128,128,128,0.6));
 }
 
-/* Top layer — bright gradient fill (no stroke) */
 .aura-style-wrapper.dreamscape .aura-top {
     display: block;
     position: absolute;
@@ -518,7 +517,6 @@
     z-index: 2;
 }
 
-/* Bottom layer — stroke only (dimgrey) */
 .aura-style-wrapper.dreamscape .aura-bottom {
     position: relative;
     color: transparent !important;
